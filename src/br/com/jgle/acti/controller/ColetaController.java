@@ -1,5 +1,6 @@
 package br.com.jgle.acti.controller;
 
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.api.Textbox;
+import org.zkoss.zul.Textbox;
 
 import br.com.jgle.acti.entity.Cliente;
 import br.com.jgle.acti.entity.Coleta;
@@ -149,7 +150,7 @@ public class ColetaController extends AbstractController<Coleta> implements Seri
 		} catch (Exception e) {
 			try {
 				Messagebox.show(e.getMessage());
-			} catch (InterruptedException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
@@ -183,7 +184,7 @@ public class ColetaController extends AbstractController<Coleta> implements Seri
 		} catch (Exception e) {
 			try {
 				Messagebox.show(e.getMessage());
-			} catch (InterruptedException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();

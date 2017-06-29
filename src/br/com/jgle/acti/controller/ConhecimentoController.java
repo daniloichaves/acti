@@ -21,7 +21,7 @@ import org.zkoss.zul.Grid;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Radio;
-import org.zkoss.zul.api.Textbox;
+import org.zkoss.zul.Textbox;
 
 import br.com.jgle.acti.entity.Cliente;
 import br.com.jgle.acti.entity.ColetaEndereco;
@@ -180,7 +180,7 @@ public class ConhecimentoController extends AbstractController<Conhecimento> {
 		} catch (Exception e) {
 			try {
 				Messagebox.show(e.getMessage());
-			} catch (InterruptedException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
@@ -214,7 +214,7 @@ public class ConhecimentoController extends AbstractController<Conhecimento> {
 		} catch (Exception e) {
 			try {
 				Messagebox.show(e.getMessage());
-			} catch (InterruptedException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
@@ -248,7 +248,7 @@ public class ConhecimentoController extends AbstractController<Conhecimento> {
 		} catch (Exception e) {
 			try {
 				Messagebox.show(e.getMessage());
-			} catch (InterruptedException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
@@ -282,7 +282,7 @@ public class ConhecimentoController extends AbstractController<Conhecimento> {
 		} catch (Exception e) {
 			try {
 				Messagebox.show(e.getMessage());
-			} catch (InterruptedException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();

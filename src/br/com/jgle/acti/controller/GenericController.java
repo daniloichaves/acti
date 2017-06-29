@@ -271,8 +271,9 @@ abstract class GenericController<T extends AbstractEntity> extends GenericForwar
 						} catch (EntityNotFoundException e1) {
 							try {
 								Messagebox.show(getUpdateDeletedMessage());
-							} catch (InterruptedException e2) {
+							} catch (Exception e2) {
 								// ignore
+								e2.printStackTrace();
 							}
 						}
 					}
@@ -329,8 +330,9 @@ abstract class GenericController<T extends AbstractEntity> extends GenericForwar
 						}
 					}
 				});
-			} catch (InterruptedException ex) {
+			} catch (Exception ex) {
 				// ignore
+				ex.printStackTrace();
 			}
 		}
 

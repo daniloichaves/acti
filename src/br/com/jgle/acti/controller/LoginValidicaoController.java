@@ -1,5 +1,6 @@
 package br.com.jgle.acti.controller;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
-import org.zkoss.zul.api.Combobox;
+import org.zkoss.zul.Combobox;
 
 import br.com.jgle.acti.entity.Login;
 import br.com.jgle.acti.service.GenericService;
@@ -62,8 +63,9 @@ public class LoginValidicaoController extends GenericForwardComposer {
 							.show("Seus dados foram enviados para o administrador");
 					// TODO enviar email para administrador
 				}
-			} catch (InterruptedException e2) {
+			} catch (Exception e2) {
 				// ignore
+				e2.printStackTrace();
 			}
 		} else {
 			setLogin(result.get(0));

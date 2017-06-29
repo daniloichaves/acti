@@ -224,8 +224,8 @@ public class AbstractListController<K extends AbstractEntity, T extends Abstract
 				} catch (EntityNotFoundException e1) {
 					try {
 						Messagebox.show(getUpdateDeletedMessage());
-					} catch (InterruptedException e2) {
-						// ignore
+					} catch (Exception e2) {
+						e2.printStackTrace();
 					}
 				}
 			}
@@ -387,8 +387,8 @@ public class AbstractListController<K extends AbstractEntity, T extends Abstract
 						}
 					}
 				});
-			} catch (InterruptedException ex) {
-				// ignore
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 		}
 

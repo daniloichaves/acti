@@ -469,7 +469,7 @@ public class AbstractController<T extends AbstractEntity> extends
 				} catch (EntityNotFoundException e1) {
 					try {
 						Messagebox.show(getUpdateDeletedMessage());
-					} catch (InterruptedException e2) {
+					} catch (Exception e2) {
 						// ignore
 					}
 				}
@@ -643,7 +643,7 @@ public class AbstractController<T extends AbstractEntity> extends
 								_deleteMode = false;
 							}
 						});
-			} catch (InterruptedException ex) {
+			} catch (Exception ex) {
 				// ignore
 			}
 		}
@@ -665,7 +665,7 @@ public class AbstractController<T extends AbstractEntity> extends
 					} catch (DataIntegrityViolationException e) {
 						try {
 							Messagebox.show("Registro em uso e não pode ser removido.");
-						} catch (InterruptedException e1) {
+						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
 					}

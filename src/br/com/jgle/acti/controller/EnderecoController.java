@@ -9,7 +9,7 @@ import org.zkoss.zk.ui.util.Composer;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.api.Textbox;
+import org.zkoss.zul.Textbox;
 
 import br.com.jgle.acti.controller.pgr.ProjetoController;
 import br.com.jgle.acti.entity.Endereco;
@@ -93,7 +93,7 @@ public class EnderecoController extends AbstractController<Endereco> implements 
 		} catch (Exception e) {
 			try {
 				Messagebox.show(e.getMessage());
-			} catch (InterruptedException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();

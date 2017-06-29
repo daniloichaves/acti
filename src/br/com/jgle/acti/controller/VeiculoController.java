@@ -1,5 +1,6 @@
 package br.com.jgle.acti.controller;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +13,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Listitem;
-import org.zkoss.zul.api.Listbox;
+import org.zkoss.zul.Listbox;
 
 import br.com.jgle.acti.entity.Motorista;
 import br.com.jgle.acti.entity.Proprietario;

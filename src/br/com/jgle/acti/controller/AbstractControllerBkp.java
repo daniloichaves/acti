@@ -221,7 +221,7 @@ public class AbstractControllerBkp<T extends AbstractEntity> extends GenericForw
 				} catch (EntityNotFoundException e1) {
 					try {
 						Messagebox.show(getUpdateDeletedMessage());
-					} catch (InterruptedException e2) {
+					} catch (Exception e2) {
 						// ignore
 					}
 				}
@@ -384,7 +384,7 @@ public class AbstractControllerBkp<T extends AbstractEntity> extends GenericForw
 						}
 					}
 				});
-			} catch (InterruptedException ex) {
+			} catch (Exception ex) {
 				// ignore
 			}
 		}

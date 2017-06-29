@@ -20,7 +20,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Vbox;
-import org.zkoss.zul.api.Listbox;
+import org.zkoss.zul.Listbox;
 
 import br.com.jgle.acti.controller.AbstractController;
 import br.com.jgle.acti.controller.EnderecoController;

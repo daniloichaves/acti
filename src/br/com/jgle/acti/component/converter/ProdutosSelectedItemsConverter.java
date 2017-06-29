@@ -52,7 +52,9 @@ public class ProdutosSelectedItemsConverter implements TypeConverter, java.io.Se
 					Executions.getCurrent().setAttribute("zkoss.zkplus.databind.ON_SELECT" + lbx.getUuid(), Boolean.TRUE);
 					Events.postEvent(new SelectEvent("onSelect", lbx, items, item));
 				}
-				lbx.setSelectedItems(items);
+				//lbx.setSelectedItems(items);
+				//TODO corrigir nova versão
+				//lbx.setSelectedItems(items);
 				return TypeConverter.IGNORE;
 
 			} else if (xmodel == null) { // no model case, assume Listitem.value
@@ -68,7 +70,8 @@ public class ProdutosSelectedItemsConverter implements TypeConverter, java.io.Se
 						}
 					}
 				}
-				lbx.setSelectedItems(items);
+				//TODO corrigir nova versão
+				//lbx.setSelectedItems(items);
 				return TypeConverter.IGNORE;
 			} else {
 				throw new UiException("model of the databind listbox " + lbx + " must be an instanceof of org.zkoss.zkplus.databind.BindingListModel." + xmodel);
