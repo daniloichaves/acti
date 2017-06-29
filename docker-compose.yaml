@@ -1,6 +1,6 @@
 database:
   image: mysql
-  container_name: database.dev
+  container_name: acti-database.dev
   command: mysqld --user=root --verbose
 #  volumes:
 #    - ./dbcreation.sql:/tmp/dbcreation.sql

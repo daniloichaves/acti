@@ -40,5 +40,12 @@ public class LoginLoad implements InitializingBean {
 		login.setSenha("jgle");
 
 		genericService.inserir(login);
+		
+		login.setNome("jGle Solutions Technology");
+		login.setEmail("admin@jgle.com.br");
+		login.setLogin("admin");
+		login.setSenha("admin");
+
+		genericService.inserir(login);
 	}
 }
