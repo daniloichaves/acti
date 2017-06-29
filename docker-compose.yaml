@@ -1,0 +1,15 @@
+database:
+  image: mysql
+  container_name: database.dev
+  command: mysqld --user=root --verbose
+#  volumes:
+#    - ./dbcreation.sql:/tmp/dbcreation.sql
+#    - ./import.sh:/tmp/import.sh
+  ports:
+    - "3306:3306"
+  environment:
+    MYSQL_DATABASE: "acti"
+    MYSQL_USER: "acti"
+    MYSQL_PASSWORD: "123456"
+    MYSQL_ROOT_PASSWORD: "root"
+    MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
