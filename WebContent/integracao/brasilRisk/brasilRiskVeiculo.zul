@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${veiculoController}"
+		visible="@{veiculoController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Veículos">
+
+		<grid>
+			<rows>
+				<group label="Dados do veículo" spans="4" />
+				<row>
+					<label value="Aquisição: " />
+					<hbox>
+						<radiogroup
+							selectedItem="@{veiculoController.selected.tipoAquisicao}">
+							<radio label="Próprio" value="1"
+								selected="true" />
+							<radio label="Terceiro" value="2" />
+						</radiogroup>
+					</hbox>
+					<label value="Placa: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.placa}" />
+				</row>
+				<row>
+					<label value="Descricao: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.descricao}" />
+					<label value="Ano: " />
+					<intbox constraint=""
+						value="@{veiculoController.selected.ano}" />
+				</row>
+				<row>
+					<label value="Marca: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.marca}" />
+					<label value="Modelo: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.modelo}" />
+				</row>
+				<row>
+					<label value="Tipo: " />
+					<combobox
+						selectedItem="@{veiculoController.selected.tipo}">
+						<comboitem label="Carreta" description=""
+							value="CARRETA" />
+						<comboitem label="Cavalo" description=""
+							value="CAVALO" />
+						<comboitem label="Toco" description=""
+							value="TOCO" />
+						<comboitem label="Truck" description=""
+							value="TRUCK" />
+						<comboitem label="Utilitário" description=""
+							value="UTILITÁRIO" />
+					</combobox>
+					<label value="Motorista: " />
+					<combobox
+						selectedItem="@{veiculoController.selected.motorista}">
+						<comboitem
+							forEach="${veiculoController.motoristas}" label="${each.nome}"
+							description="${each.sobrenome}" value="${each}" />
+					</combobox>
+				</row>
+				<row>
+					<label value="Proprietário: " />
+					<combobox
+						selectedItem="@{veiculoController.selected.proprietario}"
+						autodrop="true">
+						<comboitem
+							forEach="${veiculoController.proprietarios}"
+							label="${each.nomeProprietario}" description="${each.tipoPessoa}"
+							value="${each}" />
+					</combobox>
+					<label value="Data Aquisição: " />
+					<datebox cols="25" format="dd/MM/yyyy"
+						onCreate="self.value = new Date()" mold="rounded"
+						value="@{veiculoController.selected.dataAquisicao}" />
+				</row>
+				<row>
+					<label value="Valor Aquisição: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorAquisicao}" />
+					<label value="Valor Venda: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.valorVenda}" />
+				</row>
+				<row>
+					<label value="Informações: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.informacoes}"
+						rows="3" />
+					<label />
+					<checkbox label="Inativo"
+						checked="@{veiculoController.selected.inativo}" />
+				</row>
+				<row>
+					<label value="Nº Certificado: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{veiculoController.selected.numeroCertificado}" />
+					<label value="Medidas: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.medidas}" />
+				</row>
+				<row>
+					<label value="Cor: " />
+					<combobox
+						selectedItem="@{veiculoController.selected.cor}">
+						<comboitem label="PRETA" description=""
+							value="PRETA" />
+						<comboitem label="PRATA" description=""
+							value="PRATA" />
+						<comboitem label="BRANCO" description=""
+							value="BRANCO" />
+						<comboitem label="AZUL" description=""
+							value="AZUL" />
+						<comboitem label="VERMELHO" description=""
+							value="VERMELHO" />
+						<comboitem label="CINZA" description=""
+							value="CINZA" />
+						<comboitem label="AMARELO" description=""
+							value="AMARELO" />
+					</combobox>
+
+					<label value="Combustível: " />
+					<combobox
+						selectedItem="@{veiculoController.selected.combustivel}">
+						<comboitem label="DIESEL" value="DIESEL" />
+						<comboitem label="ALCOOL" value="ALCOOL" />
+						<comboitem label="GASOLINA" value="GASOLINA" />
+						<comboitem label="FLEX" value="FLEX" />
+						<comboitem label="GÁS" value="GAS" />
+					</combobox>
+				</row>
+				<row>
+					<label value="Média Cons. Lt: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.mediaConsLt}" />
+					<label value="Km Atual: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.kmAtual}" />
+				</row>
+				<row>
+					<label value="Capacidade: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.capacidade}" />
+					<label />
+					<label />
+				</row>
+
+
+				<group label="Carreta" spans="4" />
+				<row id="carretaTipo">
+					<label value="Carreta Tipo: " />
+					<combobox
+						selectedItem="@{veiculoController.selected.carretaTipo}">
+						<comboitem label="Baú" description=""
+							value="BAU" />
+						<comboitem label="Bug" description=""
+							value="BUG" />
+						<comboitem label="Graneleiro" description=""
+							value="GRANELEIRO" />
+						<comboitem label="Sider" description=""
+							value="SIDER" />
+					</combobox>
+					<label value="Carreta Placa: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.carretaPlaca}" />
+				</row>
+				<row>
+					<label value="Carreta RENAVAN: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{veiculoController.selected.carretaRenavan}" />
+					<label value="Carreta Chassi: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.carretaChassi}" />
+				</row>
+				<row>
+					<label value="Carreta Ano Fabricação: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{veiculoController.selected.carretaAnoFabricacao}" />
+					<label value="Carreta Marca: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.carretaMarca}" />
+				</row>
+				<row>
+					<label value="Carreta Modelo: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.carretaModelo}" />
+					<label />
+					<label />
+				</row>
+
+				<group label="Dados do Seguro" spans="4" />
+				<row>
+					<label value="Seguradora: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.seguradora}" />
+					<label value="Corretora: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.corretora}" />
+				</row>
+				<row>
+					<label value="Apólice: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.apolice}" />
+					<label value="Tipo Seguradora: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{veiculoController.selected.tipoSeguradora}" />
+				</row>
+				<row>
+					<label value="Data Vencimento Seguro: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						onCreate="self.value = new Date()" mold="rounded"
+						value="@{veiculoController.selected.dataVencimentoSeguro}" />
+					<label />
+					<label />
+				</row>
+			</rows>
+		</grid>
+		<grid>
+			<rows>
+
+				<group label="Dados do Seguro Valores dos Prêmios"
+					spans="4" />
+				<row>
+					<label value="Colisão: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.colisao}" />
+					<label value="Roubo: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.roubo}" />
+				</row>
+				<row>
+					<label value="Explosão: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.explosao}" />
+					<label value="Danos Materiais: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.danosMateriais}" />
+				</row>
+				<row>
+					<label value="Danos Corporais: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.danosCorporais}" />
+					<label value="Terceiros: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.terceiros}" />
+				</row>
+				<row>
+					<label value="Incêndio: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.incendio}" />
+					<label value="Raio: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.raio}" />
+				</row>
+				<row>
+					<label value="Outros: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.outros}" />
+					<label value="Valor Pago: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.valorPago}" />
+					<!-- Inserir como Despesa Valor Pago ? -->
+				</row>
+			</rows>
+		</grid>
+		<grid>
+			<rows>
+				<group label="Dados para carregamento do veículo"
+					spans="4" />
+				<row>
+					<label value="Lotação Minima: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.lotacaoMinima}" />
+					<label value="Lotação Máxima: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.lotacaoMaxima}" />
+				</row>
+				<row>
+					<label value="Val Por Viagem: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.valorPorViagem}" />
+					<label value="Val Viagem Execido: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.valorViagemExecido}" />
+				</row>
+				<row>
+					<label value="Val Km Rodado: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.valorKmRodado}" />
+					<label value="Val Km Execido: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.valorKmExecido}" />
+				</row>
+				<row>
+					<label value="Valor HR: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.valorHora}" />
+					<label value="Valor HR Execido: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.valorHoraExecido}" />
+				</row>
+				<row>
+					<label value="Valor Dia: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.valorDia}" />
+					<label value="Valor Dia Execido: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.valorDiaExecido}" />
+				</row>
+				<row>
+					<label value="%Pagar Motor: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.porcPagarMotor}" />
+					<label value="Valor Por Entrega: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.valorPorEntrega}" />
+				</row>
+				<row>
+					<label value="Valor Devolução: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.valorDevolucao}" />
+					<label value="Valor por NF: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.valorNF}" />
+				</row>
+			</rows>
+		</grid>
+
+		<include id="enderecoList" src="/cadastro/rastreadorList.zul" />
+
+		<include id="veiculoServico"
+			src="/cadastro/veiculoServicoList.zul" />
+
+		<include id="veiculoPneu"
+			src="/cadastro/estoque/pneuSaidaList.zul" />
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{veiculoController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

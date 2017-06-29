@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit" apply="${pneuSaidaController}"
+		visible="@{pneuSaidaController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Saída de Pneu">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Pneu" />
+					<combobox
+						selectedItem="@{pneuSaidaController.selected.pneu}"
+						autodrop="true">
+
+						<comboitem
+							forEach="${pneuSaidaController.pneus}" label="${each.modelo}"
+							description="${each.marca}" value="${each}" />
+					</combobox>
+
+					<label value="Veiculo: " />
+					<combobox
+						selectedItem="@{pneuSaidaController.selected.veiculo}"
+						autodrop="true">
+
+						<comboitem
+							forEach="${pneuSaidaController.veiculos}" label="${each.placa}"
+							description="${each.marca}" value="${each}" />
+					</combobox>
+				</row>
+				<row>
+					<label value="Quantidade: " />
+					<intbox constraint="no negative"
+						value="@{pneuSaidaController.selected.quantidade}" />
+					<label value="Data: " />
+					<datebox cols="25" format="dd/MM/yyyy"
+						onCreate="self.value = new Date()" mold="rounded"
+						value="@{pneuSaidaController.selected.dataCriacao}" />
+				</row>
+				<row>
+					<label value="Hodômetro(KM): " />
+					<intbox style="text-transform:uppercase"
+						constraint="" value="@{pneuSaidaController.selected.hodometro}" />
+				</row>
+
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{pneuSaidaController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

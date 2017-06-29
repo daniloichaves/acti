@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${veiculoController}"
+		visible="@{veiculoController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Veículos">
+
+		<grid>
+			<rows>
+				<group label="Dados do veículo" spans="4" />
+				<row>
+					<label value="Perfil: " /><!-- aquisição  -->
+					<hbox>
+						<combobox id="tipoAquisicaoBox"
+							constraint="no empty"
+							selectedItem="@{veiculoController.selected.tipoAquisicao}">
+							<comboitem label="Frota" value="1" />
+							<comboitem label="Agregado" value="2" />
+							<comboitem label="Autônomo" value="3" />
+						</combobox>
+						<!-- 
+							<radiogroup
+							selectedItem="@{veiculoController.selected.tipoAquisicao}">
+							<radio label="Próprio" value="1"
+							selected="true" />
+							<radio label="Terceiro" value="2" />
+							</radiogroup>
+						-->
+					</hbox>
+					<label value="Classificação: " />
+					<combobox id="classificacaoBox" constraint="no empty"
+						selectedItem="@{veiculoController.selected.classificacao}">
+						<comboitem label="Utilitário" value="UTILITARIO" />
+						<comboitem label="Cavalo" value="CAVALO" />
+						<comboitem label="Carreta" value="CARRETA" />
+						<comboitem label="Bi-trem" value="Bi-TREM" />
+					</combobox>
+				</row>
+				<row>
+					<!-- 
+						<label value="Motorista: " />
+						<combobox
+						selectedItem="@{veiculoController.selected.motorista}">
+						<comboitem
+						forEach="${veiculoController.motoristas}" label="${each.nome}"
+						description="${each.sobrenome}" value="${each}" />
+						</combobox>
+					-->
+					<label value="Tipo: " />
+					<combobox id="tipoBox" constraint="no empty"
+						selectedItem="@{veiculoController.selected.tipo}">
+						<comboitem label="Carreta aberta" value="CARRETA ABERTA" />
+						<comboitem label="Carreta baú" value="CARRETA BAU" />
+						<comboitem label="Carreta sider" value="CARRETA SIDER" />
+						<comboitem label="Cavalo trucado" value="CAVALO TRUCADO" />
+						<comboitem label="Toco baú" value="TOCO BAÚ" />
+						<comboitem label="Toco aberto" value="TOCO ABERTO" />
+						<comboitem label="Toco sider" value="TOCO SIDER" />
+						<comboitem label="Truck aberto" value="TRUCK ABERTO" />
+						<comboitem label="Truck baú" value="TRUCK BAU" />
+						<comboitem label="Truck sider" value="TRUCK SIDER" />
+					</combobox>
+					<label value="Placa: " />
+					<textbox id="placaBox"
+						style="text-transform:uppercase" constraint="no empty"
+						value="@{veiculoController.selected.placa}">
+						<attribute name="onClick">
+	Clients.evalJavaScript("setMask('" + placaBox.getUuid() + "', 'aaa-9999')");
+</attribute>
+					</textbox>
+				</row>
+				<row>
+					<label value="Descricao: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.descricao}" />
+					<label value="Ano: " />
+					<intbox id="anoBox"
+						constraint="no empty, no negative, no zero"
+						value="@{veiculoController.selected.ano}" />
+				</row>
+				<row>
+					<label value="Chassi: " />
+					<textbox id="chassiBox"
+						style="text-transform:uppercase" constraint="no empty"
+						value="@{veiculoController.selected.chassi}" />
+					<label value="RENAVAN: " />
+					<textbox id="renavanBox" constraint="no empty"
+						style="text-transform:uppercase"
+						value="@{veiculoController.selected.renavan}" />
+				</row>
+				<row>
+					<label value="Cidade: " />
+					<textbox id="cidadeBox"
+						style="text-transform:uppercase" constraint="no empty"
+						value="@{veiculoController.selected.cidade}" />
+					<label value="UF: " />
+					<textbox id="ufBox" style="text-transform:uppercase"
+						constraint="no empty" value="@{veiculoController.selected.uf}" />
+
+				</row>
+				<row>
+					<label value="Marca: " />
+					<textbox id="marcaBox"
+						style="text-transform:uppercase" constraint="no empty"
+						value="@{veiculoController.selected.marca}" />
+					<label value="Modelo: " />
+					<textbox id="modeloBox"
+						style="text-transform:uppercase" constraint="no empty"
+						value="@{veiculoController.selected.modelo}" />
+				</row>
+				<row>
+					<label value="Proprietário: " />
+					<combobox
+						selectedItem="@{veiculoController.selected.proprietario}"
+						autodrop="true">
+						<comboitem
+							forEach="${veiculoController.proprietarios}"
+							label="${each.nomeProprietario}" description="${each.tipoPessoa}"
+							value="${each}" />
+					</combobox>
+					<label />
+					<checkbox label="Inativo"
+						checked="@{veiculoController.selected.inativo}" />
+					<!-- <label value="Data Aquisição: " />
+					<datebox cols="25" format="dd/MM/yyyy"
+						onCreate="self.value = new Date()" mold="rounded"
+						value="@{veiculoController.selected.dataAquisicao}" /> -->
+				</row>
+				<!-- <row>
+					<label value="Valor Aquisição: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorAquisicao}" />
+					<label value="Valor Venda: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorVenda}" />
+				</row> -->
+				<row>
+					<!-- <label value="Informações: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.informacoes}"
+						rows="3" /> -->
+					
+				</row>
+				<row>
+					<label value="Nº Certificado: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{veiculoController.selected.numeroCertificado}" />
+				<!-- <label value="Medidas: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.medidas}" /> -->
+					
+					<label value="Cor: " />
+					<combobox id="corBox"
+						selectedItem="@{veiculoController.selected.cor}">
+						<comboitem label="PRETA" description=""
+							value="PRETA" />
+						<comboitem label="PRATA" description=""
+							value="PRATA" />
+						<comboitem label="BRANCO" description=""
+							value="BRANCO" />
+						<comboitem label="AZUL" description=""
+							value="AZUL" />
+						<comboitem label="VERMELHO" description=""
+							value="VERMELHO" />
+						<comboitem label="CINZA" description=""
+							value="CINZA" />
+						<comboitem label="AMARELO" description=""
+							value="AMARELO" />
+					</combobox>
+				</row>
+				<row>
+					
+
+					<!-- <label value="Combustível: " />
+					<combobox
+						selectedItem="@{veiculoController.selected.combustivel}">
+						<comboitem label="DIESEL" value="DIESEL" />
+						<comboitem label="ALCOOL" value="ALCOOL" />
+						<comboitem label="GASOLINA" value="GASOLINA" />
+						<comboitem label="FLEX" value="FLEX" />
+						<comboitem label="GÁS" value="GAS" />
+					</combobox> -->
+				</row>
+				<row visible="false">
+					<!-- <label value="Média Cons. Lt: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.mediaConsLt}" /> -->
+					<label value="Km Atual: " />
+					<intbox id="kmAtualBox"
+						style="text-transform:uppercase" constraint=""
+						value="@{veiculoController.selected.kmAtual}">
+						<attribute name="onClick">
+	Clients.evalJavaScript("setMask('" + kmAtualBox.getUuid() + "', '999-999')");
+</attribute>
+					</intbox>
+					<label value="Capacidade: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.capacidade}" />
+				</row>
+
+				<group label="Carreta" spans="4"  visible="false"/>
+				<row id="carretaTipo"  visible="false">
+					<label value="Carreta Tipo: " />
+					<combobox id="carretaTipoBox"
+						selectedItem="@{veiculoController.selected.carretaTipo}">
+						<comboitem label="Baú" description=""
+							value="BAU" />
+						<comboitem label="Bug" description=""
+							value="BUG" />
+						<comboitem label="Graneleiro" description=""
+							value="GRANELEIRO" />
+						<comboitem label="Sider" description=""
+							value="SIDER" />
+					</combobox>
+					<label value="Carreta Placa: " />
+					<textbox id="carretaPlacaBox"
+						style="text-transform:uppercase"
+						value="@{veiculoController.selected.carretaPlaca}" />
+				</row>
+				<row  visible="false">
+					<label value="Carreta RENAVAN: " />
+					<textbox id="carretaRenavanBox"
+						style="text-transform:uppercase"
+						value="@{veiculoController.selected.carretaRenavan}" />
+					<label value="Carreta Chassi: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.carretaChassi}" />
+				</row>
+				<row  visible="false">
+					<label value="Carreta Ano Fabricação: " />
+					<intbox style="text-transform:uppercase"
+						constraint=""
+						value="@{veiculoController.selected.carretaAnoFabricacao}" />
+					<label value="Carreta Marca: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.carretaMarca}" />
+				</row>
+				<row  visible="false">
+					<label value="Carreta Modelo: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.carretaModelo}" />
+					<label />
+					<label />
+				</row>
+
+				<group label="Dados do Seguro" spans="4" />
+				<row>
+					<label value="Seguradora: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.seguradora}" />
+					<label value="Corretora: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.corretora}" />
+				</row>
+				<row>
+					<label value="Apólice: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.apolice}" />
+					<label value="Tipo Seguradora: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{veiculoController.selected.tipoSeguradora}" />
+				</row>
+				<row>
+					<label value="Data Vencimento Seguro: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						onCreate="self.value = new Date()" mold="rounded"
+						value="@{veiculoController.selected.dataVencimentoSeguro}" />
+					<label />
+					<label />
+				</row>
+			</rows>
+		</grid>
+		<!-- <grid>
+			<rows>
+
+				<group label="Dados do Seguro Valores dos Prêmios"
+					spans="4" />
+				<row>
+					<label value="Colisão: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.colisao}" />
+					<label value="Roubo: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.roubo}" />
+				</row>
+				<row>
+					<label value="Explosão: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.explosao}" />
+					<label value="Danos Materiais: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.danosMateriais}" />
+				</row>
+				<row>
+					<label value="Danos Corporais: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.danosCorporais}" />
+					<label value="Terceiros: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.terceiros}" />
+				</row>
+				<row>
+					<label value="Incêndio: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.incendio}" />
+					<label value="Raio: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.raio}" />
+				</row>
+				<row>
+					<label value="Outros: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.outros}" />
+					<label value="Valor Pago: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorPago}" />
+					Inserir como Despesa Valor Pago ?
+				</row>
+			</rows>
+		</grid> -->
+		<!-- <grid>
+			<rows>
+				<group label="Dados para carregamento do veículo"
+					spans="4" />
+				<row>
+					<label value="Lotação Minima: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.lotacaoMinima}" />
+					<label value="Lotação Máxima: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{veiculoController.selected.lotacaoMaxima}" />
+				</row>
+				<row>
+					<label value="Valor Por Viagem: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorPorViagem}" />
+					<label value="Valor Viagem Execido: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorViagemExecido}" />
+				</row>
+				<row>
+					<label value="Valor Km Rodado: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorKmRodado}" />
+					<label value="Valor Km Execido: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorKmExecido}" />
+				</row>
+				<row>
+					<label value="Valor HR: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorHora}" />
+					<label value="Valor HR Execido: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorHoraExecido}" />
+				</row>
+				<row>
+					<label value="Valor Dia: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorDia}" />
+					<label value="Valor Dia Execido: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorDiaExecido}" />
+				</row>
+				<row>
+					<label value="%Pagar Motor: " />
+					<doublebox constraint=""
+						value="@{veiculoController.selected.porcPagarMotor}" />
+					<label value="Valor Por Entrega: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorPorEntrega}" />
+				</row>
+				<row>
+					<label value="Valor Devolução: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorDevolucao}" />
+					<label value="Valor por NF: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{veiculoController.selected.valorNF}" />
+				</row>
+			</rows>
+		</grid> -->
+
+		<include id="rastreadorList"
+			src="/cadastro/veiculoRastreadorList.zul"
+			controller="${veiculoController.veiculoRastreadorController}" />
+			
+		<tabbox>
+			<tabs>
+				<tab id="tabSensores" label="Sensores" closable="false"/>
+				<tab id="tabAtuadores" label="Atuadores" closable="false" />
+				<tab id="tabAdicionais" label="Adicionais Obrigatórios" closable="false"/>
+			</tabs>
+			
+			<tabpanels>
+				<tabpanel id="panelSensores">
+								<grid>
+									<rows>
+										<row spans="4"
+											id="sensoresBox">
+											<columnlayout>
+
+												<columnchildren
+													width="50%">
+													<panel
+														title="Sensores Disponiveis:">
+														<panelchildren>
+															<listbox
+																id="leftSensores" multiple="true" height="300px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{veiculoController.sensores}">
+
+																<listhead>
+																	<listheader
+																		label="Sensores" />
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.sensor}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="100px">
+													<panel>
+														<panelchildren
+															style="margin: 70px 34px;">
+															<image
+																id="addSensores" sclass="pointer"
+																src="/img/png/ButtonArrowRightDouble-32x32.png"
+																tooltiptext="Add Project">
+															</image>
+															<separator
+																height="15px" />
+															<image
+																id="removeSensores" sclass="pointer"
+																src="/img/png/ButtonArrowLeftDouble-32x32.png"
+																tooltiptext="Remove Project">
+															</image>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="50%">
+													<panel
+														title="Sensores em uso:" height="">
+														<panelchildren>
+															<listbox
+																id="rightSensores" multiple="true" height="300px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{veiculoController.selected.sensors}">
+
+																<listhead>
+																	<listheader
+																		label="Sensores" />
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.sensor}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+											</columnlayout>
+										</row>
+									</rows>
+								</grid>
+							</tabpanel>
+
+							<tabpanel id="panelAtuadores">
+								<grid>
+									<rows>
+										<row spans="4"
+											id="atuadoresBox">
+											<columnlayout>
+
+												<columnchildren
+													width="50%">
+													<panel
+														title="Atuadores Disponiveis:">
+														<panelchildren>
+															<listbox
+																id="leftAtuadores" multiple="true" height="300px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{veiculoController.atuadores}">
+
+																<listhead>
+																	<listheader
+																		label="Atuadores" />
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.atuador}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="100px">
+													<panel>
+														<panelchildren
+															style="margin: 70px 34px;">
+															<image
+																id="addAtuadores" sclass="pointer"
+																src="/img/png/ButtonArrowRightDouble-32x32.png"
+																tooltiptext="Add Project">
+															</image>
+															<separator
+																height="15px" />
+															<image
+																id="removeAtuadores" sclass="pointer"
+																src="/img/png/ButtonArrowLeftDouble-32x32.png"
+																tooltiptext="Remove Project">
+															</image>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="50%">
+													<panel
+														title="Atuadores em uso:" height="">
+														<panelchildren>
+															<listbox
+																id="rightAtuadores" multiple="true" height="300px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{veiculoController.selected.atuadors}">
+
+																<listhead>
+																	<listheader
+																		label="Atuadores" />
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.atuador}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+											</columnlayout>
+										</row>
+									</rows>
+								</grid>
+							</tabpanel>
+
+
+							<tabpanel id="panelAdicionais">
+								<grid>
+									<rows>
+										<row spans="4"
+											id="adicionaisBox">
+											<columnlayout>
+
+												<columnchildren
+													width="50%">
+													<panel
+														title="Adicionais Disponiveis:">
+														<panelchildren>
+															<listbox
+																id="leftAdicionais" multiple="true" height="300px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{veiculoController.adicionais}">
+
+																<listhead>
+																	<listheader
+																		label="Adicionais" />
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.adicional}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="100px">
+													<panel>
+														<panelchildren
+															style="margin: 70px 34px;">
+															<image
+																id="addAdicionais" sclass="pointer"
+																src="/img/png/ButtonArrowRightDouble-32x32.png"
+																tooltiptext="Add Project">
+															</image>
+															<separator
+																height="15px" />
+															<image
+																id="removeAdicionais" sclass="pointer"
+																src="/img/png/ButtonArrowLeftDouble-32x32.png"
+																tooltiptext="Remove Project">
+															</image>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="50%">
+													<panel
+														title="Adicionais em uso:" height="">
+														<panelchildren>
+															<listbox
+																id="rightAdicionais" multiple="true" height="300px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{veiculoController.selected.adicionals}">
+
+																<listhead>
+																	<listheader
+																		label="Adicionais" />
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.adicional}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+											</columnlayout>
+										</row>
+									</rows>
+								</grid>
+							</tabpanel>
+			</tabpanels>
+		</tabbox>
+		
+		<!-- 
+		<include id="sensorList"
+			src="/cadastro/veiculoSensorList.zul"
+			controller="${veiculoController.veiculoSensorController}" />
+			
+		<include id="adicionalList"
+			src="/cadastro/veiculoAdicionalList.zul"
+			controller="${veiculoController.veiculoAdicionalController}" />
+		 -->
+		<!-- 
+			<include id="veiculoServico"
+			src="/cadastro/veiculoServicoManutencaoList.zul"
+			controller="${veiculoController.veiculoServicoManutencaoController}" />
+		-->
+
+		<!-- 
+			<include id="veiculoPneu"
+			src="/cadastro/estoque/pneuSaidaList.zul" />
+		-->
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png"
+				onClick="validate()" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{veiculoController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+		<zscript>
+			<![CDATA[
+	void validate() {
+		//validate data
+		placaBox.getValue();
+		tipoBox.getValue();
+		renavanBox.getValue();
+		chassiBox.getValue();
+		anoBox.getValue();
+		marcaBox.getValue();
+		modeloBox.getValue();
+		corBox.getValue();
+		ufBox.getValue();
+		cidadeBox.getValue();
+		carretaTipoBox.getValue();
+		carretaPlacaBox.getValue();
+		carretaRenavanBox.getValue();
+	}
+]]>
+  		</zscript>
+
+	</window>
+</zk>

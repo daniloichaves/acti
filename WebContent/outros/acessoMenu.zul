@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk>
+	<zscript>
+		pageScope.put("showMenu", Boolean.TRUE);
+	</zscript>
+
+	<window id="entityEdit" apply="${acessoMenuController}"
+		ctrlKeys="#up#down" title="Liberação de Menu para Usuários"
+		width="100%" height="100%">
+
+		<grid>
+			<rows>
+				<row>
+					<!--					<label value="Unidade: " />-->
+					<!--					<combobox-->
+					<!--						selectedItem="@{acessoMenuController.unidade}" autodrop="true">-->
+					<!---->
+					<!--						<comboitem-->
+					<!--							forEach="${acessoMenuController.unidades}"-->
+					<!--							label="${each.nomeFantasia}" description="${each.razaoSocial}"-->
+					<!--							value="${each}" />-->
+					<!--					</combobox>-->
+					<label value="Login: " />
+					<combobox id="loginBox"
+						selectedItem="@{acessoMenuController.login}" autodrop="true">
+
+						<comboitem
+							forEach="${acessoMenuController.logins}" label="${each.nome}"
+							description="${each.email}" value="${each}" />
+					</combobox>
+				</row>
+				<row spans="2">
+					<button id="acessoMenuSaveButton" label="Salvar" />
+
+				</row>
+			</rows>
+		</grid>
+
+		<include id="menuInclude" src="/inc/menuTree.zul" width="100%"
+			height="100%" showMenu="true" style="overflow:auto; ">
+			<attribute name="onCreate">
+	Tree tree = (Tree) menuInclude.getFellow("menuTree", true);
+	tree.setMultiple(true);
+	tree.setCheckmark(true);
+</attribute>
+		</include>
+	</window>
+</zk>

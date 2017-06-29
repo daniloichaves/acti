@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<zk>
+	<zscript>
+	<![CDATA[
+	import br.com.jgle.acti.controller.AbstractController;
+	System.out.println("myList: " + requestScope.get("controller"));
+	AbstractController emailController = (AbstractController) requestScope
+			.get("controller");
+]]>
+	</zscript>
+
+	<window id="entityWin" ctrlKeys="#up#down" title="Lista de Email">
+
+		<listbox id="entityList" model="@{emailController.reminders}"
+			selectedItem="@{emailController.selected}" width="100%" height="100%"
+			mold="paging" pageSize="@{emailController.pageSize}">
+
+			<listhead sizable="true">
+				<listheader label="Alterar" width="45px" />
+				<listheader label="tipo" sort="auto" />
+				<listheader label="e-mail" sort="auto" />
+				<listheader label="observação" sort="auto" />
+				<listheader label="Deletar" width="50px" />
+			</listhead>
+			<listitem self="@{each=reminder}">
+				<listcell id="entityUpdateQuick"
+					image="/img/png/page-edit-icon24x24.png" />
+				<listcell label="@{reminder.tipo}" />
+				<listcell label="@{reminder.email}" />
+				<listcell label="@{reminder.observacao}" />
+				<listcell id="entityDeleteQuick"
+					image="/img/png/delete-icon16x16.png" />
+			</listitem>
+		</listbox>
+
+		<div id="entityDetail">
+
+			<!-- view mode -->
+			<div id="entityView"
+				visible="@{emailController.viewMode}">
+
+				<!-- 
+					<grid width="100%">
+					<rows>
+					<row>
+					<hbox>
+					<label value="Tipo:" />
+					<label
+					value="@{emailController.selected.tipo}" />
+					</hbox>
+					<hbox>
+					<label value="Observacao:" />
+					<label
+					value="@{emailController.selected.observacao}" />
+					</hbox>
+					</row>
+					<row>
+					<hbox>
+					<label value="Email:" />
+					<label
+					value="@{emailController.selected.email}" />
+					</hbox>
+					</row>
+					</rows>
+					</grid>
+				-->
+
+			</div>
+
+			<image id="entityCreate"
+				src="/img/png/file-new-icon32x32.png"
+				visible="@{emailController.viewMode}" />
+
+			<include src="/cadastro/email.zul" />
+		</div>
+
+
+
+	</window>
+</zk>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${entradaEstoqueController}"
+		visible="@{entradaEstoqueController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Entradas/ Compras">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Unidade: " />
+					<combobox
+						selectedItem="@{entradaEstoqueController.selected.unidade}"
+						autodrop="true">
+						<comboitem
+							forEach="${entradaEstoqueController.unidades}"
+							label="${each.nomeFantasia}" description="${each.razaoSocial}"
+							value="${each}" />
+					</combobox>
+					<label value="Almoxarifado: " />
+					<combobox
+						selectedItem="@{entradaEstoqueController.selected.almoxarifado}"
+						autodrop="true">
+						<comboitem
+							forEach="${entradaEstoqueController.almoxarifados}"
+							label="${each.nome}" value="${each}" />
+					</combobox>
+				</row>
+				<row>
+					<label value="Data/Hora: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						onCreate="self.value = new Date()" mold="rounded"
+						value="@{entradaEstoqueController.selected.dataCriacao}" />
+					<label value="Data/Hora Prev. Entrega: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						mold="rounded"
+						value="@{entradaEstoqueController.selected.dataEntrega}" />
+				</row>
+				<row>
+					<label value="Nº NF: " />
+					<textbox style="text-transform:uppercase"
+						value="@{entradaEstoqueController.selected.numeroNotaFical}" />
+					<label value="Fornecedor: " />
+					<combobox
+						selectedItem="@{entradaEstoqueController.selected.fornecedor}"
+						autodrop="true">
+						<comboitem
+							forEach="${entradaEstoqueController.fornecedores}"
+							label="${each.razaosocialnome}"
+							description="${each.nomefantasiasobrenome}" value="${each}" />
+					</combobox>
+				</row>
+				<row spans="4">
+					<groupbox mold="default">
+						<caption label="Situação:" />
+						<radiogroup
+							selectedItem="@{entradaEstoqueController.selected.situacao}">
+							<radio label="COMPRA" value="COMPRA" />
+							<radio label="CONSIGNAÇÂO"
+								value="CONSIGNACAO" />
+							<radio label="ACERTO ESTOQUE"
+								value="ACERTOESTOQUE" />
+							<radio label="DEVOLUÇÂO" value="DEVOLUCAO" />
+						</radiogroup>
+					</groupbox>
+				</row>
+				<row>
+					<label value="Observacao: " />
+					<textbox style="text-transform:uppercase"
+						value="@{entradaEstoqueController.selected.observacao}"
+						constraint="" rows="3" />
+					<label value="Solicitante: " />
+					<combobox
+						selectedItem="@{entradaEstoqueController.selected.solicitante}"
+						autodrop="true">
+						<comboitem
+							forEach="${entradaEstoqueController.funcionarios}"
+							label="${each.nome}" description="${each.sobrenome}"
+							value="${each}">
+						</comboitem>
+					</combobox>
+				</row>
+			</rows>
+		</grid>
+
+		<include id="itensEntrada"
+			src="/cadastro/estoque/entradaEstoqueItemList.zul"
+			controller="${entradaEstoqueController.entradaItemEstoqueController}" />
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{entradaEstoqueController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

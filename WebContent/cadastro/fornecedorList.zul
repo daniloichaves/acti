@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<window id="entityWin" ctrlKeys="#up#down"
+	title="Lista de Fornecedores">
+
+	<hbox id="searchHbox" use="br.com.jgle.acti.component.SearchHbox"
+		selected="@{clienteFornecedorController.selected}" />
+
+	<listbox id="entityList" width="100%" height="100%" mold="paging"
+		model="@{clienteFornecedorController.reminders}"
+		selectedItem="@{clienteFornecedorController.selected}" pageSize="@{clienteFornecedorController.pageSize}">
+
+		<listhead sizable="true">
+			<listheader label="Alterar" width="45px" />
+			<listheader label="Tipo Pessoa" sort="auto" />
+			<listheader label="Nome" sort="auto" />
+			<listheader label="Ins. Est. / RG" sort="auto" />
+			<listheader label="CNPJ / CPF" sort="auto" />
+			<listheader label="Tipo" sort="auto" />
+			<listheader label="Observação" />
+			<listheader label="Deletar" width="50px" />
+		</listhead>
+		<listitem self="@{each=reminder}">
+			<listcell id="entityUpdateQuick"
+				image="/img/png/page-edit-icon24x24.png" />
+			<listcell label="@{reminder.tipoRegistro}" />
+			<listcell label="@{reminder.razaosocialnome}" />
+			<listcell label="@{reminder.ierg}" />
+			<listcell label="@{reminder.cnpjcpf}" />
+			<listcell label="@{reminder.tipoPessoa}" />
+			<listcell label="@{reminder.observacao}" />
+			<listcell id="entityDeleteQuick"
+				image="/img/png/delete-icon16x16.png" />
+		</listitem>
+	</listbox>
+
+	<div id="entityDetail">
+
+		<!-- view mode -->
+		<div id="entityView"
+			visible="@{clienteFornecedorController.viewMode}">
+
+			<!-- 
+			<grid width="100%">
+				<rows>
+					<row>
+						Tipo Registro:
+						<label
+							value="@{clienteFornecedorController.selected.tipoRegistro}" />
+						Tipo Pessoa:
+						<label
+							value="@{clienteFornecedorController.selected.tipoPessoa}" />
+					</row>
+					<row>
+						CNPJ / CPF:
+						<label
+							value="@{clienteFornecedorController.selected.cnpjcpf}" />
+						Data Cadastro:
+						<label
+							value="@{clienteFornecedorController.selected.dataCadastro,converter='org.zkoss.zkplus.databind.DateFormatConverter'}"
+							self="@{format(dd/MM/yyyy)}" />
+					</row>
+					<row>
+						Razão Social/ Nome:
+						<label
+							value="@{clienteFornecedorController.selected.razaosocialnome}" />
+						Nome Fantasia/ Sobrenome:
+						<label
+							value="@{clienteFornecedorController.selected.nomefantasiasobrenome}" />
+					</row>
+				</rows>
+			</grid>
+			 -->
+		</div>
+
+		<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+			visible="@{clienteFornecedorController.viewMode}" />
+
+		<include src="/cadastro/cliente.zul" />
+	</div>
+
+</window>

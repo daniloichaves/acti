@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${almoxarifadoController}"
+		visible="@{almoxarifadoController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Entradas/ Compras">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Data/Hora: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						onCreate="self.setValue(new Date())" mold="rounded"
+						disabled="true" />
+					<label value="Código: " />
+					<textbox style="text-transform:uppercase"
+						value="@{almoxarifadoController.selected.codigo}" />
+				</row>
+				<row>
+					<label value="almoxarifado: " />
+					<textbox style="text-transform:uppercase"
+						value="@{almoxarifadoController.selected.nome}" />
+					<label value="Unidade: " />
+					<combobox
+						selectedItem="@{almoxarifadoController.selected.unidade}"
+						autodrop="true">
+						<comboitem
+							forEach="${almoxarifadoController.unidades}"
+							label="${each.nomeFantasia}" value="${each}" />
+					</combobox>
+				</row>
+				<row>
+					<label value="Observação: " />
+					<textbox style="text-transform:uppercase"
+						value="@{almoxarifadoController.selected.observacao}" rows="6" />
+				</row>
+			</rows>
+		</grid>
+		<grid>
+			<rows>
+				<group label="Endereço" spans="4" />
+				<row>
+					<label value="Endereço: " />
+					<textbox id="remetenteEnderecoBox"
+						style="text-transform:uppercase" rows="2"
+						constraint="no empty: Por favor, digite um endereço"
+						value="@{almoxarifadoController.selected.endereco.endereco}"
+						width="95%" />
+					<hbox>
+						<label value="Número.: " />
+						<textbox id="numeroBox" style="text-transform:uppercase"
+							maxlength="8" constraint="no empty: Por favor, digite um número"
+							value="@{almoxarifadoController.selected.endereco.numero}" />
+					</hbox>
+					<hbox>
+						<label value="CEP.: " />
+						<textbox id="cepBox" style="text-transform:uppercase"
+							maxlength="8" constraint="no empty: Por favor, digite um cep"
+							value="@{almoxarifadoController.selected.endereco.cep}" />
+					</hbox>
+				</row>
+				<row>
+					<label value="Bairro.: " />
+					<textbox id="remetenteBairroBox"
+						style="text-transform:uppercase" constraint=""
+						value="@{almoxarifadoController.selected.endereco.bairro}" />
+					<!--					<label value="Guia.: " />-->
+					<!--					<textbox style="text-transform:uppercase"-->
+					<!--						constraint=""-->
+					<!--						value="@{almoxarifadoController.selected.endereco.guia}" />-->
+					<label value="Cidade.: " />
+					<textbox id="remetenteCidadeBox"
+						style="text-transform:uppercase" constraint=""
+						value="@{almoxarifadoController.selected.endereco.cidade}" />
+				</row>
+				<row>
+
+					<label value="UF.: " />
+					<combobox id="remetenteUFBox"
+						use="br.com.jgle.acti.component.UFCombobox"
+						selectedItem="@{almoxarifadoController.selected.endereco.uf}"
+						value="@{almoxarifadoController.selected.endereco.uf}"
+						autodrop="true">
+					</combobox>
+					<label value="Ponto Referênca: " />
+					<textbox style="text-transform:uppercase" rows="2"
+						value="@{almoxarifadoController.selected.endereco.pontoReferencia}" />
+				</row>
+				<!--				<row>-->
+				<!--					<label value="Data/Hora Limite: " />-->
+				<!--					<datebox cols="25" format="dd/MM/yyyy a HH:mm"-->
+				<!--						onCreate="self.value = new Date()" mold="rounded"-->
+				<!--						value="@{almoxarifadoController.selected.endereco.dataHoraColeta}" />-->
+				<!--				</row>-->
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" onClick="validate()"/>
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete" visible="@{cpofController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+		<zscript>
+			<![CDATA[
+	  			void validate() {
+	   		 		//validate data
+					remetenteEnderecoBox.getValue();
+	   		 		numeroBox.getValue();
+	   		 		cepBox.getValue();
+	  			}
+	  		]]>
+	  	</zscript>
+	</window>
+</zk>

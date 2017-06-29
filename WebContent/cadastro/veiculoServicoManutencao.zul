@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit"
+		apply="${veiculoServicoManutencaoController}"
+		visible="@{veiculoServicoManutencaoController.editMode}"
+		ctrlKeys="#up#down" title="Cadastro de Serviços Manutenção">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Nome Serviço: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{veiculoServicoManutencaoController.selected.nomeServico}" />
+				</row>
+				<row>
+					<label value="Data execução: " />
+					<datebox cols="25" format="dd/MM/yyyy"
+						onCreate="self.setValue(new Date())" mold="rounded"
+						value="@{veiculoServicoManutencaoController.selected.dataExecucao}" />
+				</row>
+				<row>
+					<label value="Data validade/ expiração: " />
+					<datebox cols="25" format="dd/MM/yyyy"
+						mold="rounded"
+						value="@{veiculoServicoManutencaoController.selected.dataValidade}" />
+				</row>
+				<row>
+					<label value="Valor: " />
+					<textbox constraint=""
+						value="@{veiculoServicoManutencaoController.selected.valor}" />
+				</row>
+				<row>
+					<label value="Descrição: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{veiculoServicoManutencaoController.selected.descricao}" />
+				</row>
+				<row>
+					<label value="Modelo: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{veiculoServicoManutencaoController.selected.modelo}" />
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{veiculoServicoManutencaoController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

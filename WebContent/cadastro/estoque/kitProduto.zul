@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${kitProdutoController}"
+		visible="@{kitProdutoController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Kit Produto">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Unidade: " />
+					<combobox
+						selectedItem="@{kitProdutoController.selected.unidade}"
+						autodrop="true">
+
+						<comboitem
+							forEach="${kitProdutoController.unidades}"
+							label="${each.razaoSocial}" value="${each}" />
+					</combobox>
+
+					<label value="Almoxarifado: " />
+					<combobox
+						selectedItem="@{kitProdutoController.selected.almoxarifado}"
+						autodrop="true">
+
+						<comboitem
+							forEach="${kitProdutoController.almoxarifados}"
+							label="${each.nome}" value="${each}" />
+					</combobox>
+				</row>
+				<row>
+					<label value="Data/Hora: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						onCreate="self.setValue(new Date())" mold="rounded" disabled="true" />
+					<label value="Codigo: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{kitProdutoController.selected.codigo}" />
+				</row>
+				<row>
+					<label value="Descrição: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{kitProdutoController.selected.descricao}" />
+					<label value="Referência: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{kitProdutoController.selected.referencia}" />
+				</row>
+				<row spans="4">
+					<columnlayout>
+						<columnchildren width="50%">
+							<panel title="Produtos Disponiveis:">
+								<panelchildren>
+									<listbox id="left" multiple="true"
+										height="300px" oddRowSclass="non-odd" fixedLayout="true"
+										checkmark="true" model="@{kitProdutoController.produtos}">
+
+										<listhead>
+											<listheader label="Código" />
+											<listheader
+												label="Descrição" />
+										</listhead>
+
+										<listitem
+											self="@{each=reminder}">
+											<listcell
+												src="/img/png/product-icon16x16.png"
+												label="@{reminder.codigo}" />
+											<listcell
+												src="/img/png/product-icon16x16.png"
+												label="@{reminder.descricao}" />
+										</listitem>
+									</listbox>
+								</panelchildren>
+							</panel>
+						</columnchildren>
+						<columnchildren width="100px">
+							<panel>
+								<panelchildren
+									style="margin: 70px 34px;">
+									<image id="addProject"
+										sclass="pointer"
+										src="/img/png/ButtonArrowRightDouble-32x32.png"
+										tooltiptext="Add Project">
+									</image>
+									<separator height="15px" />
+									<image id="removeProject"
+										sclass="pointer"
+										src="/img/png/ButtonArrowLeftDouble-32x32.png"
+										tooltiptext="Remove Project">
+									</image>
+								</panelchildren>
+							</panel>
+						</columnchildren>
+						<columnchildren width="50%">
+							<panel title="Kit Produto:" height="">
+								<panelchildren>
+									<listbox id="right" multiple="true"
+										height="300px" oddRowSclass="non-odd" fixedLayout="true"
+										checkmark="true"
+										model="@{kitProdutoController.selected.produtos}">
+										<listhead>
+											<listheader label="Código" />
+											<listheader
+												label="Descrição" />
+										</listhead>
+
+										<listitem
+											self="@{each=reminder}">
+											<listcell
+												src="/img/png/product-icon16x16.png"
+												label="@{reminder.codigo}" />
+											<listcell
+												src="/img/png/product-icon16x16.png"
+												label="@{reminder.descricao}" />
+										</listitem>
+									</listbox>
+								</panelchildren>
+							</panel>
+						</columnchildren>
+					</columnlayout>
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{kitProdutoController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+	</window>
+	<zscript>
+	</zscript>
+</zk>

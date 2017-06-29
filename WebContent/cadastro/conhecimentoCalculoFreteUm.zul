@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+
+	<style src="/css/acti.css" />
+
+	<zscript>
+	<![CDATA[
+	import br.com.jgle.acti.controller.AbstractController;
+	System.out.println("myList: " + requestScope.get("controller"));
+	AbstractController conhecimentoCalculoFreteUmController = (AbstractController) requestScope.get("controller");
+]]>
+	</zscript>
+
+	<window id="entityWin" apply="${notaFiscalController}"
+		ctrlKeys="#up#down" title="Lista de Nota Fiscal">
+
+
+		<div id="entityDetail">
+
+			<window id="entityEdit"
+				visible="@{notaFiscalController.editMode}" ctrlKeys="#up#down"
+				title="Cadastro de Nota Fiscal">
+
+				<grid id="boxFrete1">
+					<rows>
+						<group label="Calc Frete 1" spans="6" />
+						<row>
+							<label value="Frete Peso: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.fretePeso}" />
+							<label value="Frete Valor: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.freteValor}" />
+							<label value="SEC/ CAT: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.secCat}" />
+						</row>
+						<row>
+							<label value="Despacho: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.despacho}" />
+							<label value="Pedágio: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.pedagio}" />
+							<label value="Adame: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.adame}" />
+						</row>
+						<row>
+							<label value="Ad-Valorem: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.adValorem}" />
+							<label value="ITR: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.irt}" />
+							<label value="Seguro: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.seguro}" />
+						</row>
+						<row>
+							<label value="Suframa: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.suframa}" />
+							<label value="Gris: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.gris}" />
+							<label value="TDE: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.tde}" />
+						</row>
+						<row>
+							<label value="TAXA 1: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.taxa1}" />
+							<label value="TAXA 2: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.taxa2}" />
+							<label value="ICMS: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.icms}" />
+						</row>
+						<row>
+							<label value="Outros: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.outros}" />
+							<label value="Desconto: " />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.desconto}" />
+							<label value="Total do C.T.R.C" />
+							<doublebox constraint=""
+								value="@{conhecimentoController.conhecimentoCalculoFreteUm.totalCTRC}" />
+						</row>
+					</rows>
+				</grid>
+
+				<div align="center">
+					<image id="entitySave"
+						src="/img/png/invoice-icon32x32.png" />
+					<image id="entityCancel"
+						src="/img/png/Cancel-2-icon32x32.png" />
+					<image id="entityDelete"
+						visible="@{notaFiscalController.create"
+						src="/img/png/delete-icon32x32.png" />
+				</div>
+
+			</window>
+
+		</div>
+
+	</window>
+
+	<zscript>
+	</zscript>
+</zk>

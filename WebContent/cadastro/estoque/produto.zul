@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${produtoController}"
+		visible="@{produtoController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Produtos">
+
+		<grid>
+			<rows>
+				<row>
+					<!--<label value="Unidade: " />
+						<combobox>
+						<comboitem label="MATRIX"></comboitem>
+						<comboitem label="FILIAL"></comboitem>
+						</combobox>
+					-->
+					<label value="Almoxarifado: " />
+					<combobox
+						selectedItem="@{produtoController.selected.almoxarifado}"
+						autodrop="true">
+						<comboitem
+							forEach="${produtoController.almoxarifados}" label="${each.nome}"
+							value="${each}" />
+					</combobox>
+					<label />
+					<label />
+				</row>
+				<row>
+					<label value="Data/Hora: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						onCreate="self.value = new Date()" mold="rounded" disabled="true" />
+					<label value="Codigo: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{produtoController.selected.codigo}" />
+				</row>
+				<row>
+					<label value="Descrição: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{produtoController.selected.descricao}" />
+					<label value="Referência: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{produtoController.selected.referencia}" />
+				</row>
+				<row>
+					<label value="Codigo Barra: " />
+					<textbox constraint=""
+						value="@{produtoController.selected.codigoBarra}" />
+					<label value="Unidade Medida: " />
+					<combobox
+						selectedItem="@{produtoController.selected.unidadeMedida}">
+						<comboitem label="PC" value="PC" />
+						<comboitem label="KG" value="KG" />
+						<comboitem label="L" value="L" />
+						<comboitem label="PC" value="PC" />
+						<comboitem label="CM" value="CM" />
+						<comboitem label="M" value="M" />
+					</combobox>
+				</row>
+				<row>
+					<label value="Grupo: " />
+					<combobox
+						selectedItem="@{produtoController.selected.grupo}"
+						autodrop="true">
+						<comboitem forEach="${produtoController.grupos}"
+							label="${each.nome}" value="${each}" />
+					</combobox>
+
+					<label value="Tipo: " />
+					<hbox>
+						<checkbox label="Consumível" />
+						<checkbox label="Não Consumível" />
+					</hbox>
+				</row>
+				<row>
+					<label value="Modelo: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{produtoController.selected.modelo}" />
+					<label value="Marca: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{produtoController.selected.marca}" />
+				</row>
+				<row>
+					<label value="Valor: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						width="130px" value="@{produtoController.selected.valor}" />
+					<checkbox label="Ativo" checked="true"
+						value="@{produtoController.selected.ativo}" />
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{produtoController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<zk>
+	<window id="entityWin" apply="${logAcessoController}"
+		ctrlKeys="#up#down"
+		title="Log de todos os acessos e atividades do usuários">
+
+		<hbox use="br.com.jgle.acti.component.SearchHbox" />
+
+		<listbox id="entityList" width="100%" height="100%"
+			mold="paging" model="@{logAcessoController.reminders}"
+			selectedItem="@{logAcessoController.selected}" pageSize="@{logAcessoController.pageSize}">
+
+			<listhead sizable="true">
+				<listheader label="Nome do Usuário" sort="auto" />
+				<listheader label="Data" sort="auto" />
+				<listheader label="IP" sort="auto" />
+				<listheader label="Página" sort="auto" />
+				<listheader label="Identificador" sort="auto" />
+				<listheader label="Tipo Ação" sort="auto" />
+				<listheader label="Unidade" sort="auto" />
+			</listhead>
+			<listitem>
+				<listcell label="Danilo I Chaves" />
+				<listcell label="10/08/2010" />
+				<listcell label="10.1.1.1" />
+				<listcell label="Motorista" />
+				<listcell label="789.465.847-07" />
+				<listcell label="Inclusão" />
+				<listcell label="Matriz" />
+			</listitem>
+			<listitem>
+				<listcell label="Ricardo Leão" />
+				<listcell label="10/05/2010" />
+				<listcell label="10.1.1.35" />
+				<listcell label="Clientes" />
+				<listcell label="123.456.987-97" />
+				<listcell label="Remoçao" />
+				<listcell label="Matriz" />
+			</listitem>
+			<listitem self="@{each=reminder}">
+				<listcell label="@{reminder.nome}" />
+				<listcell label="@{reminder.dataHora}" />
+				<listcell label="@{reminder.ip}" />
+				<listcell label="@{reminder.pagina}" />
+				<listcell label="" />
+				<listcell label="@{reminder.acao}" />
+				<listcell label="" />
+			</listitem>
+		</listbox>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

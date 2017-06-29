@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit" apply="${proprietarioController}"
+		visible="@{proprietarioController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Proprietário">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Tipo de Pessoa: " />
+					<combobox id="tipoPessoaBox"
+						constraint="no empty: Por favor, escolha um Tipo"
+						value="@{proprietarioController.selected.tipoPessoa}">
+						<comboitem label="JURÍDICA" value="JURIDICA" />
+						<comboitem label="FÍSICA" value="FISICA" />
+						<attribute name="onChange">
+							String tipoPessoa = (String) tipoPessoaBox.getSelectedItem().getValue();
+							if (tipoPessoa.equals("FISICA")) {
+								Clients.evalJavaScript("setMask('" + cnpjCPFBox.getUuid() + "', 'cpf')");
+							} else {
+								Clients.evalJavaScript("setMask('" + cnpjCPFBox.getUuid() + "', 'cnpj')");
+							}
+						</attribute>
+					</combobox>
+					<label value="Nome do Proprietário: " />
+					<textbox id="nomePropBox" style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite um nome do proprietário"
+						value="@{proprietarioController.selected.nomeProprietario}" />
+				</row>
+				<row>
+					<label value="CNPJ / CPF: " />
+					<textbox id="cnpjCPFBox" style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite um CNPJ ou CPF"
+						value="@{proprietarioController.selected.cnpjcpf}" >
+						<attribute name="onClick">
+							Clients.evalJavaScript("setMask('" + cnpjCPFBox.getUuid() + "', 'cpf')");
+						</attribute>
+					</textbox>
+			
+					<label value="Incrição Estatual / RG: " />
+					<textbox id="inscEstRgBox" style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite um I.E ou RG"
+						value="@{proprietarioController.selected.ierg}" />
+				</row>
+				<row>
+					<label value="UF RG: " />
+					<combobox id="ufrgBox"
+						constraint="no empty: Por favor, digite um UF RG"
+						use="br.com.jgle.acti.component.UFCombobox"
+						selectedItem="@{proprietarioController.selected.ufrg}" autodrop="true"
+						value="SP"/>	
+					<label value="Data de Nascimento: " />
+					<datebox id="dtnascBox" constraint="no empty" width="150px"
+						value="@{proprietarioController.selected.dataNascimento}" />
+				</row>
+				<row>
+					<label value="Nome da Mãe: " />
+					<textbox id="nomeMaeBox" style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite um nome para a mãe do proprietário"
+						value="@{proprietarioController.selected.nomeMae}" />
+					<label value="Nome do Pai: " />
+					<textbox style="text-transform:uppercase"
+						value="@{proprietarioController.selected.nomePai}" />
+				</row>
+				<row>
+					<label value="Observação: " />
+						<textbox style="text-transform:uppercase" rows="3"
+							value="@{proprietarioController.selected.observacao}" />
+					<label />
+					<label />
+				</row>
+			</rows>
+		</grid>
+
+		<include id="enderecoList" src="/cadastro/enderecoList.zul"
+			controller="${proprietarioController.enderecoController}" />
+
+		<include id="telefoneList" src="/cadastro/telefoneList.zul"
+			controller="${proprietarioController.telefoneController}" />
+
+		<include id="emailList" src="/cadastro/emailList.zul"
+			controller="${proprietarioController.emailController}" />
+
+		<include id="contaBancoList" src="/cadastro/contaBancoList.zul"
+			controller="${proprietarioController.contaBancoController}" />
+
+<!--		<include id="ultimasServicoList"-->
+		<!--			src="/cadastro/ultimosServicoList.zul"-->
+		<!--			controller="${proprietarioController.contaBancoController}" />-->
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" onClick="validate()"/>
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{proprietarioController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+		<zscript>
+			<![CDATA[
+  			void validate() {
+   		 		//validate data
+   		 		tipoPessoaBox.getValue();
+   		 		nomePropBox.getValue();
+   		 		inscEstRgBox.getValue();
+   		 		ufrgBox.getValue();
+   		 		dtnascBox.getValue();
+   		 		nomeMaeBox.getValue();
+   		 		cnpjCPFBox.getValue();
+  			}
+  			]]>
+  		</zscript>
+	</window>
+</zk>

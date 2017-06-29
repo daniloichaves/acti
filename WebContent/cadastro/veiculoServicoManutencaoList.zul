@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<window id="entityWin" apply="${veiculoServicoManutencaoController}"
+	title="Histórico de Serviços Manutenção">
+
+	<listbox id="entityList" width="100%" height="100%" mold="paging"
+		model="@{veiculoServicoManutencaoController.reminders}"
+		selectedItem="@{veiculoServicoManutencaoController.selected}"
+		pageSize="@{veiculoServicoManutencaoController.pageSize}">
+		<listhead sizable="true">
+			<listheader label="Alterar" width="45px" />
+			<listheader label="Nome Serviço" sort="auto" />
+			<listheader label="Data Execução" sort="auto" />
+			<listheader label="Data Validade" sort="auto" />
+			<listheader label="Descrição" sort="auto" />
+			<listheader label="Valor" sort="auto" />
+			<listheader label="Deletar" width="50px" />
+		</listhead>
+		<listitem self="@{each=reminder}">
+			<listcell id="entityUpdateQuick"
+				image="/img/png/page-edit-icon24x24.png" />
+			<listcell label="@{reminder.nomeServico}" />
+			<listcell label="@{reminder.dataExecucao}" />
+			<listcell label="@{reminder.dataValidade}" />
+			<listcell label="@{reminder.descricao}" />
+			<listcell label="@{reminder.valor}" />
+			<listcell id="entityDeleteQuick"
+				image="/img/png/delete-icon16x16.png" />
+		</listitem>
+	</listbox>
+
+	<div id="entityDetail">
+
+		<!-- view mode -->
+		<div id="entityView"
+			visible="@{veiculoServicoManutencaoController.viewMode}">
+
+			<!-- 
+				<grid width="100%">
+				<rows>
+				<row>
+				Pneu marca:
+				<label
+				value="@{veiculoServicoManutencaoController.selected.pneu.marca}" />
+				Pneu modelo
+				<label
+				value="@{veiculoServicoManutencaoController.selected.pneu.modelo}" />
+				</row>
+				<row>
+				Veiculo Dono:
+				<label
+				value="@{veiculoServicoManutencaoController.selected.veiculo.veiculo.proprietario.nomeProprietario}" />
+				Veiculo Placa:
+				<label
+				value="@{veiculoServicoManutencaoController.selected.veiculo.placa}" />
+				</row>
+				<row>
+				Quantidade:
+				<label
+				value="@{veiculoServicoManutencaoController.selected.quantidade}" />
+				Data:
+				<label
+				value="@{veiculoServicoManutencaoController.selected.dataCriacao,converter='org.zkoss.zkplus.databind.DateFormatConverter'}"
+				self="@{format(dd/MM/yyyy)}" />
+				</row>
+				</rows>
+				</grid>
+			-->
+
+		</div>
+
+		<include src="/cadastro/veiculoServicoManutencao.zul" />
+	</div>
+
+	<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+		visible="@{veiculoServicoManutencaoController.viewMode}" />
+</window>

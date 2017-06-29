@@ -1,0 +1,156 @@
+<window>
+	<style>
+		tr.myodd td.z-row-inner, tr.myodd { background-color: #E4EBF8; }
+		.myimg { margin: 5px; border: 10px solid #B0C75E; }
+		div.z-column-content { text-align: center; font-weight: bold; }
+		div.z-row-content span { font-family: Tahoma,Arial,serif; color:
+		#0E3A99; }
+	</style>
+	<zscript>
+	String[][] datas = new String[][] {
+			// Today 
+			new String[] { "SourceForge.net",
+					"[zk1 - Help] RE: ZK problem in dynamic menu",
+					"2008/4/29 15:47:27", "12KB" },
+			new String[] { "SourceForge.net", "[zk1 - Help] RE: FileUpload",
+					"2008/4/29 15:37:57", "14KB" },
+			new String[] { "SourceForge.net",
+					"[zk1 - Help] RE: Datebox format", "2008/4/29 15:27:31",
+					"11KB" },
+			new String[] { "SourceForge.net", "[zk1 - Help] FileUpload",
+					"2008/4/29 14:07:25", "11KB" },
+			new String[] {
+					"SourceForge.net",
+					"[zk1 - General] RE: Opening more than one new	browser window",
+					"2008/4/29 13:44:17", "12KB" },
+			// Yesterday 
+			new String[] { "SourceForge.net",
+					"[zk1 - Help] RE: SelectedItemConverter Question",
+					"2008/4/28 13:31:12", "14KB" },
+			new String[] { "SourceForge.net",
+					"[zk1 - Help] RE: Times_Series Chart help",
+					"2008/4/28 13:26:37", "14KB" },
+			new String[] { "SourceForge.net",
+					"[zk1 - Help] RE: SelectedItemConverter Question",
+					"2008/4/28 10:14:27", "14KB" },
+			// Sunday 
+			new String[] {
+					"SourceForge.net",
+					"[zk1 - General] RE: Opening more than one new	browser window",
+					"2008/4/27 13:44:17", "12KB" },
+			new String[] { "SourceForge.net",
+					"[zk1 - Help] RE: SelectedItemConverter Question",
+					"2008/4/27 13:31:12", "14KB" },
+			new String[] { "SourceForge.net",
+					"[zk1 - Help] RE: Times_Series Chart help",
+					"2008/4/27 13:26:37", "14KB" }, };
+</zscript>
+
+	<menubar id="menubar" autodrop="true">
+		<menu label="File">
+			<menupopup>
+				<menuitem label="New" onClick="alert(self.label)" />
+				<menuitem label="Open" onClick="alert(self.label)" />
+				<menuitem label="Save" onClick="alert(self.label)" />
+				<menuseparator />
+				<menuitem label="Exit" onClick="alert(self.label)" />
+			</menupopup>
+		</menu>
+		<menu label="Option">
+			<menupopup>
+				<menuitem label="Simple" autocheck="true" />
+				<menuitem label="Rich" autocheck="true" />
+			</menupopup>
+		</menu>
+		<menu label="Help">
+			<menupopup>
+				<menuitem label="Index" onClick="alert(self.label)" />
+				<menu label="About">
+					<menupopup>
+						<menuitem label="About ZK"
+							onClick="alert(self.label)" />
+						<menuitem label="About Potix"
+							onClick="alert(self.label)" />
+					</menupopup>
+				</menu>
+			</menupopup>
+		</menu>
+	</menubar>
+	<tabbox>
+		<tabs>
+			<tab label="Tab 1" />
+			<tab label="Tab 2" closable="true" />
+		</tabs>
+		<tabpanels>
+			<tabpanel>
+
+				<listbox fixedLayout="true" oddRowSclass="">
+					<listhead sizable="true">
+						<listheader width="150px" label="From"
+							sort="auto" />
+						<listheader label="Subject" sort="auto" />
+						<listheader width="150px" label="Received"
+							sort="auto" />
+						<listheader width="50px" label="Size"
+							sort="auto" />
+					</listhead>
+					<listgroup>
+						<listcell label="Date:Today " />
+						<listcell label="" />
+						<listcell label="" />
+						<listcell label="" />
+					</listgroup>
+					<listitem forEach="${datas}" forEachBegin="0"
+						forEachEnd="4" sclass="cells">
+						<listcell label="${each[0]}"
+							image="/img/mail_read.png" style="padding-left: 10px" />
+						<listcell label="${each[1]}" />
+						<listcell label="${each[2]}" />
+						<listcell label="${each[3]}" />
+					</listitem>
+					<listgroupfoot>
+						<listcell label="5 emails"
+							style="padding-left: 10px" />
+						<listcell label="zk1" />
+						<listcell label="2008/4/29" />
+						<listcell label="60KB" />
+					</listgroupfoot>
+					<listgroup label="Date:Yesterday" />
+					<listitem forEach="${datas}" forEachBegin="5"
+						forEachEnd="7" sclass="cells">
+						<listcell label="${each[0]}"
+							image="/img/mail_read.png" style="padding-left: 10px" />
+						<listcell label="${each[1]}" />
+						<listcell label="${each[2]}" />
+						<listcell label="${each[3]}" />
+					</listitem>
+					<listgroupfoot>
+						<listcell label="3 emails"
+							style="padding-left: 10px" />
+						<listcell label="zk1" />
+						<listcell label="2008/4/28" />
+						<listcell label="42KB" />
+					</listgroupfoot>
+					<listgroup label="Date:Sunday" />
+					<listitem forEach="${datas}" forEachBegin="8"
+						forEachEnd="10" sclass="cells">
+						<listcell label="${each[0]}"
+							image="/img/mail_read.png" style="padding-left: 10px" />
+						<listcell label="${each[1]}" />
+						<listcell label="${each[2]}" />
+						<listcell label="${each[3]}" />
+					</listitem>
+					<listgroupfoot>
+						<listcell label="3 emails"
+							style="padding-left: 10px" />
+						<listcell label="zk1" />
+						<listcell label="2008/4/27" />
+						<listcell label="40KB" />
+					</listgroupfoot>
+				</listbox>
+
+			</tabpanel>
+			<tabpanel>This is panel 2 The second panel</tabpanel>
+		</tabpanels>
+	</tabbox>
+</window>

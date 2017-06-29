@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+	<window id="loginWindow" border="normal" height="100%"
+		width="100%">
+
+		<borderlayout>
+			<north height="15%" splittable="true" collapsible="true">
+				<include id="header" context="" src="/inc/header.zul" />
+			</north>
+
+			<center style="padding: 35px 0 0 200px;">
+				<include src="/cadastro/loginList.zul"></include>
+			</center>
+
+			<south size="3%">
+				<label
+					value="JGle Solutions Technology © 2010 - Todos os direitos reservados - melhor visualizado em 1024x768 pixels ou superior." />
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

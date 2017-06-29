@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+
+<window title="Lista de Entradas/ Compras">
+		
+		<listbox id="list" width="100%" height="100%" mold="paging">
+			<listhead sizable="true">
+				<listheader label="Alterar" width="45px"/>
+				<listheader label="Almoxarifado" sort="auto"/>
+				<listheader label="Data" sort="auto"/>
+				<listheader label="Destino de uso" sort="auto"/>
+				<listheader label="Solicitante" sort="auto"/>
+				<listheader label="Veiculo" sort="auto"/>
+				<listheader label="Placa"/>
+				<listheader label="Deletar" width="50px"/>
+			</listhead>
+			<listitem>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="MATRIX"/>
+				<listcell label="10/11/2010 12:10"/>
+				<listcell label="LIMPEZA"/>
+				<listcell label="THIAGO Silva"/>
+				<listcell label="CAMINHONETE"/>
+				<listcell label="QWE-6598"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+		</listbox>
+		
+		<image src="/img/png/file-new-icon32x32.png">
+		</image>		
+		
+		
+		<include id="cad" visible="false" src="/cadastro/estoque/saidas.zul"/>
+	</window>

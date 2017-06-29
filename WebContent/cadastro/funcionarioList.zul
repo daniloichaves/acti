@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<window id="entityWin" ctrlKeys="#up#down"
+	title="Lista de Funionário">
+
+	<hbox id="searchHbox" use="br.com.jgle.acti.component.SearchHbox"
+		selected="@{funcionarioController.selected}" />
+
+	<listbox id="entityList" width="100%" height="100%" mold="paging"
+		model="@{funcionarioController.reminders}"
+		selectedItem="@{funcionarioController.selected}" pageSize="@{funcionarioController.pageSize}">
+
+		<listhead sizable="true">
+			<listheader label="Alterar" width="45px" />
+			<listheader label="Cargo" sort="auto" />
+			<listheader label="Nome" sort="auto" />
+			<listheader label="RG" sort="auto" />
+			<listheader label="CPF" sort="auto" />
+			<listheader label="Tipo" sort="auto" />
+			<listheader label="Deletar" width="50px" />
+		</listhead>
+		<listitem self="@{each=reminder}">
+			<listcell id="entityUpdateQuick"
+				image="/img/png/page-edit-icon24x24.png" />
+			<listcell label="@{reminder.cargo}" />
+			<listcell label="@{reminder.nome}" />
+			<listcell label="@{reminder.rg}" />
+			<listcell label="@{reminder.cpf}" />
+			<listcell label="@{reminder.tipo}" />
+			<listcell id="entityDeleteQuick"
+				image="/img/png/delete-icon16x16.png" />
+		</listitem>
+	</listbox>
+
+	<div id="entityDetail">
+
+		<!-- view mode -->
+		<div id="entityView"
+			visible="@{funcionarioController.viewMode}">
+
+			<grid width="100%">
+				<rows>
+					<row>
+						Nome:
+						<label
+							value="@{funcionarioController.selected.nome}" />
+						Sobrenome:
+						<label
+							value="@{funcionarioController.selected.sobrenome}" />
+					</row>
+					<row>
+						Cargo:
+						<label
+							value="@{funcionarioController.selected.cargo}" />
+						Login:
+						<label
+							value="@{funcionarioController.selected.login.login}" />
+					</row>
+				</rows>
+			</grid>
+
+		</div>
+
+		<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+			visible="@{funcionarioController.viewMode}" />
+
+		<include src="/cadastro/funcionario.zul" />
+	</div>
+
+
+</window>

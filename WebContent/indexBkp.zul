@@ -1,0 +1,53 @@
+<?page title="Aplicação de Controle de Transporte Integrado" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="normal" height="100%" width="100%">
+
+		<borderlayout>
+			<north height="90px" splittable="true" collapsible="true">
+				<include id="header" context="" src="/inc/header.zul"/>
+			</north>
+
+			<center>
+				<borderlayout>
+					<west id="menulateral" size="20%" flex="true" splittable="true" collapsible="true">
+						<borderlayout>
+							<north size="80%" autoscroll="true">
+								<include id="menu" context="" src="/inc/menu.zul"/>
+							</north>
+
+							<center>
+								<groupbox mold="3d"  width="100%" height="100%">
+									<caption label="Login: dandro		/	Nome: Danilo"/>
+									<label value="JGle / Westtrack"/>
+								</groupbox>
+							</center>
+
+						</borderlayout>
+					</west>
+
+					<center>
+						<borderlayout height="auto">
+							<north size="90%" autoscroll="true">
+								<include id="principal" src="/inc/principal.zul" height="100%" progressing="true" />
+							</north>
+
+							<center>
+								<window>
+<!--									<caption label="ACTI Versão: 0.0.5 - Mensagem:"/>-->
+									<label value="Executado com sucesso"/>
+								</window>
+							</center>
+
+						</borderlayout>
+					</center>
+				</borderlayout>
+			</center>
+
+			<south size="3%">
+				<label
+					value="JGle Solutions Technology © 2010 - Todos os direitos reservados - melhor visualizado em 1024x768 pixels ou superior." />
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

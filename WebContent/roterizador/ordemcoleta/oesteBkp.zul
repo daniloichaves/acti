@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  <window title="Simple listbox content exporting test"  width="250px" border="normal">
+    <zscript>
+  		String[] data = new String[30];
+  		for(int j=0; j == data.length-1; ++j) {
+  			data = "option " + j;
+  		}
+  		ListModel strset = new SimpleListModel(data);
+
+      public static void export_to_csv(Listbox listbox) {
+        String s = ";";
+        StringBuffer sb = new StringBuffer();
+
+        for (Object head : listbox.getHeads()) {
+          String h = "";
+          for (Object header : ((Listhead) head).getChildren()) {
+            h += ((Listheader) header).getLabel() + s;
+          }
+          sb.append(h + "\n");
+        }
+        for (Object item : listbox.getItems()) {
+          String i = "";
+          for (Object cell : ((Listitem) item).getChildren()) {
+            i += ((Listcell) cell).getLabel() + s;
+          }
+          sb.append(i + "\n");
+        }
+        Filedownload.save(sb.toString().getBytes(), "text/plain", "gf_dot_analyst_at_gmail_dot_com.csv");
+      }
+    </zscript>
+
+    <listbox id="list" rows="10" model="${strset}">
+      <listhead>
+        <listheader label="Options" sort="auto"/>
+        <listheader label="Values" sort="auto"/>
+      </listhead>
+    </listbox>
+    <button label="Export to csv" onClick="export_to_csv(list)"/>
+  </window>
+</zk>

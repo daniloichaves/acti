@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk>
+	<style src="/css/acti.css" />
+
+	<window>
+		<hbox>
+			<groupbox mold="3d" width="450px"
+				use="br.com.jgle.acti.component.StatisticGroupBox" />
+
+
+			<groupbox mold="3d"
+				use="br.com.jgle.acti.component.UsersOnlineGroupbox" />
+
+		</hbox>
+	</window>
+</zk>

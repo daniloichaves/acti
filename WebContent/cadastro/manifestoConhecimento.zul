@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit" apply="${manifestoConhecimentoController}"
+		visible="@{manifestoConhecimentoController.editMode}"
+		ctrlKeys="#up#down" title="Conhecimento">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Nome/ Razão Social " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="${reminder.ctrc}" />
+					<label value="CPF/ CNPJ " />
+					<textbox constraint=""
+						value="@{manifestoConhecimentoController.selected.destinatario.cpfCnpj}" />
+				</row>
+				<row>
+					<label value="Endereço: " />
+					<textbox style="text-transform:uppercase" rows="2"
+						constraint="no empty: Por favor, digite um endereço"
+						value="@{manifestoConhecimentoController.selected.destinatario.endereco}"
+						width="95%" />
+					<hbox>
+						<label value="Número.: " />
+						<textbox style="text-transform:uppercase"
+							maxlength="8" constraint="no empty: Por favor, digite um número"
+							value="@{manifestoConhecimentoController.selected.destinatario.numero}" />
+					</hbox>
+					<hbox>
+						<label value="CEP.: " />
+						<textbox style="text-transform:uppercase"
+							maxlength="8" constraint="no empty: Por favor, digite um cep"
+							value="@{manifestoConhecimentoController.selected.destinatario.cep}" />
+					</hbox>
+				</row>
+				<row>
+					<label value="Bairro.: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{manifestoConhecimentoController.selected.destinatario.bairro}" />
+					<label value="Guia.: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{manifestoConhecimentoController.selected.destinatario.guia}" />
+				</row>
+				<row>
+					<label value="Cidade.: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{manifestoConhecimentoController.selected.destinatario.cidade}" />
+					<label value="UF.: " />
+					<combobox
+						use="br.com.jgle.acti.component.UFCombobox"
+						selectedItem="@{manifestoConhecimentoController.selected.destinatario.uf}"
+						value="@{manifestoConhecimentoController.selected.destinatario.uf}"
+						autodrop="true">
+					</combobox>
+				</row>
+				<row>
+					<label value="Contato.: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{manifestoConhecimentoController.selected.destinatario.contato}" />
+					<label value="Telefone.: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{manifestoConhecimentoController.selected.destinatario.telefone}" />
+				</row>
+				<row>
+					<label value="Ramal: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{manifestoConhecimentoController.selected.destinatario.ramal}" />
+					<label value="E-mail: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{manifestoConhecimentoController.selected.destinatario.email}" />
+				</row>
+				<row>
+					<label value="Ponto Referênca: " />
+					<textbox style="text-transform:uppercase" rows="2"
+						value="@{manifestoConhecimentoController.selected.destinatario.pontoReferencia}" />
+					<label value="Data/Hora Limite: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						mold="rounded"
+						value="@{manifestoConhecimentoController.selected.destinatario.dataHoraColeta}" />
+				</row>
+			</rows>
+		</grid>
+
+		<grid>
+			<rows>
+				<row spans="4">
+					<hbox>
+						<label value="Nº CT-e: " />
+						<textbox constraint=""
+							style="text-transform:uppercase"
+							value="@{manifestoConhecimentoController.selected.conhecimentoCTe.numeroCTE}" />
+					</hbox>
+				</row>
+				<row>
+					<label value="Data/Hora envio: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						mold="rounded"
+						value="@{manifestoConhecimentoController.selected.conhecimentoCTe.dataHoraEnvioCTE}" />
+					<label value="Protocolo: " />
+					<textbox constraint=""
+						style="text-transform:uppercase"
+						value="@{manifestoConhecimentoController.selected.conhecimentoCTe.protocoloEnvio}" />
+				</row>
+				<row spans="4">
+					<hbox>
+						<label value="Status: " />
+						<textbox constraint=""
+							style="text-transform:uppercase"
+							value="@{manifestoConhecimentoController.selected.conhecimentoCTe.status}" />
+					</hbox>
+				</row>
+				<row spans="4">
+					<hbox>
+						<label value="Resposta/ Rejeição: " />
+						<textbox constraint=""
+							style="text-transform:uppercase"
+							value="@{manifestoConhecimentoController.selected.conhecimentoCTe.rejeicao}" />
+					</hbox>
+				</row>
+				<row>
+					<label value="Data/Hora Aprovação: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						mold="rounded"
+						value="@{manifestoConhecimentoController.selected.conhecimentoCTe.dataHoraAprovacao}" />
+					<label value="Protocolo: " />
+					<textbox constraint=""
+						style="text-transform:uppercase"
+						value="@{manifestoConhecimentoController.selected.conhecimentoCTe.protocoloAprovacao}" />
+				</row>
+				<row>
+					<label value="Data/Hora Cancelamento: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						mold="rounded"
+						value="@{manifestoConhecimentoController.selected.conhecimentoCTe.dataHoraCancelamento}" />
+					<label value="Protocolo: " />
+					<textbox constraint=""
+						style="text-transform:uppercase"
+						value="@{manifestoConhecimentoController.selected.conhecimentoCTe.protocoloCancelamento}" />
+				</row>
+			</rows>
+		</grid>
+		<tabbox>
+			<tabs>
+				<tab label="Doc Envio" closable="false" selected="true" />
+				<tab label="Doc Aprovação" closable="false" />
+				<tab label="Doc Cancelamento" closable="false" />
+				<tab label="Doc Inicial" closable="false" />
+			</tabs>
+			<tabpanels>
+				<tabpanel>
+					<textbox constraint="" rows="8" width="100%"
+						style="text-transform:uppercase"
+						value="@{manifestoConhecimentoController.selected.conhecimentoCTe.docXMLEnvio}" />
+				</tabpanel>
+				<tabpanel>
+					<textbox constraint="" rows="8" width="100%"
+						style="text-transform:uppercase"
+						value="@{manifestoConhecimentoController.selected.conhecimentoCTe.docXMLAprovacao}" />
+				</tabpanel>
+				<tabpanel>
+					<textbox constraint="" rows="8" width="100%"
+						style="text-transform:uppercase"
+						value="@{manifestoConhecimentoController.selected.conhecimentoCTe.docXMLCancelamento}" />
+				</tabpanel>
+				<tabpanel>
+					<textbox constraint="" rows="8" width="100%"
+						style="text-transform:uppercase"
+						value="@{manifestoConhecimentoController.selected.conhecimentoCTe.docXMLOriginal}" />
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+
+		<separator bar="true" />
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{manifestoConhecimentoController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

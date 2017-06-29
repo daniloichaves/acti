@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${entradaItemEstoqueController}"
+		visible="@{entradaItemEstoqueController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Lista de Entradas/ Compras - Itens Entrada">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Produto: " />
+					<combobox
+						selectedItem="@{entradaItemEstoqueController.selected.produto}"
+						autodrop="true">
+						<comboitem
+							forEach="${entradaItemEstoqueController.produtos}"
+							label="${each.codigo}" description="${each.descricao}"
+							value="${each}" />
+					</combobox>
+					<label />
+					<label />
+				</row>
+			</rows>
+		</grid>
+		<grid>
+			<rows>
+				<row>
+					<label value="Valor Unitário: " />
+					<doublebox id="valorUnitarioBox"
+						constraint="no negative: Valor não pode ser negativo"
+						format="R$ #,##0.00"
+						value="@{entradaItemEstoqueController.selected.valorUnitario}" />
+					<label value="Qtd: " />
+					<intbox id="qtdBox" constraint=""
+						value="@{entradaItemEstoqueController.selected.quantidade}" />
+					<label value="Total: " />
+					<doublebox id="totalBox"
+						constraint="no negative: Valor não pode ser negativo"
+						format="R$ #,##0.00"
+						value="@{entradaItemEstoqueController.selected.valorTotal}" />
+				</row>
+				<row>
+					<label value="IPI: " />
+					<doublebox
+						constraint="no negative: Valor não pode ser negativo"
+						format="R$ #,##0.00"
+						value="@{entradaItemEstoqueController.selected.ipi}" />
+					<label value="Desc Total: " />
+					<doublebox format="R$ - #,##0.00"
+						value="@{entradaItemEstoqueController.selected.desconto}" />
+					<label value="Total Bruto: " />
+					<doublebox
+						constraint="no negative: Valor não pode ser negativo"
+						format="R$ #,##0.00"
+						value="@{entradaItemEstoqueController.selected.valorTotalBruto}" />
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{entradaItemEstoqueController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

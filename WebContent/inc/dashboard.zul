@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="WEB-INF/zul.xsd ">
+
+	<window id="entityEdit" apply="${dashboardController}"
+		border="normal" width="100%">
+
+		<hbox>
+			<groupbox mold="3d" width="380px">
+				<caption label="Alertas" />
+				<grid>
+					<columns>
+						<column label="Cadastro" sort="auto" />
+						<column label="Descrição" sort="auto" />
+						<column label="Identificação" sort="auto" />
+					</columns>
+
+					<rows>
+						<row
+							forEach="${dashboardController.motoristaService.veiculosSeguroAVencer}">
+							<label value="Veículo" />
+							<label style="color:red;float:right;"
+								value="Data do seguro esta à vencer" />
+							<label value="${each.placa}" />
+						</row>
+
+						<row
+							forEach="${dashboardController.motoristaService.veiculosCRLVAVencer}">
+							<label value="Veículo" />
+							<label style="color:red;float:right;"
+								value="Data do CRLVA esta à vencer" />
+							<label value="${each.placa}" />
+						</row>
+
+						<row
+							forEach="${dashboardController.motoristaService.motoristaCNHAVencer}">
+							<label value="Motorista" />
+							<label style="color:red;float:right;"
+								value="Data da CNH esta à vencer" />
+							<label value="${each.apelido}" />
+						</row>
+
+					</rows>
+				</grid>
+			</groupbox>
+		</hbox>
+
+		<hbox>
+
+			<groupbox mold="3d" width="380px">
+				<caption label="Contas à pagar" />
+				<grid>
+					<columns>
+						<column width="40px" />
+						<column label="Vencimento" sort="auto" />
+						<column label="Documento" sort="auto" />
+						<column label="Valor" sort="auto" />
+						<column label="Fornecedor" sort="auto" />
+					</columns>
+					<rows>
+						<row>
+							<detail>
+								<hlayout>
+									<vlayout>
+										<label value="Fornecedor"
+											style="font-weight:bold;font-style: italic;" />
+										<hlayout>
+											<label value="Telefone:" />
+											<label value="1234-6457"
+												sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Email:" />
+											<label
+												value="Apple@fasfd.com" sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Responsável:" />
+											<label value="João"
+												sclass="heavy" />
+										</hlayout>
+									</vlayout>
+								</hlayout>
+							</detail>
+							<label value="10/10/2010" />
+							<label style="color:green;float:right;"
+								value="200" />
+							<label value="654,65" />
+							<label value="Westtrack" />
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox mold="3d" width="380px">
+				<caption label="Contas à Receber" />
+				<grid>
+					<columns>
+						<column width="40px" />
+						<column label="Vencimento" sort="auto" />
+						<column label="Documento" sort="auto" />
+						<column label="Valor" sort="auto" />
+						<column label="Fornecedor" sort="auto" />
+					</columns>
+					<rows>
+						<row>
+							<detail>
+								<hlayout>
+									<vlayout>
+										<label value="Cliente"
+											style="font-weight:bold;font-style: italic;" />
+										<hlayout>
+											<label value="Telefone:" />
+											<label value="6547-9878"
+												sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Email:" />
+											<label
+												value="jgle@jgle.com.br" sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Responsável:" />
+											<label value="Danilo"
+												sclass="heavy" />
+										</hlayout>
+									</vlayout>
+								</hlayout>
+							</detail>
+							<label value="10/10/2010" />
+							<label style="color:green;float:right;"
+								value="200" />
+							<label value="654,65" />
+							<label value="jGle" />
+						</row>
+						<row>
+							<detail>
+								<hlayout>
+									<vlayout>
+										<label value="Cliente"
+											style="font-weight:bold;font-style: italic;" />
+										<hlayout>
+											<label value="Telefone:" />
+											<label value="1234-5435"
+												sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Email:" />
+											<label
+												value="daf2@dsfr.com.br" sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Responsável:" />
+											<label value="Joel"
+												sclass="heavy" />
+										</hlayout>
+									</vlayout>
+								</hlayout>
+							</detail>
+							<label value="10/10/2010" />
+							<label style="color:green;float:right;"
+								value="200" />
+							<label value="1236,35" />
+							<label value="Google" />
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</hbox>
+
+		<hbox>
+			<groupbox mold="3d" width="380px">
+				<caption label="Seguros Vencidos e à Vencer" />
+				<grid>
+					<columns>
+						<column width="40px" />
+						<column label="Descrição" sort="auto" />
+						<column label="Veiculo" sort="auto" />
+						<column label="Placa" sort="auto" />
+						<column label="Data Vencimento" sort="auto" />
+						<column label="Seguradora" sort="auto" />
+					</columns>
+					<rows>
+						<row>
+							<detail>
+								<hlayout>
+									<vlayout>
+										<label value="Seguradora"
+											style="font-weight:bold;font-style: italic;" />
+										<hlayout>
+											<label value="Telefone:" />
+											<label value="6547-9878"
+												sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Email:" />
+											<label
+												value="jgle@jgle.com.br" sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Responsável:" />
+											<label value="Danilo"
+												sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Banco:" />
+											<label value="Itaú"
+												sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Agencia:" />
+											<label value="1045"
+												sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Conta:" />
+											<label value="24816-8"
+												sclass="heavy" />
+										</hlayout>
+									</vlayout>
+								</hlayout>
+							</detail>
+							<label value="Seguro completo" />
+							<label style="color:green;float:right;"
+								value="TRATOR" />
+							<label value="DWN 5835" />
+							<label value="10/10/2010" />
+							<label value="AZUL" />
+						</row>
+						<row>
+							<detail>
+								<hlayout>
+									<vlayout>
+										<label value="Cliente"
+											style="font-weight:bold;font-style: italic;" />
+										<hlayout>
+											<label value="Telefone:" />
+											<label value="1234-5435"
+												sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Email:" />
+											<label
+												value="daf2@dsfr.com.br" sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Responsável:" />
+											<label value="Joel"
+												sclass="heavy" />
+										</hlayout>
+									</vlayout>
+								</hlayout>
+							</detail>
+							<label value="Rastreador" />
+							<label style="color:green;float:right;"
+								value="CARRETA" />
+							<label value="XPT 4587" />
+							<label value="20/12/2010" />
+							<label value="MARITIMA" />
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox mold="3d" width="380px">
+				<caption label="Manutenção Vencidas e à Vencer" />
+				<grid>
+					<columns>
+						<column width="40px" />
+						<column label="Descrição" sort="auto" />
+						<column label="Veiculo" sort="auto" />
+						<column label="Placa" sort="auto" />
+						<column label="Data Vencimento" sort="auto" />
+						<column label="Fornecedor" sort="auto" />
+					</columns>
+					<rows>
+						<row>
+							<detail>
+								<hlayout>
+									<vlayout>
+										<label value="Fornecedor"
+											style="font-weight:bold;font-style: italic;" />
+										<hlayout>
+											<label value="Telefone:" />
+											<label value="6547-9878"
+												sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Email:" />
+											<label
+												value="jgle@jgle.com.br" sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Responsável:" />
+											<label value="Danilo"
+												sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Banco:" />
+											<label value="Itaú"
+												sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Agencia:" />
+											<label value="1045"
+												sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Conta:" />
+											<label value="24816-8"
+												sclass="heavy" />
+										</hlayout>
+									</vlayout>
+								</hlayout>
+							</detail>
+							<label value="RASTREADOR" />
+							<label style="color:green;float:right;"
+								value="COMBI" />
+							<label value="CBI 6485" />
+							<label value="18/10/2010" />
+							<label value="WESTTRACK" />
+						</row>
+						<row>
+							<detail>
+								<hlayout>
+									<vlayout>
+										<label value="Cliente"
+											style="font-weight:bold;font-style: italic;" />
+										<hlayout>
+											<label value="Telefone:" />
+											<label value="1234-5435"
+												sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Email:" />
+											<label
+												value="daf2@dsfr.com.br" sclass="heavy" />
+										</hlayout>
+										<hlayout>
+											<label value="Responsável:" />
+											<label value="Joel"
+												sclass="heavy" />
+										</hlayout>
+									</vlayout>
+								</hlayout>
+							</detail>
+							<label value="Rastreador" />
+							<label style="color:green;float:right;"
+								value="CARRETA" />
+							<label value="LJK 8787" />
+							<label value="11/11/2010" />
+							<label value="WESTTRACK" />
+						</row>
+					</rows>
+				</grid>
+
+			</groupbox>
+		</hbox>
+	</window>
+</zk>

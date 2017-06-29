@@ -1,0 +1,1752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit" apply="${conhecimentoController}"
+		visible="@{conhecimentoController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Conhecimento de Frete">
+
+
+		<tabbox id="childrenTabbox">
+			<tabs>
+				<tab id="tab1" label="C.T.R.C" closable="false"
+					selected="true" />
+				<tab id="tab2" label="Remetente/ Destinatário"
+					closable="false" />
+				<!--				<tab id="tab3" label="Destinatário" closable="false" />-->
+				<tab id="tab4" label="Consig/Redesp/Parceiros"
+					closable="false" />
+				<tab label="Mercadoria" closable="false" />
+				<tab label="Cáculo Frete" closable="false" />
+				<tab label="Motorista" closable="false" />
+				<tab label="Financeiro" closable="false" />
+				<tab label="CT-e" closable="false" />
+				<!--				<tab label="Ocorrências" closable="false" />-->
+			</tabs>
+
+			<tabpanels>
+				<tabpanel>
+					<grid>
+						<rows>
+							<row>
+								<hbox>
+									<label value="Nº Controle: " />
+									<textbox readonly="true"
+										value="@{conhecimentoController.selected.id}" />
+								</hbox>
+								<hbox>
+									<label value="Nº C.T.R.C: " />
+									<textbox constraint=""
+										style="text-transform:uppercase"
+										value="@{conhecimentoController.selected.ctrc}" />
+								</hbox>
+								<hbox>
+									<hbox>
+										<label value="Serie: " />
+										<textbox constraint=""
+											style="text-transform:uppercase"
+											value="@{conhecimentoController.selected.serie}" />
+									</hbox>
+								</hbox>
+								<hbox>
+									<label value="Sub Serie: " />
+									<textbox constraint=""
+										style="text-transform:uppercase"
+										value="@{conhecimentoController.selected.subSerie}" />
+								</hbox>
+							</row>
+							<row>
+								<hbox>
+									<label value="Tipo de Frete: " />
+									<radiogroup
+										selectedItem="@{conhecimentoController.selected.tipoFrete}">
+										<radio label="FOB" value="FOB" />
+										<radio label="CIF" value="CIF" />
+									</radiogroup>
+								</hbox>
+								<hbox>
+									<label value="Tipo Gris: " />
+									<combobox
+										selectedItem="@{conhecimentoController.selected.tipoGris}">
+										<comboitem label="Liberado"
+											description="" value="LIBERADO" />
+										<comboitem label="Rastreado"
+											description="" value="RASTREADO" />
+										<comboitem label="Telemonitorado"
+											description="" value="TELEMONITORADO" />
+										<comboitem
+											label="Rastreado com escolta" description=""
+											value="RASTREADO COM ESCOLTA" />
+									</combobox>
+								</hbox>
+								<hbox>
+									<label value="C.F.O.P: " />
+									<combobox
+										selectedItem="@{conhecimentoController.selected.cpof}"
+										autodrop="true">
+	
+										<comboitem
+											forEach="${conhecimentoController.cpofs}"
+											label="${each.codigo}" description="${each.descricao}"
+											value="${each}" />
+									</combobox>
+								</hbox>
+							</row>
+							<row>
+								<label value="Local de Emissão " />
+								<textbox
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.localEmissao}" />
+								<label value="Data/Hora: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm"
+									onCreate="self.setValue(new Date())" mold="rounded"
+									disabled="true"
+									value="@{conhecimentoController.selected.dataCriacao}" />
+							</row>
+							<row>
+								<label value="Digitador: " />
+								<combobox
+									selectedItem="@{conhecimentoController.selected.digitador}">
+									<comboitem
+										forEach="${conhecimentoController.digitadores}"
+										label="${each.nome}" description="${each.login}"
+										value="${each}" />
+								</combobox>
+								<label />
+								<label />
+							</row>
+						</rows>
+					</grid>
+
+					<separator bar="true" />
+
+					<grid>
+						<rows>
+							<group label="Seguradora" spans="4" />
+							<row>
+								<label value="Agência/ Seguradora: " />
+								<textbox
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.seguradora.agenciaSeguradora}" />
+								<label />
+								<label />
+							</row>
+
+							<row>
+								<label value="Nº Apólice: " />
+								<textbox
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.seguradora.numeroApolice}" />
+								<label value="Nº Averbação: " />
+								<textbox
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.seguradora.numeroAverbacao}" />
+							</row>
+							<row>
+								<label value="Atendente: " />
+								<textbox
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.seguradora.atendente}" />
+								<label value="Liberação: " />
+								<textbox
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.seguradora.liberacao}" />
+							</row>
+						</rows>
+					</grid>
+
+					<separator bar="true" />
+
+					<grid>
+						<rows>
+							<group label="Averbação" spans="4" />
+							<row>
+								<button id="averbacaoBtn" label="Download File" />
+							</row>
+							<row>
+								<label value="Login: " />
+								<textbox
+									style="text-transform:uppercase" />
+								<label value="Data: " />
+								<textbox
+									style="text-transform:uppercase" />
+							</row>
+						</rows>
+					</grid>
+
+
+				</tabpanel>
+
+				<tabpanel>
+					<grid>
+						<rows>
+							<group label="Remetente " spans="4" />
+							<row>
+								<label value="Cliente" />
+								<combobox id="remetenteBox"
+									selectedItem="@{conhecimentoController.selected.clienteRemetente}"
+									autodrop="true">
+
+									<comboitem
+										forEach="${conhecimentoController.clientes}"
+										label="${each.razaosocialnome}" value="${each}" />
+								</combobox>
+								<label value="Busca por CEP.: " />
+								<hbox>
+									<textbox id="remetenteCepBox"
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um cep"
+										value="@{conhecimentoController.selected.remetente.cep}" />
+									<image id="remetenteCepSearch"
+										src="/img/png/search-icon16x16.png" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<row>
+								<label value="Nome/ Razão Social " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.remetente.nomeRazaoSocial}" />
+								<label value="CPF/ CNPJ " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.remetente.cpfCnpj}" />
+							</row>
+							<row>
+								<label value="Endereço: " />
+								<textbox id="remetenteEnderecoBox"
+									style="text-transform:uppercase" rows="2"
+									constraint="no empty: Por favor, digite um endereço"
+									value="@{conhecimentoController.selected.remetente.endereco}"
+									width="95%" />
+								<hbox>
+									<label value="Número.: " />
+									<textbox
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um número"
+										value="@{conhecimentoController.selected.remetente.numero}" />
+								</hbox>
+								<hbox>
+									<label value="CEP.: " />
+									<textbox
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um cep"
+										value="@{conhecimentoController.selected.remetente.cep}" />
+								</hbox>
+							</row>
+							<row>
+								<label value="Bairro.: " />
+								<textbox id="remetenteBairroBox"
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.remetente.bairro}" />
+								<label value="Guia.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.remetente.guia}" />
+							</row>
+							<row>
+								<label value="Cidade.: " />
+								<textbox id="remetenteCidadeBox"
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.remetente.cidade}" />
+								<label value="UF.: " />
+								<combobox id="remetenteUFBox"
+									use="br.com.jgle.acti.component.UFCombobox"
+									selectedItem="@{conhecimentoController.selected.remetente.uf}"
+									value="@{conhecimentoController.selected.remetente.uf}"
+									autodrop="true">
+								</combobox>
+							</row>
+							<row>
+								<label value="Contato.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.remetente.contato}" />
+								<label value="Telefone.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.remetente.telefone}" />
+							</row>
+							<row>
+								<label value="Ramal: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.remetente.ramal}" />
+								<label value="E-mail: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.remetente.email}" />
+							</row>
+							<row>
+								<label value="Ponto Referênca: " />
+								<textbox
+									style="text-transform:uppercase" rows="2"
+									value="@{conhecimentoController.selected.remetente.pontoReferencia}" />
+								<label value="Data/Hora Limite: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" onCreate="self.value = new Date()"
+									mold="rounded"
+									value="@{conhecimentoController.selected.remetente.dataHoraColeta}" />
+							</row>
+						</rows>
+					</grid>
+
+
+
+					<grid>
+						<rows>
+							<group label="Destinatário" spans="4" />
+							<row>
+								<label
+									value="Histórico Endereços Entregues" />
+								<combobox id="destinatarioBox"
+									selectedItem="@{conhecimentoController.selected.destinatario}"
+									autodrop="true">
+
+									<comboitem
+										forEach="${conhecimentoController.enderecosEntregues}"
+										label="${each.endereco}"
+										description="${each.bairro} ${each.cep}" value="${each}" />
+								</combobox>
+								<label value="Busca por CEP.: " />
+								<hbox>
+									<textbox id="destinatarioCepBox"
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um cep"
+										value="@{conhecimentoController.selected.destinatario.cep}" />
+									<image id="destinatarioCepSearch"
+										src="/img/png/search-icon16x16.png" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<row>
+								<label value="Nome/ Razão Social " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.destinatario.nomeRazaoSocial}" />
+								<label value="CPF/ CNPJ " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.destinatario.cpfCnpj}" />
+							</row>
+							<row>
+								<label value="Endereço: " />
+								<textbox id="destinatarioEnderecoBox"
+									style="text-transform:uppercase" rows="2"
+									constraint="no empty: Por favor, digite um endereço"
+									value="@{conhecimentoController.selected.destinatario.endereco}"
+									width="95%" />
+								<hbox>
+									<label value="Número.: " />
+									<textbox
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um número"
+										value="@{conhecimentoController.selected.destinatario.numero}" />
+								</hbox>
+								<hbox>
+									<label value="CEP.: " />
+									<textbox
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um cep"
+										value="@{conhecimentoController.selected.destinatario.cep}" />
+								</hbox>
+							</row>
+							<row>
+								<label value="Bairro.: " />
+								<textbox id="destinatarioBairroBox"
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.destinatario.bairro}" />
+								<label value="Guia.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.destinatario.guia}" />
+							</row>
+							<row>
+								<label value="Cidade.: " />
+								<textbox id="destinatarioCidadeBox"
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.destinatario.cidade}" />
+								<label value="UF.: " />
+								<combobox id="destinatarioUFBox"
+									use="br.com.jgle.acti.component.UFCombobox"
+									selectedItem="@{conhecimentoController.selected.destinatario.uf}"
+									value="@{conhecimentoController.selected.destinatario.uf}"
+									autodrop="true">
+								</combobox>
+							</row>
+							<row>
+								<label value="Contato.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.destinatario.contato}" />
+								<label value="Telefone.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.destinatario.telefone}" />
+							</row>
+							<row>
+								<label value="Ramal: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.destinatario.ramal}" />
+								<label value="E-mail: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.destinatario.email}" />
+							</row>
+							<row>
+								<label value="Ponto Referênca: " />
+								<textbox
+									style="text-transform:uppercase" rows="2"
+									value="@{conhecimentoController.selected.destinatario.pontoReferencia}" />
+								<label value="Data/Hora Limite: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" onCreate="self.value = new Date()"
+									mold="rounded"
+									value="@{conhecimentoController.selected.destinatario.dataHoraColeta}" />
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+
+				<tabpanel>
+					<grid>
+						<rows>
+							<group label="Consignatário" spans="4" />
+							<row>
+								<label
+									value="Histórico Endereços Entregues" />
+								<combobox id="consignatarioBox"
+									selectedItem="@{conhecimentoController.selected.consignatarioEndereco}"
+									autodrop="true">
+
+									<comboitem
+										forEach="${conhecimentoController.consignatarioEnderecosEntregues}"
+										label="${each.endereco}"
+										description="${each.bairro} ${each.cep}" value="${each}" />
+								</combobox>
+								<label value="Busca por CEP.: " />
+								<hbox>
+									<textbox id="consignatarioCepBox"
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um cep"
+										value="@{conhecimentoController.selected.consignatarioEndereco.cep}" />
+									<image id="consignatarioCepSearch"
+										src="/img/png/search-icon16x16.png" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<row>
+								<label value="Nome/ Razão Social " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.consignatarioEndereco.nomeRazaoSocial}" />
+								<label value="CPF/ CNPJ " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.consignatarioEndereco.cpfCnpj}" />
+							</row>
+							<row>
+								<label value="Endereço: " />
+								<textbox id="consignatarioEnderecoBox"
+									style="text-transform:uppercase" rows="2"
+									constraint="no empty: Por favor, digite um endereço"
+									value="@{conhecimentoController.selected.consignatarioEndereco.endereco}"
+									width="95%" />
+								<hbox>
+									<label value="Número.: " />
+									<textbox
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um número"
+										value="@{conhecimentoController.selected.consignatarioEndereco.numero}" />
+								</hbox>
+								<hbox>
+									<label value="CEP.: " />
+									<textbox
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um cep"
+										value="@{conhecimentoController.selected.consignatarioEndereco.cep}" />
+								</hbox>
+							</row>
+							<row>
+								<label value="Bairro.: " />
+								<textbox id="consignatarioBairroBox"
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.consignatarioEndereco.bairro}" />
+								<label value="Guia.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.consignatarioEndereco.guia}" />
+							</row>
+							<row>
+								<label value="Cidade.: " />
+								<textbox id="consignatarioCidadeBox"
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.consignatarioEndereco.cidade}" />
+								<label value="UF.: " />
+								<combobox id="consignatarioUFBox"
+									use="br.com.jgle.acti.component.UFCombobox"
+									selectedItem="@{conhecimentoController.selected.consignatarioEndereco.uf}"
+									value="@{conhecimentoController.selected.consignatarioEndereco.uf}"
+									autodrop="true">
+								</combobox>
+							</row>
+							<row>
+								<label value="Contato.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.consignatarioEndereco.contato}" />
+								<label value="Telefone.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.consignatarioEndereco.telefone}" />
+							</row>
+							<row>
+								<label value="Ramal: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.consignatarioEndereco.ramal}" />
+								<label value="E-mail: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.consignatarioEndereco.email}" />
+							</row>
+							<row>
+								<label value="Ponto Referênca: " />
+								<textbox
+									style="text-transform:uppercase" rows="2"
+									constraint="no empty: Por favor, digite um endereço"
+									value="@{conhecimentoController.selected.consignatarioEndereco.pontoReferencia}" />
+								<label value="Data/Hora Limite: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" onCreate="self.value = new Date()"
+									mold="rounded"
+									value="@{conhecimentoController.selected.consignatarioEndereco.dataHoraColeta}" />
+							</row>
+							<row>
+								<hbox>
+									<label value="Serie: " />
+									<textbox constraint=""
+										style="text-transform:uppercase"
+										value="@{conhecimentoController.selected.consignatarioSerie}" />
+								</hbox>
+								<checkbox label="Frt.Comb."
+									checked="@{conhecimentoController.selected.consignatarioFreteComb}" />
+								<label value="ICMS: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.consignatarioIcms}" />
+							</row>
+							<row>
+								<label value="C.T.R.C. Consignatário: " />
+								<textbox constraint=""
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.consignatarioCtrc}" />
+								<label />
+								<label />
+							</row>
+							<row spans="4">
+								<groupbox mold="default">
+									<caption label="Pagamento Frete" />
+									<radiogroup
+										selectedItem="@{conhecimentoController.selected.consignatarioPagamentoFrete}">
+										<radio label="FRETE PAGO"
+											value="FRETEPAGO" />
+										<radio label="FRETE À PAGAR"
+											value="FRETEAPAGAR" />
+										<radio label="NENHUM"
+											value="NENHUM" />
+									</radiogroup>
+								</groupbox>
+							</row>
+						</rows>
+					</grid>
+
+					<separator bar="true" />
+					<grid>
+						<rows>
+							<group label="Redespacho" spans="4" />
+							<row>
+								<label
+									value="Histórico Endereços Entregues" />
+								<combobox id="redespachoBox"
+									selectedItem="@{conhecimentoController.selected.redespachoEndereco}"
+									autodrop="true">
+
+									<comboitem
+										forEach="${conhecimentoController.enderecosEntregues}"
+										label="${each.endereco}"
+										description="${each.bairro} ${each.cep}" value="${each}" />
+								</combobox>
+								<label value="Busca por CEP.: " />
+								<hbox>
+									<textbox id="redespachoCepBox"
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um cep"
+										value="@{conhecimentoController.selected.redespachoEndereco.cep}" />
+									<image id="redespachoCepSearch"
+										src="/img/png/search-icon16x16.png" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<row>
+								<label value="Nome/ Razão Social " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.redespachoEndereco.nomeRazaoSocial}" />
+								<label value="CPF/ CNPJ " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.redespachoEndereco.cpfCnpj}" />
+							</row>
+							<row>
+								<label value="Endereço: " />
+								<textbox id="redespachoEnderecoBox"
+									style="text-transform:uppercase" rows="2"
+									constraint="no empty: Por favor, digite um endereço"
+									value="@{conhecimentoController.selected.redespachoEndereco.endereco}"
+									width="95%" />
+								<hbox>
+									<label value="Número.: " />
+									<textbox
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um número"
+										value="@{conhecimentoController.selected.redespachoEndereco.numero}" />
+								</hbox>
+								<hbox>
+									<label value="CEP.: " />
+									<textbox
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um cep"
+										value="@{conhecimentoController.selected.redespachoEndereco.cep}" />
+								</hbox>
+							</row>
+							<row>
+								<label value="Bairro.: " />
+								<textbox id="redespachoBairroBox"
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.redespachoEndereco.bairro}" />
+								<label value="Guia.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.redespachoEndereco.guia}" />
+							</row>
+							<row>
+								<label value="Cidade.: " />
+								<textbox id="redespachoCidadeBox"
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.redespachoEndereco.cidade}" />
+								<label value="UF.: " />
+								<combobox id="redespachoUFBox"
+									use="br.com.jgle.acti.component.UFCombobox"
+									selectedItem="@{conhecimentoController.selected.redespachoEndereco.uf}"
+									value="@{conhecimentoController.selected.redespachoEndereco.uf}"
+									autodrop="true">
+								</combobox>
+							</row>
+							<row>
+								<label value="Contato.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.redespachoEndereco.contato}" />
+								<label value="Telefone.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.redespachoEndereco.telefone}" />
+							</row>
+							<row>
+								<label value="Ramal: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.redespachoEndereco.ramal}" />
+								<label value="E-mail: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{conhecimentoController.selected.redespachoEndereco.email}" />
+							</row>
+							<row>
+								<label value="Ponto Referênca: " />
+								<textbox
+									style="text-transform:uppercase" rows="2"
+									constraint="no empty: Por favor, digite um endereço"
+									value="@{conhecimentoController.selected.redespachoEndereco.pontoReferencia}" />
+								<label value="Data/Hora Limite: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" onCreate="self.value = new Date()"
+									mold="rounded"
+									value="@{conhecimentoController.selected.redespachoEndereco.dataHoraColeta}" />
+							</row>
+							<row>
+								<hbox>
+									<label value="Serie: " />
+									<textbox constraint=""
+										style="text-transform:uppercase"
+										value="@{conhecimentoController.selected.redespachoSerie}" />
+								</hbox>
+								<checkbox label="Frt.Comb."
+									checked="@{conhecimentoController.selected.redespachoFreteComb}" />
+								<label value="ICMS: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.redespachoIcms}" />
+							</row>
+							<row spans="4">
+								<groupbox mold="default">
+									<caption label="Pagamento Frete" />
+									<radiogroup
+										selectedItem="@{conhecimentoController.selected.redespachoPagamentoFrete}">
+										<radio label="FRETE PAGO"
+											value="FRETEPAGO" />
+										<radio label="FRETE À PAGAR"
+											value="FRETEAPAGAR" />
+										<radio label="NENHUM"
+											value="NENHUM" />
+									</radiogroup>
+								</groupbox>
+							</row>
+						</rows>
+					</grid>
+
+					<separator bar="true" />
+					<grid>
+						<columns>
+							<column width="10%" />
+							<column width="25%" />
+							<column width="10%" />
+							<column width="25%" />
+							<column width="10%" />
+							<column />
+						</columns>
+						<rows>
+							<group label="Maritimo" spans="6" />
+							<row>
+								<label value="Porto: " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.porto}" />
+								<label value="Navio: " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.navio}" />
+								<label value="Armazém: " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.armazem}" />
+							</row>
+							<row>
+								<label value="Base DI/DTA: " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.baseDIDTA}" />
+								<label value="Tipo: " />
+								<hbox>
+									<radiogroup
+										selectedItem="@{conhecimentoController.selected.conhecimentoMaritimo.tipo}">
+										<radio label="IMPORTAÇÃO"
+											value="IMPORTACAO" />
+										<radio label="EXPORTAÇÃO"
+											value="EXPORTACAO" />
+									</radiogroup>
+								</hbox>
+								<label value="Processo: " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.processo}" />
+							</row>
+							<row>
+								<label value="V/Ref: " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.valoReferente}" />
+								<label value="Lacre: " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.lacre}" />
+								<label value="Despachante/ Agência: " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.despachanteAgencia}" />
+							</row>
+							<row>
+								<label value="Nº DI: " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.numeroDI}" />
+								<label value="Data DI: " />
+								<datebox cols="25" format="dd/MM/yyyy"
+									onCreate="self.setValue(new Date())" mold="rounded"
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.dataDI}"
+									width="90%" />
+								<label value="Nº DTA: " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.numeroDTA}" />
+							</row>
+							<row>
+								<label value="Data DTA: " />
+								<datebox cols="25" format="dd/MM/yyyy"
+									onCreate="self.setValue(new Date())" mold="rounded"
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.dataDTA}"
+									width="90%" />
+								<label value="Nº Reserva/ Nota Fiscal " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.numeroReservaNotaFiscal}" />
+								<label value="Data Reserva: " />
+								<datebox cols="25" format="dd/MM/yyyy"
+									onCreate="self.setValue(new Date())" mold="rounded"
+									value="@{conhecimentoController.selected.conhecimentoMaritimo.dataReservaNotaFiscal}"
+									width="90%" />
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+				<tabpanel>
+					<include id="notaFiscalList" height="100%"
+						src="/cadastro/notaFiscalList.zul"
+						controller="${conhecimentoController.notaFiscalController}" />
+
+					<separator bar="true" />
+					<include id="servicoList" height="100%"
+						src="/cadastro/servicoList.zul"
+						controller="${conhecimentoController.servicoController}" />
+				</tabpanel>
+
+				<tabpanel>
+					<grid>
+						<rows>
+							<row spans="6">
+								<groupbox mold="default">
+									<caption label="Tipos de calculos" />
+									<radiogroup
+										selectedItem="@{conhecimentoController.selected.tipoCalculoFrete}">
+
+										<radio id="caldFreteRad1"
+											label="Calc Frete 1" value="CALC_FRETE_1" />
+										<radio id="caldFreteRad2"
+											label="Calc Frete 2" value="CALC_FRETE_2" />
+										<radio id="caldFreteRad3"
+											label="Calc Carta Frete" value="CALC_CARTA_FRETE" />
+										<!--									<radio-->
+										<!--										label="Calc Frete Fracionado" />-->
+									</radiogroup>
+								</groupbox>
+							</row>
+						</rows>
+					</grid>
+
+					<grid id="boxFrete1">
+						<rows>
+							<group label="Calc Frete 1" spans="6" />
+							<row>
+								<label value="Frete Peso: " />
+								<doublebox constraint=""
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.fretePeso}" />
+								<label value="Frete Valor: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.freteValor}" />
+								<label value="SEC/ CAT: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.secCat}" />
+							</row>
+							<row>
+								<label value="Despacho: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.despacho}" />
+								<label value="Pedágio: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.pedagio}" />
+								<label value="Adame: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.adame}" />
+							</row>
+							<row>
+								<label value="Ad-Valorem: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.adValorem}" />
+								<label value="ITR: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.irt}" />
+								<label value="Seguro: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.seguro}" />
+							</row>
+							<row>
+								<label value="Suframa: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.suframa}" />
+								<label value="Gris: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.gris}" />
+								<label value="TDE: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.tde}" />
+							</row>
+							<row>
+								<label value="TAXA 1: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.taxa1}" />
+								<label value="TAXA 2: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.taxa2}" />
+								<label value="ICMS: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.icms}" />
+							</row>
+							<row>
+								<label value="Outros: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.outros}" />
+								<label value="Desconto: " />
+								<doublebox constraint=""
+									format="R$ - #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.desconto}" />
+								<label value="Total do C.T.R.C" />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.totalCTRC}" />
+							</row>
+							<row>
+								<hbox>
+									<label value="Formula:: " />
+									<label value="ex.: 10*20" />
+								</hbox>
+								<textbox id="formulaBox"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.formula}" />
+								<label value="Valor Formula: " />
+								<doublebox id="valorFormulaBox"
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.conhecimentoCalculoFreteUm.valorFormula}" />
+							</row>
+						</rows>
+					</grid>
+
+					<div id="boxFrete2" visible="false">
+						<grid>
+							<rows>
+								<group label="Calc Frete 2" spans="6" />
+								<row>
+									<label value="Peso Frete : " />
+									<doublebox constraint=""
+										format="R$ #,##0.00"
+										value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.pesoFrete}" />
+									<label value="Frete Val Unit: " />
+									<doublebox constraint=""
+										format="R$ #,##0.00"
+										value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.freteValorUnit}" />
+									<label value="Pedágio" />
+									<doublebox constraint=""
+										format="R$ #,##0.00"
+										value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.pedagio}" />
+								</row>
+								<row>
+									<hbox>
+										<label value="Formula:: " />
+										<label value="ex.: 10*20" />
+									</hbox>
+									<textbox id="formulaBox2"
+										value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.formula}" />
+									<label value="Valor Formula: " />
+									<doublebox id="valorFormulaBox2"
+										format="R$ #,##0.00"
+										value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.valorFormula}" />
+								</row>
+								<row spans="6">
+									<groupbox mold="default">
+										<caption
+											label="Composição do cálculo ICMS" />
+										<grid>
+											<rows>
+												<row>
+													<label
+														value="Frete Val Unit: " />
+													<label
+														value="Frete Peso Valor" />
+													<label value="%" />
+													<label
+														value="Calc/Sec" />
+													<label value="Desp" />
+													<label
+														value="Ademe" />
+													<label value="ITR" />
+													<label value="GRIS" />
+													<label
+														value="Outro" />
+												</row>
+												<row>
+													<doublebox
+														constraint="" format="R$ #,##0.00" width="70px"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.calcICMSFreteValorUnit}" />
+													<doublebox
+														constraint="" format="R$ #,##0.00" width="70px"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.calcICMSFretePesoValor}" />
+													<doublebox
+														constraint="" format="R$ #,##0.00" width="70px"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.calcICMSPorcentagem}" />
+													<doublebox
+														constraint="" format="R$ #,##0.00" width="70px"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.calcICMSCalcSec}" />
+													<doublebox
+														constraint="" format="R$ #,##0.00" width="70px"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.calcICMSDesp}" />
+													<doublebox
+														constraint="" format="R$ #,##0.00" width="70px"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.calcICMSAdeme}" />
+													<doublebox
+														constraint="" format="R$ #,##0.00" width="70px"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.calcICMSITR}" />
+													<doublebox
+														constraint="" format="R$ #,##0.00" width="70px"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.calcICMSGRIS}" />
+													<doublebox
+														constraint="" format="R$ #,##0.00" width="70px"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.calcICMSOutro}" />
+												</row>
+											</rows>
+										</grid>
+									</groupbox>
+								</row>
+							</rows>
+						</grid>
+						<grid>
+							<rows>
+								<row spans="2">
+									<groupbox mold="default">
+										<caption
+											label="Cálculo do ICMS" />
+										<grid>
+											<columns>
+												<column width="100px" />
+												<column width="100px" />
+												<column width="100px" />
+												<column width="100%" />
+											</columns>
+											<rows>
+												<row>
+													<label
+														value="% Base ICMS: " />
+													<label
+														value="Base de Calculo" />
+													<label
+														value="Aliquota ICMS" />
+													<label
+														value="Valor ICMS" />
+												</row>
+												<row>
+													<doublebox
+														constraint="" format="##0 %"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.baseICMS}" />
+													<doublebox
+														constraint="" format="R$ #,##0.00"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.baseCalculo}" />
+													<doublebox
+														constraint="" format="R$ #,##0.00"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.baseAliquotaICMS}" />
+													<doublebox
+														constraint="" format="R$ #,##0.00"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.baseValorICMS}" />
+												</row>
+											</rows>
+										</grid>
+									</groupbox>
+									<groupbox mold="default">
+										<caption label="Outros" />
+										<grid>
+											<rows>
+												<row>
+													<label
+														value="Outros 1: " />
+													<label
+														value="Outros 2" />
+												</row>
+												<row>
+													<doublebox
+														constraint="" format="R$ #,##0.00"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.outros1}" />
+													<doublebox
+														constraint="" format="R$ #,##0.00"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.outros2}" />
+												</row>
+											</rows>
+										</grid>
+									</groupbox>
+									<groupbox mold="default">
+										<caption label="Outros" />
+										<grid>
+											<rows>
+												<row>
+													<label
+														value="Ent Extras: " />
+													<label
+														value="Val Ent Extras" />
+													<label
+														value="Total" />
+												</row>
+												<row>
+													<intbox
+														constraint=""
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.outrosQtdExtra}" />
+													<doublebox
+														constraint="" format="R$ #,##0.00"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.outrosValExtra}" />
+													<hbox>
+														<label
+															value="X" />
+														<doublebox
+															constraint="" format="R$ #,##0.00"
+															value="@{conhecimentoController.selected.conhecimentoCalculoFreteDois.outrosTotalExtra}" />
+													</hbox>
+												</row>
+											</rows>
+										</grid>
+									</groupbox>
+								</row>
+							</rows>
+						</grid>
+					</div>
+
+					<grid id="boxFrete3" visible="false">
+						<rows>
+							<group label="Calc Carta Frete" spans="6" />
+							<row spans="6">
+								<groupbox mold="default">
+									<caption label="Cálculo do ICMS" />
+									<grid>
+										<rows>
+											<row>
+												<label
+													value="Frete Bruto: " />
+												<label
+													value="Frete Vol Unit: " />
+												<label value="Pesos" />
+												<label
+													value="Total Motorista" />
+												<label value="Pedágio " />
+												<label value="Estadia" />
+												<label
+													value="Ajudante " />
+												<label value="Outros" />
+											</row>
+											<row>
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.freteBruto}" />
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.freteValorUnit}" />
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.pesoFrete}" />
+												<hbox>
+													<label value="=" />
+													<doublebox
+														constraint="" format="R$ #,##0.00"
+														value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.totalMotorista}" />
+												</hbox>
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.pedagio}" />
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.estadia}" />
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.ajudante}" />
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.outros}" />
+											</row>
+										</rows>
+									</grid>
+									<grid>
+										<rows>
+											<row>
+												<label
+													value="Sest/Senat " />
+												<label value="INSS" />
+												<label value="Desconto" />
+												<label value="Pedagio" />
+												<label
+													value="Adiantamento" />
+												<label
+													value="Imposto de renda" />
+												<label
+													value="Falta da Mercadoria" />
+												<label value="Seguro" />
+											</row>
+											<row>
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.sestSenat}" />
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.INSS}" />
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.desconto}" />
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.pedagio2}" />
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.adiantamento}" />
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.impostoRenda}" />
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.faltaMercadoria}" />
+												<doublebox constraint=""
+													format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.seguro}" />
+											</row>
+											<row spans="3">
+												<hbox>
+													<label
+														value="Formula:: " />
+													<label
+														value="ex.: 10*20" />
+												</hbox>
+												<textbox
+													id="formulaBox3"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.formula}" />
+												<label
+													value="Valor Formula: " />
+												<doublebox
+													id="valorFormulaBox3" format="R$ #,##0.00"
+													value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.valorFormula}" />
+											</row>
+										</rows>
+									</grid>
+								</groupbox>
+							</row>
+							<row spans="6">
+								<grid>
+									<rows>
+										<row>
+											<groupbox mold="default">
+												<caption
+													label="Observações Carta Frete" />
+												<grid>
+													<rows>
+														<row>
+															<textbox
+																constraint="" rows="8" width="100%"
+																value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.observacao}" />
+														</row>
+													</rows>
+												</grid>
+											</groupbox>
+											<groupbox mold="default">
+												<grid>
+													<rows>
+														<row>
+															<label
+																value="Frete Liquido " />
+														</row>
+														<row>
+															<doublebox
+																constraint="" format="R$ #,##0.00"
+																value="@{conhecimentoController.selected.conhecimentoCalculoFreteCarta.freteLiquido}" />
+														</row>
+													</rows>
+												</grid>
+											</groupbox>
+										</row>
+									</rows>
+								</grid>
+							</row>
+						</rows>
+					</grid>
+
+					<!--					<groupbox mold="default">-->
+					<!--						<caption label="Outros Valores" />-->
+					<!--						<grid>-->
+					<!--							<rows>-->
+					<!--								<row>-->
+					<!--									<label value="% s/Frete: " />-->
+					<!--									<label value="Valor Retorno: " />-->
+					<!--									<label value="% s/Frete: " />-->
+					<!--									<label value="Valor Excedente: " />-->
+					<!--								</row>-->
+					<!--								<row>-->
+					<!--									<textbox constraint="" />-->
+					<!--									<textbox constraint="" />-->
+					<!--									<textbox constraint="" />-->
+					<!--									<textbox constraint="" />-->
+					<!--								</row>-->
+					<!--							</rows>-->
+					<!--						</grid>-->
+					<!--					</groupbox>-->
+
+
+					<separator height="25px" bar="true" />
+
+					<groupbox mold="default">
+						<caption label="Observações" />
+						<grid>
+							<rows>
+								<row spans="8">
+									<textbox constraint="" rows="8"
+										width="100%"
+										value="@{conhecimentoController.selected.observacao}" />
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<grid>
+						<rows>
+							<group label="Taxas/ Valores" spans="4"></group>
+							<row>
+								<label value="Tx. Min.: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.taxaMinima}" />
+								<label value="Tx. Seguro: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.taxaSeguro}" />
+							</row>
+							<row>
+								<label value="Val. Seguro: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.valorSeguro}" />
+								<label value="Total Frete: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.totalFrete}" />
+							</row>
+							<row>
+								<label value="Base ICMS: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.baseICMS}" />
+								<label value="ICMS: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.ICMS}" />
+							</row>
+							<row>
+								<label value="Val. ICMS: " />
+								<doublebox constraint=""
+									format="R$ #,##0.00"
+									value="@{conhecimentoController.selected.valorICMS}" />
+								<label value="" />
+								<label value="" />
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+				<tabpanel>
+					<grid>
+						<rows>
+							<group label="Coleta" spans="4" />
+							<row>
+								<label value="Motorista Coleta: " />
+								<combobox
+									selectedItem="@{conhecimentoController.selected.motoristaColeta}">
+									<comboitem
+										forEach="${conhecimentoController.motoristas}"
+										label="${each.nome}" description="${each.sobrenome}"
+										value="${each}" />
+								</combobox>
+								<label value="Veículo Coleta: " />
+								<combobox
+									selectedItem="@{conhecimentoController.selected.veiculoColeta}">
+									<comboitem
+										forEach="${conhecimentoController.veiculos}"
+										label="${each.placa}" description="${each.descricao}"
+										value="${each}" />
+								</combobox>
+							</row>
+							<row>
+								<label value="Km inicial: " />
+								<intbox
+									constraint="no negative: Valor não pode ser negativo"
+									value="@{conhecimentoController.selected.kmInicialColeta}" />
+								<label value="Km Final: " />
+								<intbox
+									constraint="no negative: Valor não pode ser negativo"
+									value="@{conhecimentoController.selected.kmFinalColeta}" />
+							</row>
+							<row>
+								<label value="Data/Hora inicial: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{conhecimentoController.selected.dataHoraInicialColeta}" />
+								<label value="Data/Hora Final: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{conhecimentoController.selected.dataHoraFinalColeta}" />
+							</row>
+							<row>
+								<label value="Entregue para: " />
+								<textbox constraint=""
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.entreguePor}" />
+								<label value="Observações: " />
+								<textbox rows="2"
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.observacaoColeta}" />
+							</row>
+
+
+							<group label="Entrega" spans="4" />
+							<row>
+								<label value="Motorista Entrega: " />
+								<combobox
+									selectedItem="@{conhecimentoController.selected.motoristaEntrega}">
+									<comboitem
+										forEach="${conhecimentoController.motoristas}"
+										label="${each.nome}" description="${each.sobrenome}"
+										value="${each}" />
+								</combobox>
+								<label value="Veículo Entrega: " />
+								<combobox
+									selectedItem="@{conhecimentoController.selected.veiculoEntrega}">
+									<comboitem
+										forEach="${conhecimentoController.veiculos}"
+										label="${each.placa}" description="${each.descricao}"
+										value="${each}" />
+								</combobox>
+							</row>
+							<row>
+								<label value="Km inicial: " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.kmInicialEntrega}" />
+								<label value="Km Final: " />
+								<textbox constraint=""
+									value="@{conhecimentoController.selected.kmFinalEntrega}" />
+							</row>
+							<row>
+								<label value="Data/Hora inicial: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{conhecimentoController.selected.dataHoraInicialEntrega}" />
+								<label value="Data/Hora Final: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{conhecimentoController.selected.dataHoraFinalEntrega}" />
+							</row>
+							<row>
+								<label value="Recebido por: " />
+								<textbox constraint=""
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.recebidoPor}" />
+								<label value="Observações: " />
+								<textbox rows="2"
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.observacaoEntrega}" />
+							</row>
+							<row>
+								<label value="Consignatario: " />
+								<textbox
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.consignatarioEntrega}" />
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+				<tabpanel>
+					<grid>
+						<rows>
+							<row>
+								<label value="Gerar Boleto: " />
+								<image id="gerarBoletoImg" src="/img/png/PDF-icon32.png" />
+							</row>
+							
+							<group label="Coleta" spans="4" />
+							<!--							<row>-->
+							<!--								<label value="Cidade Coleta: " />-->
+							<!--								<textbox-->
+							<!--									style="text-transform:uppercase" constraint="" />-->
+							<!--								<label value="Cidade Entrega: " />-->
+							<!--								<textbox-->
+							<!--									style="text-transform:uppercase" constraint="" />-->
+							<!--							</row>-->
+							<row>
+								<label value="Calculado até: " />
+								<textbox constraint="" />
+								<!--								<label value="Motorista: " />-->
+								<!--								<combobox>-->
+								<!--									<comboitem label="Danilo"></comboitem>-->
+								<!--									<comboitem label="Ricardo"></comboitem>-->
+								<!--								</combobox>-->
+							</row>
+							<row>
+								<label value="Veículo: " />
+								<combobox>
+									<comboitem label="Truck"></comboitem>
+									<comboitem label="Truck Ext"></comboitem>
+								</combobox>
+								<label value="Carreta: " />
+								<combobox>
+									<comboitem label="XPTO"></comboitem>
+									<comboitem label="ABC"></comboitem>
+								</combobox>
+							</row>
+							<row>
+								<label value="Bi-Trem: " />
+								<textbox constraint="" />
+								<label value="Codigo Observação: " />
+								<textbox
+									style="text-transform:uppercase" constraint="" />
+							</row>
+							<row>
+								<!--								<label value="Desconto R$: " />-->
+								<!--								<doublebox constraint=""-->
+								<!--									 />-->
+								<label value="Peso cubado: " />
+								<doublebox constraint="" />
+							</row>
+							<row>
+								<label value="Palet Normal: " />
+								<doublebox constraint="" />
+								<label value="Tx Coleta: " />
+								<doublebox constraint="" />
+							</row>
+							<row>
+								<label value="Seguro 1%: " />
+								<doublebox constraint="" />
+								<label value="Ademe: " />
+								<doublebox constraint="" />
+							</row>
+							<row>
+								<label value="ITR R$: " />
+								<doublebox constraint="" />
+								<label value="Seguro 2%: " />
+								<doublebox constraint="" />
+							</row>
+
+							<row>
+								<label value="Dt. Pagto: " />
+								<textbox constraint="" />
+								<label value="Entrega: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" />
+							</row>
+							<row>
+								<label value="Pago ao Motorista: " />
+								<hbox>
+									<doublebox constraint="" />
+									<checkbox label="Gerar Carta Frete" />
+								</hbox>
+								<label value="Observação: " />
+								<textbox
+									style="text-transform:uppercase" rows="4">
+								</textbox>
+							</row>
+							<row>
+								<label value="Vendedor: " />
+								<combobox></combobox>
+								<label value="%: " />
+								<textbox constraint="" />
+							</row>
+							<row>
+								<label value="Comprov: " />
+								<textbox constraint="" />
+								<label value="Crtl: " />
+								<textbox constraint="" />
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<group label="Carga" spans="4"></group>
+							<row>
+								<label value="Data: " />
+								<hbox>
+									<datebox id="derg" width="150px" />
+								</hbox>
+								<label value="Nat. Carga: " />
+								<combobox>
+									<comboitem>DIVERSOS</comboitem>
+								</combobox>
+							</row>
+							<row>
+								<label value="Valor Notas: " />
+								<doublebox constraint="" />
+								<label value="Peso (KG): " />
+								<textbox constraint="" />
+							</row>
+							<row>
+								<label value="Lt M3: " />
+								<textbox constraint="" />
+								<label value="Peso (M3): " />
+								<textbox constraint="" />
+							</row>
+							<row>
+								<label value="Qtde. Vols.: " />
+								<intbox constraint="" />
+								<label value="Espécie: " />
+								<textbox constraint="" />
+							</row>
+							<row></row>
+							<row>
+								<label value="Frete Peso: " />
+								<textbox constraint="" />
+								<label value="Adic. Peso(%): " />
+								<doublebox constraint="" />
+							</row>
+							<row>
+								<label value="Ad Valorem: " />
+								<doublebox constraint="" />
+								<label value="Cat.: " />
+								<doublebox constraint="" />
+							</row>
+							<row>
+
+							</row>
+							<row>
+								<label value="Despacho: " />
+								<textbox
+									style="text-transform:uppercase" constraint="" />
+								<label value="Pedágio: " />
+								<doublebox constraint="" />
+							</row>
+							<row>
+								<label value="Entrega: " />
+								<textbox constraint="" />
+								<label value="Outros: " />
+								<textbox
+									style="text-transform:uppercase" constraint="" />
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+				<tabpanel>
+					<grid>
+						<rows>
+							<row spans="4">
+								<hbox>
+									<label value="Nº CT-e: " />
+									<textbox constraint=""
+										style="text-transform:uppercase"
+										value="@{conhecimentoController.selected.conhecimentoCTe.numeroCTE}" />
+								</hbox>
+							</row>
+							<row>
+								<label value="Data/Hora envio: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{conhecimentoController.selected.conhecimentoCTe.dataHoraEnvioCTE}" />
+								<label value="Protocolo: " />
+								<textbox constraint=""
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.conhecimentoCTe.protocoloEnvio}" />
+							</row>
+							<row spans="4">
+								<hbox>
+									<label value="Status: " />
+									<textbox constraint=""
+										style="text-transform:uppercase"
+										value="@{conhecimentoController.selected.conhecimentoCTe.status}" />
+								</hbox>
+							</row>
+							<row spans="4">
+								<hbox>
+									<label value="Resposta/ Rejeição: " />
+									<textbox constraint=""
+										style="text-transform:uppercase"
+										value="@{conhecimentoController.selected.conhecimentoCTe.rejeicao}" />
+								</hbox>
+							</row>
+							<row>
+								<label value="Data/Hora Aprovação: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{conhecimentoController.selected.conhecimentoCTe.dataHoraAprovacao}" />
+								<label value="Protocolo: " />
+								<textbox constraint=""
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.conhecimentoCTe.protocoloAprovacao}" />
+							</row>
+							<row>
+								<label value="Data/Hora Cancelamento: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{conhecimentoController.selected.conhecimentoCTe.dataHoraCancelamento}" />
+								<label value="Protocolo: " />
+								<textbox constraint=""
+									style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.conhecimentoCTe.protocoloCancelamento}" />
+							</row>
+						</rows>
+					</grid>
+					<tabbox>
+						<tabs>
+							<tab label="Doc Envio" closable="false"
+								selected="true" />
+							<tab label="Doc Aprovação" closable="false" />
+							<tab label="Doc Cancelamento"
+								closable="false" />
+							<tab label="Doc Inicial" closable="false" />
+						</tabs>
+						<tabpanels>
+							<tabpanel>
+								<textbox constraint="" rows="8"
+									width="100%" style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.conhecimentoCTe.docXMLEnvio}" />
+							</tabpanel>
+							<tabpanel>
+								<textbox constraint="" rows="8"
+									width="100%" style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.conhecimentoCTe.docXMLAprovacao}" />
+							</tabpanel>
+							<tabpanel>
+								<textbox constraint="" rows="8"
+									width="100%" style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.conhecimentoCTe.docXMLCancelamento}" />
+							</tabpanel>
+							<tabpanel>
+								<textbox constraint="" rows="8"
+									width="100%" style="text-transform:uppercase"
+									value="@{conhecimentoController.selected.conhecimentoCTe.docXMLOriginal}" />
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{conhecimentoController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

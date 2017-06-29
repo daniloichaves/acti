@@ -1,0 +1,86 @@
+<?page title="Sistema Integrado para Transportadoras" contentType="text/html;charset=UTF-8" complete="true"?>
+<zk>
+
+	<script
+		content="zk.googleAPIkey='ABQIAAAAL5W7NVHwrWYE3JzrRsBJ5hTNOr8vgXOQPTkanHJhOUOv_qsDxBSJYejru4p5jPF3yzK_s4GVLgDCaQ'" />
+	<script type="text/javascript"
+		src="http://www.google.com/jsapi?key=ABQIAAAAL5W7NVHwrWYE3JzrRsBJ5hTNOr8vgXOQPTkanHJhOUOv_qsDxBSJYejru4p5jPF3yzK_s4GVLgDCaQ">
+	</script>
+
+	<window title="Roterizador - Norte" border="normal" width="100%"
+		height="600px">
+
+
+		<borderlayout>
+			<north>
+				<listbox mold="paging">
+					<listhead sizable="true">
+						<listheader label="Empresa" sort="auto" />
+						<listheader label="Endereço" sort="auto" />
+						<listheader label="Volume" />
+						<listheader label="Peso" />
+						<listheader label="NF" />
+						<listheader label="Valor" />
+					</listhead>
+					<listitem>
+						<listcell label="Jgle Solutions" />
+						<listcell label="Rua leopoldina, 234" />
+						<listcell label="76" />
+						<listcell label="10t" />
+						<listcell label="312" />
+						<listcell label="1564.70" />
+					</listitem>
+					<listitem>
+						<listcell label="Westtrack" />
+						<listcell label="Rua dos andantes, 85" />
+						<listcell label="65" />
+						<listcell label="10t" />
+						<listcell label="54" />
+						<listcell label="597.00" />
+					</listitem>
+					<listitem>
+						<listcell label="Google" />
+						<listcell label="Av. Jose da Silva, 45" />
+						<listcell label="54" />
+						<listcell label="10t" />
+						<listcell label="7657" />
+						<listcell label="11564.00" />
+					</listitem>
+					<listitem>
+						<listcell label="Oi" />
+						<listcell label="Av. raimundos, 25" />
+						<listcell label="65" />
+						<listcell label="10t" />
+						<listcell label="67577" />
+						<listcell label="1645.00" />
+					</listitem>
+				</listbox>
+			</north>
+			<center>
+				<gmaps id="mymap" width="100%" height="100%"
+					showLargeCtrl="true"
+					style="border:1px solid black;margin-top:5px">
+					<attribute name="onMapDoubleClick">
+	double lat = event.lat;
+	double lng = event.lng;
+	//add a gmarker on the vertex
+	new org.zkoss.gmaps.Gmarker("", lat, lng).setParent(mymap);
+	//add a polyline vertex point
+	mypoly.addPoint(lat, lng, 3);
+	//display the vertex latitude and longitude
+	lbl.value = lbl.value + event.lat + "," + event.lng + ";\n";
+</attribute>
+
+					<gpolyline id="mypoly" color="#3333cc" weight="10" />
+				</gmaps>
+			</center>
+
+			<south>
+				<vbox>
+					data:
+					<label id="lbl" pre="true" />
+				</vbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

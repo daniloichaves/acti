@@ -1,0 +1,898 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit" apply="${projetoController}"
+		visible="@{projetoController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Projetos do PRG">
+
+		<zscript>
+	void verificaTab() {
+		if (rastreadorCheck.isChecked()) {
+			tabRastreador.setVisible(true);
+			panelRastreador.setVisible(true);
+			tabRastreador.setSelected(true);
+		} else {
+			tabRastreador.setVisible(false);
+			panelRastreador.setVisible(false);
+		}
+		if (sensorCheck.isChecked()) {
+			tabSensores.setVisible(true);
+			panelSensores.setVisible(true);
+			tabSensores.setSelected(true);
+		} else {
+			tabSensores.setVisible(false);
+			panelSensores.setVisible(false);
+		}
+		if (atuadorCheck.isChecked()) {
+			tabAtuadores.setVisible(true);
+			panelAtuadores.setVisible(true);
+			tabAtuadores.setSelected(true);
+		} else {
+			tabAtuadores.setVisible(false);
+			panelAtuadores.setVisible(false);
+		}
+		if (adiconaisCheck.isChecked()) {
+			tabAdicionais.setVisible(true);
+			panelAdicionais.setVisible(true);
+			tabAdicionais.setSelected(true);
+		} else {
+			tabAdicionais.setVisible(false);
+			panelAdicionais.setVisible(false);
+		}
+
+		if (rastreadorCheck.isChecked() || sensorCheck.isChecked()
+				|| atuadorCheck.isChecked() || adiconaisCheck.isChecked()
+				|| adiconaisCheck.isChecked())
+			tabs.setVisible(true);
+		else
+			tabs.setVisible(false);
+	}
+</zscript>
+		<tabbox onClientInfo="verificaTab();">
+			<tabs>
+				<tab id="tab0" label="Dados Gerais" closable="false"
+					selected="true" />
+				<tab id="tab1" label="Seguro Próprio" closable="false" />
+				<tab id="tab6" label="Tempo Comunicação"
+					closable="false" visible="false"/>
+				<tab id="tab7" label="Tabela de Sub-Limite"
+					closable="false" />
+				<tab id="tab8" label="Restrição de Paradas"
+					closable="false" />
+				<tab id="tab9" label="Escolta Armada" closable="false" />
+			</tabs>
+			<tabpanels>
+				<tabpanel>
+					<grid>
+						<rows>
+<!-- 							<group label="Unidades Envolvidas" -->
+<!-- 								spans="4" /> -->
+							<row align="center">
+								<label value="Seguradora: " />
+								<combobox id="seguradoraBox"
+									selectedItem="@{projetoController.selected.seguradora}"
+									autodrop="true">
+									<comboitem
+										forEach="${projetoController.seguradoras}"
+										label="${each.razaosocialnome}" value="${each}" />
+								</combobox>
+								<label value="Corretora: " />
+								<combobox id="corretoraBox"
+									selectedItem="@{projetoController.selected.corretora}"
+									autodrop="true">
+									<comboitem
+										forEach="${projetoController.corretoras}"
+										label="${each.razaosocialnome}" value="${each}" />
+								</combobox>
+							</row>
+
+							<row align="center">
+								<label value="Número Apólice: " />
+								<intbox></intbox>
+								<label value="Vigëncia: " />
+								<hbox>
+									<datebox id="dataVigenciaInicialBox"
+										format="dd/MM/yyyy" onCreate="self.setValue(new Date())"
+										mold="rounded"
+										value="@{projetoController.selected.dataVigenciaInicial}" />
+									<label value=" à " />
+									<datebox format="dd/MM/yyyy"
+										onCreate="self.setValue(new Date()); self.getValue().setYear(dataVigenciaInicialBox.getValue().getYear() + 1)"
+										mold="rounded"
+										value="@{projetoController.selected.dataVigenciaFinal}" />
+								</hbox>
+							</row>
+
+							<row spans="4" id="unidadeBox">
+								<columnlayout>
+									<columnchildren width="50%">
+										<panel
+											title="Unidades/ Filiais:">
+											<panelchildren>
+												<listbox
+													id="leftUnidades" multiple="true" height="100px"
+													oddRowSclass="non-odd" fixedLayout="true" checkmark="true"
+													model="@{projetoController.unidades}">
+
+													<listhead>
+														<listheader
+															label="Nome Fantasia" />
+														<listheader
+															label="Razão Social" />
+													</listhead>
+
+													<listitem
+														self="@{each=reminder}">
+														<listcell
+															label="@{reminder.nomeFantasia}" />
+														<listcell
+															label="@{reminder.razaoSocial}" />
+													</listitem>
+												</listbox>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+									<columnchildren width="100px">
+										<panel>
+											<panelchildren
+												style="margin: 30px 34px;">
+												<image id="addUnidades"
+													sclass="pointer"
+													src="/img/png/ButtonArrowRightDouble-32x32.png"
+													tooltiptext="Add Project">
+												</image>
+												<separator
+													height="15px" />
+												<image
+													id="removeUnidades" sclass="pointer"
+													src="/img/png/ButtonArrowLeftDouble-32x32.png"
+													tooltiptext="Remove Project">
+												</image>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+									<columnchildren width="50%">
+										<panel
+											title="Unidades/ Filiais envolvidas:" height="">
+											<panelchildren>
+												<listbox
+													id="rightUnidades" multiple="true" height="100px"
+													oddRowSclass="non-odd" fixedLayout="true" checkmark="true"
+													model="@{projetoController.selected.unidades}">
+
+													<listhead>
+														<listheader
+															label="Nome Fantasia" />
+														<listheader
+															label="Razão Social" />
+													</listhead>
+
+													<listitem
+														self="@{each=reminder}">
+														<listcell
+															label="@{reminder.nomeFantasia}" />
+														<listcell
+															label="@{reminder.razaoSocial}" />
+													</listitem>
+												</listbox>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+								</columnlayout>
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<columns>
+							<column width="20%" />
+							<column width="20%" />
+							<column width="20%" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+<!-- 								<label value="Limite Máximo de Garantia: " /> -->
+								<label value="Limite Máximo de Responsabilidade: " />
+								<doublebox format="R$ #,##0.00"
+									value="@{projetoController.selected.limiteMaximoGarantia}" />
+								<label
+									value="Bens Não compreendidos pelo seguro: ( separados por virgula ; )" />
+								<textbox rows="8" width="100%"
+									style="text-transform:uppercase"
+									value="@{projetoController.selected.bensNaoCompreendidosSeguro}" />
+							</row>
+							<row>
+								<label
+									value="Armazenar Documento PRG: " />
+								<button id="pgrUploadBtn"
+									label="Upload Arquivo" />
+
+								<label value="Download Documento PGR: " />
+								<vbox id="downloadBox">
+
+								</vbox>
+							</row>
+						</rows>
+					</grid>
+					
+					<grid>
+						<rows>
+							<row>
+								<label value="Veiculo Rastreado: " />
+								<checkbox id="rastreadorCheck"
+									checked="true"
+									onClick="verificaTab()" onCheck="verificaTab()" />
+								<label value="Sensores: "
+									onCheck="verificaTab()" />
+								<checkbox id="sensorCheck"
+									checked="true"
+									onClick="verificaTab()" onCheck="verificaTab()" />
+							</row>
+							<row>
+								<label value="Atuadores: " />
+								<checkbox id="atuadorCheck"
+									checked="true"
+									onClick="verificaTab()" onCheck="verificaTab()" />
+								<label
+									value="Adicionais Obrigatórios: " />
+								<checkbox id="adiconaisCheck"
+									checked="true"
+									onClick="verificaTab()" onCheck="verificaTab()" />
+							</row>
+						</rows>
+					</grid>
+
+					<!-- Tabbox 2 -->
+					<tabbox>
+						<tabs>
+							<tab id="tabRastreador" label="Rastreador"
+								closable="false" visible="@{projetoController.selected.veiculoRastreado}" />
+							<tab id="tabSensores" label="Sensores"
+								closable="false" visible="@{projetoController.selected.sensores}" />
+							<tab id="tabAtuadores" label="Atuadores"
+								closable="false" visible="@{projetoController.selected.atuadores}" />
+							<tab id="tabAdicionais"
+								label="Adicionais Obrigatórios" closable="false"
+								visible="@{projetoController.selected.adicionaisObrigadorios}" />
+						</tabs>
+						<tabpanels id="tabs">
+							<tabpanel id="panelRastreador"
+								visible="false">
+								<grid>
+									<rows id="rastreadorBox">
+										<row spans="4">
+											<columnlayout>
+												<columnchildren
+													width="50%">
+													<panel
+														title="Tecnologias Disponiveis:">
+														<panelchildren>
+															<listbox
+																id="leftRastreador" multiple="true" height="150px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{projetoController.rastreadores}">
+
+																<listhead>
+																	<listheader
+																		label="Rastreadores" />
+																	<!--														<listheader-->
+																	<!--															label="Equipamento" />-->
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.rastreador}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="100px">
+													<panel>
+														<panelchildren
+															style="margin: 70px 34px;">
+															<image
+																id="addRastreador" sclass="pointer"
+																src="/img/png/ButtonArrowRightDouble-32x32.png"
+																tooltiptext="Add Project">
+															</image>
+															<separator
+																height="15px" />
+															<image
+																id="removeRastreador" sclass="pointer"
+																src="/img/png/ButtonArrowLeftDouble-32x32.png"
+																tooltiptext="Remove Project">
+															</image>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="50%">
+													<panel
+														title="Tecnologias Autorizadas:" height="">
+														<panelchildren>
+															<listbox
+																id="rightRastreador" multiple="true" height="150px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{projetoController.selected.rastreadores}">
+
+																<listhead>
+																	<listheader
+																		label="Empresa" />
+																	<!--														<listheader-->
+																	<!--															label="Equipamento" />-->
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.rastreador}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+											</columnlayout>
+										</row>
+
+									</rows>
+								</grid>
+							</tabpanel>
+
+							<tabpanel id="panelSensores">
+								<grid>
+									<rows>
+										<row spans="4"
+											id="sensoresBox">
+											<columnlayout>
+
+												<columnchildren
+													width="50%">
+													<panel
+														title="Sensores Disponiveis:">
+														<panelchildren>
+															<listbox
+																id="leftSensores" multiple="true" height="300px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{projetoController.sensores}">
+
+																<listhead>
+																	<listheader
+																		label="Sensores" />
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.sensor}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="100px">
+													<panel>
+														<panelchildren
+															style="margin: 70px 34px;">
+															<image
+																id="addSensores" sclass="pointer"
+																src="/img/png/ButtonArrowRightDouble-32x32.png"
+																tooltiptext="Add Project">
+															</image>
+															<separator
+																height="15px" />
+															<image
+																id="removeSensores" sclass="pointer"
+																src="/img/png/ButtonArrowLeftDouble-32x32.png"
+																tooltiptext="Remove Project">
+															</image>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="50%">
+													<panel
+														title="Cliente/ Embarcador Com Seguro:" height="">
+														<panelchildren>
+															<listbox
+																id="rightSensores" multiple="true" height="300px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{projetoController.selected.sensors}">
+
+																<listhead>
+																	<listheader
+																		label="Sensores" />
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.sensor}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+											</columnlayout>
+										</row>
+									</rows>
+								</grid>
+							</tabpanel>
+
+							<tabpanel id="panelAtuadores">
+								<grid>
+									<rows>
+										<row spans="4"
+											id="atuadoresBox">
+											<columnlayout>
+
+												<columnchildren
+													width="50%">
+													<panel
+														title="Atuadores Disponiveis:">
+														<panelchildren>
+															<listbox
+																id="leftAtuadores" multiple="true" height="300px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{projetoController.atuadores}">
+
+																<listhead>
+																	<listheader
+																		label="Atuadores" />
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.atuador}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="100px">
+													<panel>
+														<panelchildren
+															style="margin: 70px 34px;">
+															<image
+																id="addAtuadores" sclass="pointer"
+																src="/img/png/ButtonArrowRightDouble-32x32.png"
+																tooltiptext="Add Project">
+															</image>
+															<separator
+																height="15px" />
+															<image
+																id="removeAtuadores" sclass="pointer"
+																src="/img/png/ButtonArrowLeftDouble-32x32.png"
+																tooltiptext="Remove Project">
+															</image>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="50%">
+													<panel
+														title="Cliente/ Embarcador Com Seguro:" height="">
+														<panelchildren>
+															<listbox
+																id="rightAtuadores" multiple="true" height="300px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{projetoController.selected.atuadors}">
+
+																<listhead>
+																	<listheader
+																		label="Atuadores" />
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.atuador}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+											</columnlayout>
+										</row>
+									</rows>
+								</grid>
+							</tabpanel>
+
+
+							<tabpanel id="panelAdicionais">
+								<grid>
+									<rows>
+										<row spans="4"
+											id="adicionaisBox">
+											<columnlayout>
+
+												<columnchildren
+													width="50%">
+													<panel
+														title="Adicionais Disponiveis:">
+														<panelchildren>
+															<listbox
+																id="leftAdicionais" multiple="true" height="300px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{projetoController.adicionais}">
+
+																<listhead>
+																	<listheader
+																		label="Adicionais" />
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.adicional}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="100px">
+													<panel>
+														<panelchildren
+															style="margin: 70px 34px;">
+															<image
+																id="addAdicionais" sclass="pointer"
+																src="/img/png/ButtonArrowRightDouble-32x32.png"
+																tooltiptext="Add Project">
+															</image>
+															<separator
+																height="15px" />
+															<image
+																id="removeAdicionais" sclass="pointer"
+																src="/img/png/ButtonArrowLeftDouble-32x32.png"
+																tooltiptext="Remove Project">
+															</image>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+												<columnchildren
+													width="50%">
+													<panel
+														title="Cliente/ Embarcador Com Seguro:" height="">
+														<panelchildren>
+															<listbox
+																id="rightAdicionais" multiple="true" height="300px"
+																oddRowSclass="non-odd" fixedLayout="true"
+																checkmark="true"
+																model="@{projetoController.selected.adicionals}">
+
+																<listhead>
+																	<listheader
+																		label="Adicionais" />
+																</listhead>
+
+																<listitem
+																	self="@{each=reminder}">
+																	<listcell
+																		label="@{reminder.adicional}" />
+																</listitem>
+															</listbox>
+														</panelchildren>
+													</panel>
+												</columnchildren>
+											</columnlayout>
+										</row>
+									</rows>
+								</grid>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+				</tabpanel>
+
+				<tabpanel>
+					<grid>
+						<rows>
+							<row spans="4">
+								<columnlayout>
+									<columnchildren width="50%">
+										<panel
+											title="Cliente/ Embarcador Disponiveis:">
+											<panelchildren>
+												<listbox id="left"
+													multiple="true" height="300px" oddRowSclass="non-odd"
+													fixedLayout="true" checkmark="true"
+													model="@{projetoController.clientes}">
+
+													<listhead>
+														<listheader
+															label="Empresa" />
+														<listheader
+															label="CNPJ" />
+													</listhead>
+
+													<listitem
+														self="@{each=reminder}">
+														<listcell
+															src="/img/png/box_32x32.png"
+															label="@{reminder.razaosocialnome}" />
+														<listcell
+															label="@{reminder.cnpjcpf}" />
+													</listitem>
+												</listbox>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+									<columnchildren width="100px">
+										<panel>
+											<panelchildren
+												style="margin: 70px 34px;">
+												<image id="addProject"
+													sclass="pointer"
+													src="/img/png/ButtonArrowRightDouble-32x32.png"
+													tooltiptext="Add Project">
+												</image>
+												<separator
+													height="15px" />
+												<image
+													id="removeProject" sclass="pointer"
+													src="/img/png/ButtonArrowLeftDouble-32x32.png"
+													tooltiptext="Remove Project">
+												</image>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+									<columnchildren width="50%">
+										<panel
+											title="Cliente/ Embarcador Com Seguro:" height="">
+											<panelchildren>
+												<listbox id="right"
+													multiple="true" height="300px" oddRowSclass="non-odd"
+													fixedLayout="true" checkmark="true"
+													model="@{projetoController.selected.embarcadoresSegProprio}">
+
+													<listhead>
+														<listheader
+															label="Empresa" />
+														<listheader
+															label="CNPJ" />
+													</listhead>
+
+													<listitem
+														self="@{each=reminder}">
+														<listcell
+															src="/img/png/box_32x32.png"
+															label="@{reminder.razaosocialnome}" />
+														<listcell
+															label="@{reminder.cnpjcpf}" />
+													</listitem>
+												</listbox>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+								</columnlayout>
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+				<tabpanel>
+					<grid>
+						<rows>
+							<group label="Tempo 1" spans="4" />
+							<row>
+								<label
+									value="Tempo maximo comunicação (minuto): " />
+								<intbox
+									value="@{projetoController.selected.tempoMaximoComunicacao}" />
+								<label />
+								<label />
+							</row>
+							<row spans="4" id="estadoBox">
+								<columnlayout>
+									<columnchildren width="50%">
+										<panel
+											title="Estados Disponiveis:">
+											<panelchildren>
+												<listbox
+													id="leftEstados" multiple="true" height="150px"
+													oddRowSclass="non-odd" fixedLayout="true" checkmark="true"
+													model="@{projetoController.estados}">
+
+													<listhead>
+														<listheader
+															label="Estado" />
+													</listhead>
+
+													<listitem
+														self="@{each=reminder}">
+														<listcell
+															label="@{reminder.uf}" />
+													</listitem>
+												</listbox>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+									<columnchildren width="100px">
+										<panel>
+											<panelchildren
+												style="margin: 70px 34px;">
+												<image id="addEstados"
+													sclass="pointer"
+													src="/img/png/ButtonArrowRightDouble-32x32.png"
+													tooltiptext="Add Project">
+												</image>
+												<separator
+													height="15px" />
+												<image
+													id="removeEstados" sclass="pointer"
+													src="/img/png/ButtonArrowLeftDouble-32x32.png"
+													tooltiptext="Remove Project">
+												</image>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+									<columnchildren width="50%">
+										<panel
+											title="Estados com Tempo de Comunicação:" height="">
+											<panelchildren>
+												<listbox
+													id="rightEstados" multiple="true" height="150px"
+													oddRowSclass="non-odd" fixedLayout="true" checkmark="true"
+													model="@{projetoController.selected.estado}">
+
+													<listhead>
+														<listheader
+															label="Estado" />
+													</listhead>
+
+													<listitem
+														self="@{each=reminder}">
+														<listcell
+															label="@{reminder.uf}" />
+													</listitem>
+												</listbox>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+								</columnlayout>
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<group label="Tempo 2" spans="4" />
+							<row>
+								<label
+									value="Tempo maximo comunicação (minuto): " />
+								<intbox
+									value="@{projetoController.selected.tempoMaximoComunicacao2}" />
+								<label />
+								<label />
+							</row>
+							<row spans="4" id="estado2Box">
+								<columnlayout>
+									<columnchildren width="50%">
+										<panel
+											title="Estados Disponiveis:">
+											<panelchildren>
+												<listbox
+													id="leftEstados2" multiple="true" height="150px"
+													oddRowSclass="non-odd" fixedLayout="true" checkmark="true"
+													model="@{projetoController.estados2}">
+
+													<listhead>
+														<listheader
+															label="Estado" />
+													</listhead>
+
+													<listitem
+														self="@{each=reminder}">
+														<listcell
+															label="@{reminder.uf}" />
+													</listitem>
+												</listbox>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+									<columnchildren width="100px">
+										<panel>
+											<panelchildren
+												style="margin: 70px 34px;">
+												<image id="addEstados2"
+													sclass="pointer"
+													src="/img/png/ButtonArrowRightDouble-32x32.png"
+													tooltiptext="Add Project">
+												</image>
+												<separator
+													height="15px" />
+												<image
+													id="removeEstados2" sclass="pointer"
+													src="/img/png/ButtonArrowLeftDouble-32x32.png"
+													tooltiptext="Remove Project">
+												</image>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+									<columnchildren width="50%">
+										<panel
+											title="Estados com Tempo de Comunicação:" height="">
+											<panelchildren>
+												<listbox
+													id="rightEstados2" multiple="true" height="150px"
+													oddRowSclass="non-odd" fixedLayout="true" checkmark="true"
+													model="@{projetoController.selected.estado2}">
+
+													<listhead>
+														<listheader
+															label="Estado" />
+													</listhead>
+
+													<listitem
+														self="@{each=reminder}">
+														<listcell
+															label="@{reminder.uf}" />
+													</listitem>
+												</listbox>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+								</columnlayout>
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+				<tabpanel>
+					<include id="grupoMercadoriaList"
+						src="/pgr/grupoMercadoriaList.zul"
+						controller="${projetoController.grupoMercadoriaController}" />
+				</tabpanel>
+
+				<tabpanel>
+					<include id="restricoesParadasList"
+						src="/cadastro/enderecoList.zul"
+						controller="${projetoController.enderecoController}" />
+
+				</tabpanel>
+
+				<tabpanel>
+					<include id="escoltaArmadaTrajetoList"
+						src="/pgr/escoltaArmadaTrajetoList.zul"
+						controller="${projetoController.escoltaArmadaTrajetoController}" />
+
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+		
+		<separator />
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{projetoController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

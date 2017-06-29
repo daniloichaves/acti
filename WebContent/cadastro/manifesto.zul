@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit" apply="${manifestoController}"
+		visible="@{manifestoController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Manifestos">
+
+		<tabbox id="childrenTabbox">
+			<tabs>
+				<tab id="tab1" label="Dados gerais" closable="false"
+					selected="true" />
+				<tab label="Conhecimentos" closable="false" />
+				<tab id="tab2" label="Origem/ Destinos"
+					closable="false" />
+				<!--				<tab label="Motorista" closable="false" />-->
+				<tab label="Cáculo Frete" closable="false" />
+			</tabs>
+
+			<tabpanels>
+				<tabpanel>
+					<grid>
+						<rows>
+							<row>
+								<label value="Nº Controle: " />
+								<textbox readonly="true"
+									value="@{conhecimentoController.selected.id}" />
+								<label value="Nº Manifesto: " />
+								<intbox constraint=""
+									value="@{manifestoController.selected.numeroManifesto}" />
+							</row>
+
+							<!--							<row>-->
+							<!--								<label value="Data/Hora Emissão: " />-->
+							<!--								<datebox cols="25"-->
+							<!--									format="dd/MM/yyyy a HH:mm"-->
+							<!--									onCreate="self.setValue(new Date())" mold="rounded" />-->
+							<!--								<label value="Previsão chegada: " />-->
+							<!--								<datebox cols="25"-->
+							<!--									format="dd/MM/yyyy a HH:mm"-->
+							<!--									onCreate="self.setValue(new Date())" mold="rounded" />-->
+							<!--							</row>-->
+
+							<row>
+								<label value="Digitador: " />
+								<combobox
+									selectedItem="@{manifestoController.selected.digitador}">
+									<comboitem
+										forEach="${manifestoController.digitadores}"
+										label="${each.nome}" description="${each.login}"
+										value="${each}" />
+								</combobox>
+								<label value="Data/Hora Emissão: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm"
+									onCreate="self.setValue(new Date())" mold="rounded"
+									disabled="true"
+									value="@{manifestoController.selected.dataCriacao}" />
+							</row>
+							<row>	
+								<label value="Conferente: " />
+								<combobox
+									selectedItem="@{manifestoController.selected.conferente}">
+									<comboitem
+										forEach="${manifestoController.conferentes}"
+										label="${each.nome}" description="${each.login}"
+										value="${each}" />
+								</combobox>
+								<!--								<label value="Rota: " />-->
+								<!--								<combobox>-->
+								<!--									<comboitem label="SP/RG"></comboitem>-->
+								<!--									<comboitem label="SP/MG"></comboitem>-->
+								<!--								</combobox>-->
+							</row>
+						</rows>
+					</grid>
+
+					<grid>
+						<rows>
+							<group label="Motorista/Veículo" spans="4" />
+							<row>
+								<label value="Motorista Entrega: " />
+								<combobox
+									selectedItem="@{manifestoController.selected.motoristaEntrega}">
+									<comboitem
+										forEach="${manifestoController.motoristas}"
+										label="${each.nome}" description="${each.sobrenome}"
+										value="${each}" />
+								</combobox>
+								<label value="Veículo Entrega: " />
+								<combobox
+									selectedItem="@{manifestoController.selected.veiculoEntrega}">
+									<comboitem
+										forEach="${manifestoController.veiculos}"
+										label="${each.placa}" description="${each.descricao}"
+										value="${each}" />
+								</combobox>
+							</row>
+							<row>
+								<label value="Km inicial: " />
+								<textbox constraint=""
+									value="@{manifestoController.selected.kmInicialEntrega}" />
+								<label value="Km Final: " />
+								<textbox constraint=""
+									value="@{manifestoController.selected.kmFinalEntrega}" />
+							</row>
+							<row>
+								<label value="Data/Hora inicial: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{manifestoController.selected.dataHoraInicialEntrega}" />
+								<label value="Data/Hora Final: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{manifestoController.selected.dataHoraFinalEntrega}" />
+							</row>
+						</rows>
+					</grid>
+
+					<grid>
+						<rows>
+							<group label="Seguradora" spans="4" />
+							<row>
+								<label value="Agência/ Seguradora: " />
+								<textbox
+									style="text-transform:uppercase"
+									value="@{manifestoController.selected.seguradora.agenciaSeguradora}" />
+								<label />
+								<label />
+							</row>
+
+							<row>
+								<label value="Nº Apólice: " />
+								<textbox
+									style="text-transform:uppercase"
+									value="@{manifestoController.selected.seguradora.numeroApolice}" />
+								<label value="Nº Averbação: " />
+								<textbox
+									style="text-transform:uppercase"
+									value="@{manifestoController.selected.seguradora.numeroAverbacao}" />
+							</row>
+							<row>
+								<label value="Atendente: " />
+								<textbox
+									style="text-transform:uppercase"
+									value="@{manifestoController.selected.seguradora.atendente}" />
+								<label value="Liberação: " />
+								<textbox
+									style="text-transform:uppercase"
+									value="@{manifestoController.selected.seguradora.liberacao}" />
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+				<tabpanel>
+					<grid>
+						<rows>
+							<row spans="4">
+								<columnlayout>
+
+									<columnchildren width="50%">
+										<panel
+											title="Conhecimentos Disponiveis:">
+											<panelchildren>
+												<listbox id="left"
+													multiple="true" height="300px" oddRowSclass="non-odd"
+													fixedLayout="true" checkmark="true"
+													model="@{manifestoController.conhecimentos}">
+
+													<listhead>
+														<listheader
+															label="Código" />
+														<listheader
+															label="Destinatário" />
+													</listhead>
+
+													<listitem
+														self="@{each=reminder}">
+														<listcell
+															src="/img/png/box_32x32.png" label="@{reminder.ctrc}" />
+														<listcell
+															label="@{reminder.destinatario.endereco}" />
+													</listitem>
+												</listbox>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+									<columnchildren width="100px">
+										<panel>
+											<panelchildren
+												style="margin: 70px 34px;">
+												<image id="addProject"
+													sclass="pointer"
+													src="/img/png/ButtonArrowRightDouble-32x32.png"
+													tooltiptext="Add Project">
+												</image>
+												<separator
+													height="15px" />
+												<image
+													id="removeProject" sclass="pointer"
+													src="/img/png/ButtonArrowLeftDouble-32x32.png"
+													tooltiptext="Remove Project">
+												</image>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+									<columnchildren width="50%">
+										<panel
+											title="Conhecimentos Manifesto:" height="">
+											<panelchildren>
+												<listbox id="right"
+													multiple="true" height="300px" oddRowSclass="non-odd"
+													fixedLayout="true" checkmark="true"
+													model="@{manifestoController.selected.conhecimentos}">
+
+													<listhead>
+														<listheader
+															label="Código" />
+														<listheader
+															label="Destinatário" />
+													</listhead>
+
+													<listitem
+														self="@{each=reminder}">
+														<listcell
+															src="/img/png/box_32x32.png" label="@{reminder.ctrc}" />
+														<listcell
+															label="@{reminder.destinatario.endereco}" />
+													</listitem>
+												</listbox>
+											</panelchildren>
+										</panel>
+									</columnchildren>
+								</columnlayout>
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+
+
+				<tabpanel>
+					<div id="conhecimentoDetail">
+						<grid>
+							<rows>
+								<group label="Origem/ Almoxarifado"
+									spans="4" />
+								<row>
+									<label value="Almoxarifado" />
+									<combobox id="almoxarifadoBox"
+										selectedItem="@{manifestoController.selected.almoxarifado}"
+										autodrop="true"
+										constraint="no empty: Por favor, selecione um almoxarifado">
+
+										<comboitem
+											forEach="${manifestoController.almoxarifados}"
+											label="${each.nome}" description="${each.codigo}"
+											value="${each}" />
+									</combobox>
+								</row>
+							</rows>
+						</grid>
+						<grid>
+							<rows>
+								<group label="Endereço" spans="4" />
+								<row>
+									<label value="Endereço: " />
+									<textbox id="remetenteEnderecoBox"
+										style="text-transform:uppercase" rows="2"
+										constraint="no empty: Por favor, digite um endereço"
+										value="@{manifestoController.selected.almoxarifado.endereco.endereco}"
+										width="95%" />
+									<hbox>
+										<label value="Número.: " />
+										<textbox
+											style="text-transform:uppercase" maxlength="8"
+											constraint="no empty: Por favor, digite um número"
+											value="@{manifestoController.selected.almoxarifado.endereco.numero}" />
+									</hbox>
+									<hbox>
+										<label value="CEP.: " />
+										<textbox
+											style="text-transform:uppercase" maxlength="8"
+											constraint="no empty: Por favor, digite um cep"
+											value="@{manifestoController.selected.almoxarifado.endereco.cep}" />
+									</hbox>
+								</row>
+								<row>
+									<label value="Bairro.: " />
+									<textbox id="remetenteBairroBox"
+										style="text-transform:uppercase" constraint=""
+										value="@{manifestoController.selected.almoxarifado.endereco.bairro}" />
+									<label value="Cidade.: " />
+									<textbox id="remetenteCidadeBox"
+										style="text-transform:uppercase" constraint=""
+										value="@{manifestoController.selected.almoxarifado.endereco.cidade}" />
+								</row>
+								<row>
+									<label value="UF.: " />
+									<combobox id="remetenteUFBox"
+										use="br.com.jgle.acti.component.UFCombobox"
+										selectedItem="@{manifestoController.selected.almoxarifado.endereco.uf}"
+										value="@{manifestoController.selected.almoxarifado.endereco.uf}"
+										autodrop="true">
+									</combobox>
+									<label value="Ponto Referênca: " />
+									<textbox
+										style="text-transform:uppercase" rows="2"
+										value="@{manifestoController.selected.almoxarifado.endereco.pontoReferencia}" />
+								</row>
+							</rows>
+						</grid>
+
+						<include height="100%"
+							src="/cadastro/manifestoConhecimentoList.zul"
+							controller="${manifestoController.manifestoConhecimentoController}" />
+					</div>
+				</tabpanel>
+
+				<tabpanel id="totaisBox">
+					<grid>
+						<rows>
+							<group
+								label="Totalização dos conhecimentos para conferência"
+								spans="4">
+							</group>
+							<row>
+								<label value="Total Valot NF: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.totalValorNF}" />
+								<label value="Total Qtde: " />
+								<intbox
+									constraint="no negative: Valor não pode ser negativo"
+									width="80px"
+									value="@{manifestoController.selected.totalQuantidade}" />
+							</row>
+							<row>
+								<label value="Total Peso: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="#.###" width="80px"
+									value="@{manifestoController.selected.totalPeso}" />
+								<label value="Valor Seguro: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.valorSeguro}" />
+							</row>
+							<row>
+								<label value="Total Frete Cif: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.totalFreteCif}" />
+								<label value="Total Frete Fob: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.totalFreteFob}" />
+							</row>
+							<row>
+								<label value="Total Frete: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.totalFrete}" />
+								<label value="Qtd CTRC: " />
+								<intbox
+									constraint="no negative: Valor não pode ser negativo"
+									width="80px"
+									value="@{manifestoController.selected.quantidadeCTRC}" />
+							</row>
+							<row>
+								<label value="(%) Seguro: " />
+								<doublebox format="###.##"
+									constraint="no negative: Valor não pode ser negativo"
+									value="@{manifestoController.selected.procentagemSeguro}" />
+								<label value="Total Desconto: " />
+								<doublebox format="###.##"
+									constraint="no negative: Valor não pode ser negativo"
+									value="@{manifestoController.selected.totalDesconto}" />
+							</row>
+						</rows>
+					</grid>
+
+					<grid>
+						<rows>
+							<group label="Despesas" spans="8" />
+							<row>
+								<label value="Sest/Senat: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.sestSenat}" />
+								<label value="INSS: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.inss}" />
+								<label value="I.R.: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.ir}" />
+								<label value="Pedágio: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.pedagio}" />
+							</row>
+							<row>
+								<label value="Falta de Mercadoria: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.faltaMercadoria}" />
+								<label value="Seguro: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.seguro}" />
+								<label value="Outros: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.outros}" />
+							</row>
+						</rows>
+					</grid>
+
+					<grid>
+						<rows>
+							<group label="Outros" spans="6" />
+
+							<row>
+								<label value="Conta Banco Motorista: " />
+								<combobox></combobox>
+								<label value="Nº Cheque Dep. Mot.: " />
+								<textbox
+									value="@{manifestoController.selected.numCheque}" />
+								<label value="Dt. Pagamento: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm"
+									onCreate="self.setValue(new Date())" mold="rounded"
+									value="@{manifestoController.selected.dataPagamento}" />
+							</row>
+							<row>
+								<label value="Valor Adiant: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.valorAdiantamento}" />
+								<label value="Cid. Adiant: " />
+								<textbox constraint=""
+									value="@{manifestoController.selected.cidAdiantamento}" />
+								<label value="Valor Motorista: " />
+								<textbox constraint=""
+									value="@{manifestoController.selected.valorMotorista}" />
+							</row>
+							<row>
+								<label value="Observação: " />
+								<textbox
+									style="text-transform:uppercase" rows="4"
+									value="@{manifestoController.selected.observacao}" />
+								<label value="Ajud. Geral/ Arrumador: " />
+								<combobox></combobox>
+								<label value="Qtde dias: " />
+								<intbox
+									value="@{manifestoController.selected.quantidadeDias}" />
+							</row>
+						</rows>
+					</grid>
+
+					<grid>
+						<rows>
+							<group label="Opcionais" spans="6" />
+							<row>
+								<label value="Descarga por Conta: " />
+								<textbox
+									value="@{manifestoController.selected.descargaPorConta}" />
+								<label value="Peso Tratado: " />
+								<doublebox format="#,##0 Kg" />
+								<label value="Valor/Tonelada: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.valorTonelada}" />
+							</row>
+							<row>
+								<label
+									value="Prazo máx Descarregamento: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm"
+									onCreate="self.setValue(new Date())" mold="rounded"
+									value="@{manifestoController.selected.dataMaxDescarregamento}" />
+								<label value="Dt. Validade: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm"
+									onCreate="self.setValue(new Date())" mold="rounded"
+									value="@{manifestoController.selected.dataValidade}" />
+								<label
+									value="Multa Atraso Descarregamento: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.multaAtrasoDescarregamento}" />
+							</row>
+							<row>
+								<label value="Total Lacres: " />
+								<intbox constraint=""
+									value="@{manifestoController.selected.totalLacres}" />
+								<label value="Pernoite: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.pernoite}" />
+								<label value="Refeição: " />
+								<doublebox
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00" width="80px"
+									value="@{manifestoController.selected.refeicao}" />
+							</row>
+						</rows>
+					</grid>
+
+					<!--					<grid>-->
+					<!--						<rows>-->
+					<!--							<group label="Valores" spans="4" />-->
+					<!--							<row>-->
+					<!--								<label value="Cidade Saldo: " />-->
+					<!--								<textbox constraint="" />-->
+					<!--								<label value="Saldo: " />-->
+					<!--								<textbox constraint="" />-->
+					<!--							</row>-->
+					<!--						</rows>-->
+					<!--					</grid>-->
+				</tabpanel>
+
+			</tabpanels>
+		</tabbox>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{manifestoController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+
+	<zscript>
+	</zscript>
+</zk>

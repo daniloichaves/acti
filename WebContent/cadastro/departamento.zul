@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<style id="css" src="/css/acti.css" />
+
+	<window title="Cadastro de Departamento" id="cadastro"
+		contentStyle="overflow:auto">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Tipo: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="DDD: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Número: " />
+					<textbox />
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<fisheyebar attachEdge="top">
+
+				<fisheye image="/img/png/save-as-icon48x48.png"
+					label="Salvar" onClick="alert(self.label)" />
+				<fisheye image="/img/png/delete-icon48x48.png"
+					label="Deletar" onClick="alert(self.label)" />
+				<fisheye image="/img/png/Cancel-2-icon48x48.png"
+					label="Cancelar" onClick="alert(self.label)">
+					<attribute name="onClick">
+	cadastro.visible = false;
+</attribute>
+				</fisheye>
+
+			</fisheyebar>
+
+		</div>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

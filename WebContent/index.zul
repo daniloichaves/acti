@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk>
+	<style src="/css/acti.css" />
+	<script type="text/javascript" src="/js/jquery-1.4.4.min.js" />
+	<script type="text/javascript" src="/js/jquery.meiomask.js" />
+	<script type="text/javascript" src="/js/masks.js" />
+	
+	<window id="entityEdit" apply="${indexController}" border="normal"
+		height="100%" width="100%">
+
+		<borderlayout>
+			<north height="90px" splittable="true" collapsible="true">
+				<include id="header" context="" src="/inc/header.zul" />
+			</north>
+
+			<center>
+				<borderlayout>
+					<west id="menulateral" size="17,5%" flex="true"
+						splittable="true" collapsible="true">
+						<borderlayout>
+							<north size="70%" autoscroll="true">
+								<include id="menu" context=""
+									src="/inc/menu.zul" />
+							</north>
+
+							<center>
+								<groupbox mold="3d" width="100%"
+									height="100%">
+
+<!-- 									<include src="/web/adsense.html"></include> -->
+								</groupbox>
+							</center>
+
+						</borderlayout>
+					</west>
+
+					<center>
+						<borderlayout height="auto">
+							<north size="100%" autoscroll="true">
+								<tabbox id="childrenTabbox">
+									<tabs>
+										<tab label="Dashboard"
+											closable="false" />
+									</tabs>
+									<tabpanels>
+										<tabpanel>
+											<include id="principal"
+												src="/inc/dashboard.zul" height="100%" progressing="true"
+												controller="${indexController.dashboardController}" />
+										</tabpanel>
+									</tabpanels>
+								</tabbox>
+							</north>
+
+							<!--							<center>-->
+							<!--								<window>-->
+							<!--									<caption label="ACTI Versão: 0.0.5 - Mensagem:"/>-->
+							<!--									<label-->
+							<!--										value="Executado com sucesso" />-->
+							<!--								</window>-->
+							<!--							</center>-->
+
+						</borderlayout>
+					</center>
+				</borderlayout>
+			</center>
+
+			<south size="3%">
+				<label
+					value="JGle Solutions Technology © 2010 - Todos os direitos reservados - melhor visualizado em 1024x768 pixels ou superior." />
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

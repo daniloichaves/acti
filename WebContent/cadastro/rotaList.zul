@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<window id="entityWin" ctrlKeys="#up#down" title="Lista de Rotas">
+
+	<hbox id="searchHbox" use="br.com.jgle.acti.component.SearchHbox"
+		selected="@{rotaController.selected}" />
+
+	<listbox id="entityList" width="100%" height="100%" mold="paging"
+		model="@{rotaController.reminders}"
+		selectedItem="@{rotaController.selected}">
+
+		<listhead sizable="true">
+			<listheader label="Alterar" width="45px" />
+			<listheader label="Origem" sort="auto" />
+			<listheader label="Destino" sort="auto" />
+			<listheader label="Fixo" />
+			<listheader label="Comissão" />
+			<listheader label="Unidade" sort="auto" />
+			<listheader label="Deletar" width="50px" />
+		</listhead>
+		<listitem self="@{each=reminder}">
+			<listcell id="entityUpdateQuick"
+				image="/img/png/page-edit-icon24x24.png" />
+			<listcell label="@{reminder.origemCidade}" />
+			<listcell label="@{reminder.destinoCidade}" />
+			<listcell label="@{reminder.valorFixo}" />
+			<listcell label="5%" />
+			<listcell label="MATRIZ" />
+			<listcell id="entityDeleteQuick"
+				image="/img/png/delete-icon16x16.png" />
+		</listitem>
+	</listbox>
+
+	<div id="entityDetail">
+
+		<!-- view mode -->
+		<div id="entityView" visible="@{rotaController.viewMode}">
+
+			<grid width="100%">
+				<rows>
+					<row>
+						Origem:
+						<label
+							value="@{rotaController.selected.origemCidade}" />
+					</row>
+					<row>
+						Destino:
+						<label
+							value="@{rotaController.selected.destinoCidade}" />
+					</row>
+					<row>
+						Frete:
+						<label
+							value="@{rotaController.selected.valorFixo}" />
+					</row>
+				</rows>
+			</grid>
+
+		</div>
+
+		<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+			visible="@{rotaController.viewMode}" />
+
+		<include src="/cadastro/rota.zul" />
+	</div>
+
+</window>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<window id="entityWin" title="Lista de Pneu de Veículo">
+
+	<hbox use="br.com.jgle.acti.component.SearchHbox"
+		selected="@{pneuController.selected}" />
+
+	<listbox id="entityList" width="100%" height="100%" mold="paging"
+		model="@{pneuController.reminders}"
+		selectedItem="@{pneuController.selected}" pageSize="@{pneuController.pageSize}">
+		<listhead sizable="true">
+			<listheader label="Alterar" width="45px" />
+			<listheader label="Aquisicao" sort="auto" />
+			<listheader label="Marca" sort="auto" />
+			<listheader label="Data" sort="auto" />
+			<listheader label="Valor" sort="auto" />
+			<listheader label="Deletar" width="50px" />
+		</listhead>
+		<listitem self="@{each=reminder}">
+			<listcell id="entityUpdateQuick"
+				image="/img/png/page-edit-icon24x24.png" />
+			<listcell label="@{reminder.aquisicao}" />
+			<listcell label="@{reminder.marca}" />
+			<listcell label="@{reminder.dataCriacao }" />
+			<listcell label="@{reminder.valorUnitario }" />
+			<listcell id="entityDeleteQuick"
+				image="/img/png/delete-icon16x16.png" />
+		</listitem>
+	</listbox>
+
+	<div id="entityDetail">
+
+		<!-- view mode -->
+		<div id="entityView" visible="@{pneuController.viewMode}">
+
+			<grid width="100%">
+				<rows>
+					<row>
+						Fornecedor:
+						<label value="" />
+						Data:
+						<label
+							value="@{pneuController.selected.dataCriacao,converter='org.zkoss.zkplus.databind.DateFormatConverter'}"
+							self="@{format(dd/MM/yyyy)}" />
+					</row>
+					<row>
+						Marca:
+						<label value="@{pneuController.selected.marca}" />
+						Tamanho:
+						<label
+							value="@{pneuController.selected.tamanho}" />
+					</row>
+					<row>
+						Quantidade:
+						<label
+							value="@{pneuController.selected.quantidade}" />
+						Valor Unitario:
+						<label width="50px"
+							value="@{pneuController.selected.valorUnitario}" />
+					</row>
+				</rows>
+			</grid>
+
+		</div>
+
+		<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+			visible="@{pneuController.viewMode}" />
+
+		<include src="/cadastro/estoque/pneuEntrada.zul" />
+	</div>
+
+</window>

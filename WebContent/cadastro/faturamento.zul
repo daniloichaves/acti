@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style id="css" src="/css/acti.css" />
+
+	<window title="Cadastro de Faturamento" id="cadastro"
+		contentStyle="overflow:auto">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Tipo de Frete: " />
+					<hbox>
+						<radio label="Fob" value="F" />
+						<radio label="Cif" value="C" />
+					</hbox>
+				</row>
+				<row>
+					<label value="Rota: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="Conhecimento: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="Data/Hora: " />
+					<datebox id="db" cols="25"
+						format="dd/MM/yyyy a HH:mm" onCreate="self.value = new Date()"
+						mold="rounded" />
+				</row>
+				<row>
+					<label value="Nº Coleta/OSC: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Nº CRT: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="CNPJ / CNH: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Razão Social/ Nome " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="Notas Fiscais " />
+					<combobox>
+						<comboitem>365 - JGLE</comboitem>
+						<comboitem>321 - WESTTRACK</comboitem>
+					</combobox>
+				</row>
+				<row>
+					<label value="Nº Manifesto " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Ano" />
+					<combobox>
+						<comboitem>2010</comboitem>
+						<comboitem>2009</comboitem>
+						<comboitem>2008</comboitem>
+						<comboitem>2007</comboitem>
+						<comboitem>2006</comboitem>
+					</combobox>
+				</row>
+				<row>
+					<label value="Fatura " />
+					<textbox constraint="" />
+				</row>
+
+				<group label="Remetente" spans="2"></group>
+				<row>
+					<label value="CNPJ " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="Razão Social " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="UF: " />
+					<combobox use="br.com.jgle.acti.component.UFCombobox"
+						selectedItem="@{enderecoController.selected.uf}"
+						autodrop="true" value="SP">
+					</combobox>
+				</row>
+				<row>
+					<label value="I.E.: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Selo: " />
+					<textbox constraint="" />
+				</row>
+
+				<group label="Destinatário" spans="2"></group>
+				<row>
+					<label value="CNPJ " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Razão Social " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="UF: " />
+					<combobox use="br.com.jgle.acti.component.UFCombobox"
+						selectedItem="@{enderecoController.selected.uf}"
+						autodrop="true" value="SP">
+					</combobox>
+				</row>
+				<row>
+					<label value="I.E.: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Serie: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+
+				<group label="Consignatário" spans="2"></group>
+				<row>
+					<label value="CNPJ " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Razão Social " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="UF: " />
+					<combobox use="br.com.jgle.acti.component.UFCombobox"
+						selectedItem="@{enderecoController.selected.uf}"
+						autodrop="true" value="SP">
+					</combobox>
+				</row>
+				<row>
+					<label value="I.E.: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Serie: " />
+					<radio label="Frt.Comb." />
+				</row>
+				<row>
+					<label value="ICMS: " />
+					<textbox constraint="" />
+				</row>
+
+				<group label="Redespacho" spans="2"></group>
+				<row>
+					<label value="CNPJ " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Razão Social " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="UF: " />
+					<combobox use="br.com.jgle.acti.component.UFCombobox"
+						selectedItem="@{enderecoController.selected.uf}"
+						autodrop="true" value="SP">
+					</combobox>
+				</row>
+				<row>
+					<label value="I.E.: " />
+					<textbox constraint="" />
+				</row>
+
+				<group label="Carga" spans="2"></group>
+				<row>
+					<label value="Data: " />
+					<hbox>
+						<datebox id="derg" width="150px" />
+					</hbox>
+				</row>
+
+				<row>
+					<label value="Nat. Carga: " />
+					<combobox>
+						<comboitem>DIVERSOS</comboitem>
+					</combobox>
+				</row>
+				<row>
+					<label value="Valor Notas: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Peso (KG): " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Lt M3: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Peso (M3): " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Qtde. Vols.: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Espécie: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="Frete Peso: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Adic. Peso(%): " />
+					<textbox constraint="" />
+				</row>
+
+				<row>
+					<label value="Ad Valorem: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Cat.: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Despacho: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="Pedágio: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="Entrega: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Outros: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+			</rows>
+		</grid>
+		<grid>
+			<rows>
+				<group label="Taxas/ Valores" spans="4"></group>
+				<row>
+					<label value="Tx. Min.: " />
+					<textbox constraint="" />
+					<label value="Tx. Seguro: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Val. Seguro: " />
+					<textbox constraint="" />
+					<label value="Total Frete: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Base ICMS: " />
+					<textbox constraint="" />
+					<label value="ICMS: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Val. ICMS: " />
+					<textbox constraint="" />
+					<label value="" />
+					<label value="" />
+				</row>
+			</rows>
+		</grid>
+		<grid>
+			<rows>
+				<group label="Coleta" spans="2"></group>
+				<row>
+					<label value="Cidade Coleta: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="Cidade Entrega: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="Calculado até: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Motorista: " />
+					<combobox>
+						<comboitem label="Danilo"></comboitem>
+						<comboitem label="Ricardo"></comboitem>
+					</combobox>
+				</row>
+				<row>
+					<label value="Veículo: " />
+					<combobox>
+						<comboitem label="Truck"></comboitem>
+						<comboitem label="Truck Ext"></comboitem>
+					</combobox>
+				</row>
+				<row>
+					<label value="Carreta: " />
+					<combobox>
+						<comboitem label="XPTO"></comboitem>
+						<comboitem label="ABC"></comboitem>
+					</combobox>
+				</row>
+				<row>
+					<label value="Bi-Trem: " />
+					<textbox constraint="" />
+				</row>
+
+
+				<row>
+					<label value="Codigo Observação: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="Desconto R$: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Peso cubado: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Palet Normal: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Tx Coleta: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Seguro 1%: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Ademe: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="ITR R$: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Seguro 2%: " />
+					<textbox constraint="" />
+				</row>
+
+
+				<row>
+					<label value="Dt. Pagto: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Entrega: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						onCreate="self.value = new Date()" />
+				</row>
+				<row>
+					<label value="Pago ao Motorista: " />
+					<hbox>
+						<textbox constraint="" />
+						<checkbox label="Gerar Carta Frete" />
+					</hbox>
+				</row>
+				<row>
+					<label value="Observação: " />
+					<textbox style="text-transform:uppercase"
+						rows="4">
+					</textbox>
+				</row>
+				<row>
+					<label value="Vendedor: " />
+					<combobox></combobox>
+				</row>
+				<row>
+					<label value="%: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Comprov: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Crtl: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="Digitador: " />
+					<hbox>
+						<label value="Leonardo: " />
+						<label value="WESTTRACK: " />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<fisheyebar attachEdge="top">
+				<fisheye image="/img/png/save-as-icon48x48.png"
+					label="Salvar" onClick="alert(self.label)" />
+				<fisheye image="/img/png/delete-icon48x48.png"
+					label="Deletar" onClick="alert(self.label)" />
+				<fisheye image="/img/png/Cancel-2-icon48x48.png"
+					label="Cancelar" onClick="alert(self.label)">
+					<attribute name="onClick">
+	cadastro.visible = false;
+</attribute>
+				</fisheye>
+
+			</fisheyebar>
+
+		</div>
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

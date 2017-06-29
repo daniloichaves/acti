@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<zk>
+	<zscript>
+	<![CDATA[
+	import br.com.jgle.acti.controller.AbstractController;
+	System.out.println("myList: " + requestScope.get("controller"));
+	AbstractController manifestoConhecimentoController = (AbstractController) requestScope.get("controller");
+]]>
+	</zscript>
+
+	<window id="entityWin" apply="${manifestoConhecimentoController}"
+		ctrlKeys="#up#down" title="Conhecimentos Selecionados">
+
+		<listbox id="entityList"
+			model="@{manifestoConhecimentoController.reminders}"
+			selectedItem="@{manifestoConhecimentoController.selected}"
+			width="100%" height="100%" mold="paging" pageSize="@{manifestoConhecimentoController.pageSize}">
+
+			<listhead sizable="true">
+				<listheader label="Alterar" width="45px" />
+				<listheader label="Conhecimento" sort="auto" />
+				<listheader label="Endereco" sort="auto" />
+				<listheader label="Numero" sort="auto" />
+				<listheader label="Bairro" sort="auto" />
+				<listheader label="Cidade" sort="auto" />
+				<listheader label="UF" sort="auto" />
+				<listheader label="Deletar" width="50px" />
+			</listhead>
+			<listitem self="@{each=reminder}">
+				<listcell id="entityUpdateQuick"
+					image="/img/png/page-edit-icon24x24.png" />
+				<listcell label="@{reminder.ctrc}" />
+				<listcell label="@{reminder.destinatario.endereco}" />
+				<listcell label="@{reminder.destinatario.numero}" />
+				<listcell label="@{reminder.destinatario.bairro}" />
+				<listcell label="@{reminder.destinatario.cidade}" />
+				<listcell label="@{reminder.destinatario.uf}" />
+				<listcell id="entityDeleteQuick"
+					image="/img/png/delete-icon16x16.png" />
+			</listitem>
+		</listbox>
+
+		<div id="entityDetail">
+
+			<!-- view mode -->
+			<div id="entityView"
+				visible="@{manifestoConhecimentoController.viewMode}">
+
+				<!--				<grid width="100%">-->
+				<!--					<columns>-->
+				<!--						<column align="right" style="width:80px" />-->
+				<!--						<column align="left" />-->
+				<!--					</columns>-->
+				<!--					<rows>-->
+				<!--						<row>-->
+				<!--							Nº NF:-->
+				<!--							<label-->
+				<!--								value="@{manifestoConhecimentoController.selected.numeroNotaFical}" />-->
+				<!--							Valor:-->
+				<!--							<label-->
+				<!--								value="@{manifestoConhecimentoController.selected.valor}" />-->
+				<!--						</row>-->
+				<!--						<row>-->
+				<!--							Volume:-->
+				<!--							<label-->
+				<!--								value="@{manifestoConhecimentoController.selected.volume}" />-->
+				<!--							Peso:-->
+				<!--							<label-->
+				<!--								value="@{manifestoConhecimentoController.selected.peso}" />-->
+				<!--						</row>-->
+				<!--					</rows>-->
+				<!--				</grid>-->
+
+			</div>
+
+			<include src="/cadastro/manifestoConhecimento.zul"
+				height="100%" />
+		</div>
+
+	</window>
+</zk>

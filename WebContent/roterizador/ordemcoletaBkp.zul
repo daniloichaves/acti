@@ -1,0 +1,34 @@
+<?page title="Sistema Integrado para Transportadoras" contentType="text/html;charset=UTF-8" complete="true"?>
+<zk>
+	<window title="Roterizador - Ordem de Coleta" border="normal" width="100%"
+		height="100%">
+		
+		<tabbox>
+			<tabs>
+				<tab label="Norte" height="100%" />
+				<tab label="Sul" height="100%" onClick="ocnorte.src = &quot;/roterizador/ordemcoleta/sul.zul&quot;"/>
+				<tab label="Leste" height="100%" onClick="ocleste.src = &quot;/roterizador/ordemcoleta/leste.zul&quot;"/>
+				<tab label="Oeste" height="100%" onClick="ocoeste.src = &quot;/roterizador/ordemcoleta/oeste.zul&quot;"/>
+			</tabs>
+			
+			<tabpanels height="700px">
+				<tabpanel height="100%" width="100%">
+					<include src="/roterizador/ordemcoleta/norte.zul" height="100%" width="100%"/>
+				</tabpanel>
+				
+				<tabpanel height="100%" width="100%">
+					<include id="ocnorte" src="" height="100%" width="100%"/>
+				</tabpanel>
+				
+				<tabpanel height="100%" width="100%">
+					<include id="ocleste" src="" height="100%" width="100%"/>
+				</tabpanel>
+				
+				<tabpanel height="100%" width="100%">
+					<include id="ocoeste" src="" height="100%" width="100%"/>
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+		
+	</window>
+</zk>

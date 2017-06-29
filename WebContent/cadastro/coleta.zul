@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit" apply="${coletaController}"
+		visible="@{coletaController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Coleta">
+
+
+		<tabbox>
+			<tabs>
+				<tab id="tab0" label="Coleta/ OSC" closable="false"
+					selected="true" />
+				<tab id="tab11" label="Remetente" closable="false" />
+				<tab id="tab12" label="Destinatario" closable="false" />
+				<tab id="tab2" label="Mercadorias/Serviço"
+					closable="false" />
+				<tab id="tabValores" label="Valores" closable="false" />
+				<tab id="tab4" label="Motorista" closable="false" />
+				<tab id="tab3" label="Opcionais" closable="false" />
+				<tab id="tab5" label="Financeiro" closable="false" />
+			</tabs>
+			<tabpanels>
+				<tabpanel>
+					<grid>
+						<rows>
+							<row>
+								<label value="Nº Controle: " />
+								<textbox readonly="true"
+									value="@{coletaController.selected.id}" />
+								<label value="Nº OS: " />
+								<textbox value="@{coletaController.selected.numeroOS}" />
+							</row>
+							<row>
+								<label value="Tipo de Frete: " />
+								<hbox>
+									<radiogroup
+										selectedItem="@{coletaController.selected.tipoFrete}">
+										<radio label="FOB" value="FOB" />
+										<radio label="CIF" value="CIF" />
+									</radiogroup>
+								</hbox>
+								<label value="CPOF: " />
+								<combobox
+									selectedItem="@{coletaController.selected.cpof}"
+									autodrop="true">
+
+									<comboitem
+										forEach="${coletaController.cpofs}" label="${each.codigo}"
+										description="${each.descricao}" value="${each}" />
+								</combobox>
+							</row>
+							<row>
+								<label value="Solicitante: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.solicitante}" />
+								<label value="Telefone: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.telefone}" />
+							</row>
+							<row>
+								<label value="Ramal: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.ramal}" />
+								<label value="E-mail: " />
+								<textbox
+									style="text-transform:uppercase"
+									constraint="/.+@.+\.[a-z]+/: Por favor, digite um e-mail válido."
+									value="@{coletaController.selected.email}" />
+							</row>
+							<row>
+								<label value="Data/Hora Coleta: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{coletaController.selected.dataHoraColeta}" />
+
+								<label
+									value="Data/Hora Limite Coleta: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{coletaController.selected.dataHoraColetaLimite}" />
+							</row>
+							<row>
+								<label value="Valor Total: " />
+								<doublebox
+										constraint="no negative: Valor não pode ser negativo"
+										format="R$ #,##0.00"
+										value="@{coletaController.selected.valorTotalBruto}" readonly="true"/>
+								<label value="Data Vencimento: " />
+								<datebox cols="25" width="100px"
+									format="dd/MM/yyyy" mold="rounded"
+									value="@{coletaController.selected.dataVencimento}" readonly="true"/>
+								
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+				<tabpanel>
+					<grid>
+						<rows>
+							<group label="Coleta/Remetente" spans="4" />
+							<row>
+								<label value="Cliente" />
+								<combobox id="remetenteBox"
+									selectedItem="@{coletaController.selected.clienteRemetente}"
+									autodrop="true">
+
+									<comboitem
+										forEach="${coletaController.clientes}"
+										label="${each.razaosocialnome}" value="${each}" />
+								</combobox>
+								<label value="CEP.: " />
+								<hbox>
+									<textbox id="remetenteCepBox"
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um cep"
+										value="@{coletaController.selected.remetente.cep}" />
+									<image id="remetenteCepSearch"
+										src="/img/png/search-icon16x16.png" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<row>
+								<label value="Nome/ Razão Social " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.remetente.nomeRazaoSocial}" />
+								<label value="CPF/ CNPJ " />
+								<textbox constraint=""
+									value="@{coletaController.selected.remetente.cpfCnpj}" />
+							</row>
+							<row>
+								<label value="Endereço: " />
+								<textbox id="remetenteEnderecoBox"
+									style="text-transform:uppercase" rows="2"
+									constraint="no empty: Por favor, digite um endereço"
+									value="@{coletaController.selected.remetente.endereco}"
+									width="95%" />
+								<label value="CEP.: " />
+								<textbox
+									style="text-transform:uppercase" maxlength="8"
+									constraint="no empty: Por favor, digite um cep"
+									value="@{coletaController.selected.remetente.cep}" />
+							</row>
+							<row>
+								<label value="Bairro.: " />
+								<textbox id="remetenteBairroBox"
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.remetente.bairro}" />
+								<label value="Guia.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.remetente.guia}" />
+							</row>
+							<row>
+								<label value="Contato.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.remetente.contato}" />
+								<label value="Telefone.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.remetente.telefone}" />
+							</row>
+							<row>
+								<label value="Ramal: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.remetente.ramal}" />
+								<label value="E-mail: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.remetente.email}" />
+							</row>
+							<row>
+								<label value="Ponto Referênca: " />
+								<textbox
+									style="text-transform:uppercase" rows="2"
+									constraint="no empty: Por favor, digite um endereço"
+									value="@{coletaController.selected.remetente.pontoReferencia}" />
+								<label value="Data/Hora Limite: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" onCreate="self.value = new Date()"
+									mold="rounded"
+									value="@{coletaController.selected.remetente.dataHoraColeta}" />
+							</row>
+						</rows>
+					</grid>
+
+				</tabpanel>
+
+				<tabpanel>
+					<grid>
+						<rows>
+							<group label="Entrega/ Destinatário"
+								spans="4" />
+							<row>
+								<label
+									value="Histórico Endereços Entregues" />
+								<combobox id="destinatarioBox"
+									selectedItem="@{coletaController.selected.destinatario}"
+									autodrop="true">
+
+									<comboitem
+										forEach="${coletaController.enderecosEntregues}"
+										label="${each.endereco}"
+										description="${each.bairro} ${each.cep}" value="${each}" />
+								</combobox>
+								<label value="CEP.: " />
+								<hbox>
+									<textbox id="destinatarioCepBox"
+										style="text-transform:uppercase" maxlength="8"
+										constraint="no empty: Por favor, digite um cep"
+										value="@{coletaController.selected.destinatario.cep}" />
+									<image id="destinatarioCepSearch"
+										src="/img/png/search-icon16x16.png" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<row>
+								<label value="Nome/ Razão Social " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.destinatario.nomeRazaoSocial}" />
+								<label value="CPF/ CNPJ " />
+								<textbox constraint=""
+									value="@{coletaController.selected.destinatario.cpfCnpj}" />
+							</row>
+							<row>
+								<label value="Endereço: " />
+								<textbox id="destinatarioEnderecoBox"
+									style="text-transform:uppercase" rows="2"
+									constraint="no empty: Por favor, digite um endereço"
+									value="@{coletaController.selected.destinatario.endereco}"
+									width="95%" />
+								<label value="CEP.: " />
+								<textbox
+									style="text-transform:uppercase" maxlength="8"
+									constraint="no empty: Por favor, digite um cep"
+									value="@{coletaController.selected.destinatario.cep}" />
+							</row>
+							<row>
+								<label value="Bairro.: " />
+								<textbox id="destinatarioBairroBox"
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.destinatario.bairro}" />
+								<label value="Guia.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.destinatario.guia}" />
+							</row>
+							<row>
+								<label value="Contato.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.destinatario.contato}" />
+								<label value="Telefone.: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.destinatario.telefone}" />
+							</row>
+							<row>
+								<label value="Ramal: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.destinatario.ramal}" />
+								<label value="E-mail: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.destinatario.email}" />
+							</row>
+							<row>
+								<label value="Ponto Referênca: " />
+								<textbox
+									style="text-transform:uppercase" rows="2"
+									constraint="no empty: Por favor, digite um endereço"
+									value="@{coletaController.selected.destinatario.pontoReferencia}" />
+								<label value="Data/Hora Limite: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" onCreate="self.value = new Date()"
+									mold="rounded"
+									value="@{coletaController.selected.destinatario.dataHoraColeta}" />
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+				<tabpanel fulfill="tab2.onSelect">
+					<include id="notaFiscalList" height="100%"
+						src="/cadastro/notaFiscalList.zul"
+						controller="${coletaController.notaFiscalController}" />
+
+					<separator bar="true" />
+					<include id="servicoList" height="100%"
+						src="/cadastro/servicoList.zul"
+						controller="${coletaController.servicoController}" />
+				</tabpanel>
+
+				<tabpanel>
+					<grid>
+						<rows>
+							<row>
+								<label value="Valor Frete/ Vl Cal.: " />
+								<doublebox id="valorFreteBox"
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00"
+									value="@{coletaController.selected.valorFrete}" />
+								<label value="Pedágio: " />
+								<doublebox id="pedagioBox"
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00"
+									value="@{coletaController.selected.pedagio}" />
+								<label value="Ad-valorem: " />
+								<doublebox id="adValoremBox"
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00"
+									value="@{coletaController.selected.adValorem}" />
+							</row>
+							<row>
+								<label value="Seguro: " />
+								<doublebox id="seguroBox"
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00"
+									value="@{coletaController.selected.seguro}" />
+								<label value="Tx Aérea: " />
+								<doublebox id="taxaAereaBox"
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00"
+									value="@{coletaController.selected.taxaAerea}" />
+								<label value="Tx Coleta/ Desp.: " />
+								<doublebox id="taxaColetaBox"
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00"
+									value="@{coletaController.selected.taxaColeta}" />
+							</row>
+
+							<row>
+								<label value="Tx Entrega: " />
+								<doublebox id="taxaEntregaBox"
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00"
+									value="@{coletaController.selected.taxaEntrega}" />
+								<label value="Redespacho: " />
+								<doublebox id="redespachoBox"
+									constraint="no negative: Valor não pode ser negativo"
+									format="R$ #,##0.00"
+									value="@{coletaController.selected.redespacho}" />
+								<label value="Desconto: " />
+								<doublebox id="descontoBox"
+									format="R$ - #,##0.00"
+									value="@{coletaController.selected.desconto}" />
+							</row>
+							<row>
+								<hbox>
+									<label value="Formula:: " />
+									<label value="ex.: 10*20" />
+								</hbox>
+								<textbox id="formulaBox"
+									value="@{coletaController.selected.formula}" />
+								<label value="Valor Formula: " />
+								<doublebox id="valorFormulaBox"
+									format="R$ #,##0.00"
+									value="@{coletaController.selected.valorFormula}" />
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<row>
+								<hbox>
+									<label value="Distancia: " />
+									<intbox id="distanciaBox"
+										constraint="no negative: Valor não pode ser negativo"
+										value="@{coletaController.selected.distancia}" />
+
+									<label value="X" />
+								</hbox>
+
+								<hbox>
+									<label value="Valor Km: " />
+									<doublebox id="valorKmBox"
+										constraint="no negative: Valor não pode ser negativo"
+										format="R$ #,##0.00"
+										value="@{coletaController.selected.valorKm}" />
+								</hbox>
+								<hbox>
+									<label value="Valor Total Km: " />
+									<doublebox id="valorTotalBox"
+										constraint="no negative: Valor não pode ser negativo"
+										format="R$ #,##0.00"
+										value="@{coletaController.selected.valorTotalKm}" />
+								</hbox>
+								<hbox>
+									<label value="Valor Total Bruto: " />
+									<doublebox id="valorTotalBrutoBox"
+										constraint="no negative: Valor não pode ser negativo"
+										format="R$ #,##0.00"
+										value="@{coletaController.selected.valorTotalBruto}" />
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<row spans="4">
+								<groupbox mold="default">
+									<caption label="Pagamento Frete" />
+									<radio label="Frete Pago" />
+									<radio label="Frete À pagar" />
+									<radio label="Nenhum" />
+								</groupbox>
+								<label />
+								<label />
+							</row>
+
+							<row spans="4">
+								<groupbox mold="default">
+									<caption
+										label="Reponsável Pagamento Frete" />
+									<radio label="Remetente" />
+									<radio label="Destinatário" />
+									<radio label="Consignatário" />
+									<radio label="Redespacho" />
+								</groupbox>
+								<label />
+								<label />
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+				<tabpanel fulfill="tab4.onSelect">
+					<grid>
+						<rows>
+							<group label="Coleta" spans="4" />
+							<row>
+								<label value="Motorista Coleta: " />
+								<combobox
+									selectedItem="@{coletaController.selected.motoristaColeta}">
+									<comboitem
+										forEach="${coletaController.motoristas}" label="${each.nome}"
+										description="${each.sobrenome}" value="${each}" />
+								</combobox>
+								<label value="Veículo Coleta: " />
+								<combobox
+									selectedItem="@{coletaController.selected.veiculoColeta}">
+									<comboitem
+										forEach="${coletaController.veiculos}" label="${each.placa}"
+										description="${each.descricao}" value="${each}" />
+								</combobox>
+							</row>
+							<row>
+								<label value="Km inicial: " />
+								<intbox
+									constraint="no negative: Valor não pode ser negativo"
+									value="@{coletaController.selected.kmInicialColeta}" />
+								<label value="Km Final: " />
+								<intbox
+									constraint="no negative: Valor não pode ser negativo"
+									value="@{coletaController.selected.kmFinalColeta}" />
+							</row>
+							<row>
+								<label value="Data/Hora inicial: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{coletaController.selected.dataHoraInicialColeta}" />
+								<label value="Data/Hora Final: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{coletaController.selected.dataHoraFinalColeta}" />
+							</row>
+							<row>
+								<label value="Entregue por: " />
+								<textbox constraint=""
+									style="text-transform:uppercase"
+									value="@{coletaController.selected.entreguePor}" />
+								<label value="Observações: " />
+								<textbox rows="2"
+									style="text-transform:uppercase"
+									value="@{coletaController.selected.observacaoColeta}" />
+							</row>
+
+
+							<group label="Entrega" spans="4" />
+							<row>
+								<label value="Motorista Entrega: " />
+								<combobox
+									selectedItem="@{coletaController.selected.motoristaEntrega}">
+									<comboitem
+										forEach="${coletaController.motoristas}" label="${each.nome}"
+										description="${each.sobrenome}" value="${each}" />
+								</combobox>
+								<label value="Veículo Entrega: " />
+								<combobox
+									selectedItem="@{coletaController.selected.veiculoEntrega}">
+									<comboitem
+										forEach="${coletaController.veiculos}" label="${each.placa}"
+										description="${each.descricao}" value="${each}" />
+								</combobox>
+							</row>
+							<row>
+								<label value="Km inicial: " />
+								<textbox constraint=""
+									value="@{coletaController.selected.kmInicialEntrega}" />
+								<label value="Km Final: " />
+								<textbox constraint=""
+									value="@{coletaController.selected.kmFinalEntrega}" />
+							</row>
+							<row>
+								<label value="Data/Hora inicial: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{coletaController.selected.dataHoraInicialEntrega}" />
+								<label value="Data/Hora Final: " />
+								<datebox cols="25"
+									format="dd/MM/yyyy a HH:mm" mold="rounded"
+									value="@{coletaController.selected.dataHoraFinalEntrega}" />
+							</row>
+							<row>
+								<label value="Recebido por: " />
+								<textbox constraint=""
+									value="@{coletaController.selected.recebidoPor}" />
+								<label value="Observações: " />
+								<textbox rows="2"
+									style="text-transform:uppercase"
+									value="@{coletaController.selected.observacaoEntrega}" />
+							</row>
+
+							<row>
+								<label value="Consignatario: " />
+								<textbox
+									value="@{coletaController.selected.consignatario}" />
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+				<tabpanel fulfill="tab3.onSelect">
+					<grid>
+						<rows>
+							<group
+								label="Dados Nota Fiscal outras informações" open="true"
+								spans="6" />
+							<row>
+								<label value="C.T.R.C: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.ctrc}" />
+								<label value="Nota Fiscal: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.notaFiscal}" />
+								<label value="DI Nº: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.diNumero}" />
+							</row>
+							<row>
+								<label value="Container Nº: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.containerNumero}" />
+								<label value="Container Tipo: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.containerTipo}" />
+								<label value="Modalidade: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.modalidade}" />
+							</row>
+							<row>
+								<label value="Nº Risco: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.numeroRisco}" />
+								<label value="Nº ONU: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.numeroOnu}" />
+								<label value="Navio: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.navio}" />
+							</row>
+							<row>
+								<label value="Amador: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.amador}" />
+								<label value="Booking: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.booking}" />
+								<label value="Material: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.material}" />
+							</row>
+							<row>
+								<label value="Qtde Lacres: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.qtdeLacres}" />
+								<label value="Nº Lacres: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.numeroLacres}" />
+								<label value="% ICMS: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.porcentagemICMS}" />
+							</row>
+							<row>
+								<label value="% ISS: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.porcentagemISS}" />
+								<label value="Especificação: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.especializacao}" />
+								<label value="Tipo Transporte: " />
+								<textbox
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.tipoTransporte}" />
+							</row>
+
+							<!--							<group-->
+							<!--								label="Observações/ Baixa coleta/Entrega" spans="4" />-->
+							<!--							<row>-->
+							<!--								<label value="Coletado: " />-->
+							<!--								<checkbox></checkbox>-->
+							<!--								<label value="Finalizado: " />-->
+							<!--								<checkbox></checkbox>-->
+							<!--							</row>-->
+							<!--							<row>-->
+							<!--								<label value="Conta Cliente: " />-->
+							<!--								<textbox constraint="" />-->
+							<!--								<label value="Tel Recebedor: " />-->
+							<!--								<textbox constraint="" />-->
+							<!--							</row>-->
+							<!--							<row>-->
+							<!--								<label value="RB recebedor: " />-->
+							<!--								<textbox-->
+							<!--									style="text-transform:uppercase" constraint="" />-->
+							<!--								<label value="AWB Cliente: " />-->
+							<!--								<textbox-->
+							<!--									style="text-transform:uppercase" constraint="" />-->
+							<!--							</row>-->
+							<!--							<row>-->
+							<!--								<label value="Km Inicial: " />-->
+							<!--								<textbox constraint="" />-->
+							<!--								<label value="KM Final: " />-->
+							<!--								<textbox constraint="" />-->
+							<!---->
+							<!--							</row>-->
+							<!--							<row>-->
+							<!--								<label value="Obs Km: " />-->
+							<!--								<textbox-->
+							<!--									style="text-transform:uppercase" constraint="" />-->
+							<!--								<label value="Consignatario: " />-->
+							<!--								<textbox-->
+							<!--									style="text-transform:uppercase" constraint="" />-->
+							<!--							</row>-->
+						</rows>
+					</grid>
+				</tabpanel>
+
+				<tabpanel>
+					<grid>
+						<rows>
+							<row>
+								<label value="Gerar Boleto: " />
+								<image id="gerarBoletoImg" src="/img/png/PDF-icon32.png" />
+							</row>
+							<row>
+								<hbox>
+									<label value="Para Faturar: " />
+									<checkbox
+										checked="@{coletaController.selected.paraFuturar}" />
+								</hbox>
+								<hbox>
+									<label value="Faturado: " />
+									<checkbox
+										checked="@{coletaController.selected.faturado}" />
+								</hbox>
+								<hbox>
+									<label value="Pago: " />
+									<checkbox
+										checked="@{coletaController.selected.pago}" />
+								</hbox>
+								<hbox>
+									<label value="Para NF Serviço: " />
+									<checkbox
+										checked="@{coletaController.selected.paraNfServico}" />
+								</hbox>
+								<label value="Fatura: " />
+								<textbox width="100px" constraint=""
+									value="@{coletaController.selected.faturado}" />
+							</row>
+							<row>
+								<label value="Data Fatura: " />
+								<datebox cols="25" width="100px"
+									format="dd/MM/yyyy" mold="rounded"
+									value="@{coletaController.selected.dataFatura}" />
+								<label value="Data Vencimento: " />
+								<datebox cols="25" width="100px"
+									format="dd/MM/yyyy" mold="rounded"
+									value="@{coletaController.selected.dataVencimento}" />
+								<label value="Data Pagamento: " />
+								<datebox cols="25" width="100px"
+									format="dd/MM/yyyy" mold="rounded"
+									value="@{coletaController.selected.dataPagamento}" />
+							</row>
+							<row>
+								<label value="Conhecimento: " />
+								<textbox width="100px"
+									style="text-transform:uppercase" constraint=""
+									value="@{coletaController.selected.conhecimento}" />
+								<label value="Nº Fatura: " />
+								<textbox width="100px" constraint=""
+									value="@{coletaController.selected.numeroFatura}" />
+								<label value="Tabela: " />
+								<combobox width="100px"
+									value="@{coletaController.selected.tabela}">
+								</combobox>
+							</row>
+						</rows>
+					</grid>
+				</tabpanel>
+
+			</tabpanels>
+		</tabbox>
+
+		<!--				<group label="Cliente" spans="4" />-->
+		<!--				<row>-->
+		<!--					<label value="Cliente Referente: " />-->
+		<!--					<combobox>-->
+		<!--						<comboitem>Danilo</comboitem>-->
+		<!--						<comboitem>Daniel</comboitem>-->
+		<!--					</combobox>-->
+		<!---->
+		<!--				</row>-->
+		<!--				<row>-->
+		<!--					<label value="Endereço: " />-->
+		<!--					<textbox style="text-transform:uppercase"-->
+		<!--						constraint="" />-->
+		<!---->
+		<!--					<label value="CEP: " />-->
+		<!--					<textbox constraint="" />-->
+		<!--				</row>-->
+		<!--				<row>-->
+		<!--					<label value="Bairro: " />-->
+		<!--					<textbox style="text-transform:uppercase"-->
+		<!--						constraint="" />-->
+		<!--					<label value="Cidade: " />-->
+		<!--					<textbox style="text-transform:uppercase"-->
+		<!--						constraint="" />-->
+		<!--				</row>-->
+		<!--				<row>-->
+		<!--					<label value="UF: " />-->
+		<!--					<textbox style="text-transform:uppercase"-->
+		<!--						constraint="" />-->
+		<!--					<label value="CPF: " />-->
+		<!--					<textbox constraint="" />-->
+		<!--				</row>-->
+		<!--				<row>-->
+		<!--					<label value="CNPJ: " />-->
+		<!--					<textbox constraint="" />-->
+		<!--					<label value="IE: " />-->
+		<!--					<textbox constraint="" />-->
+		<!--				</row>-->
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete" visible="@{coletaController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

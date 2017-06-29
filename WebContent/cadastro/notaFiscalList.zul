@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<zk>
+	<zscript>
+	<![CDATA[
+	import br.com.jgle.acti.controller.NotaFiscalController;
+	System.out.println("myList: " + requestScope.get("controller"));
+	NotaFiscalController notaFiscalController = (NotaFiscalController) requestScope
+			.get("controller");
+]]>
+	</zscript>
+
+	<window id="entityWin" ctrlKeys="#up#down"
+		title="Lista de Nota Fiscal">
+
+		<listbox id="entityList"
+			model="@{notaFiscalController.reminders}"
+			selectedItem="@{notaFiscalController.selected}" width="100%"
+			height="100%" mold="paging" pageSize="@{notaFiscalController.pageSize}">
+
+			<listhead sizable="true">
+				<listheader label="Alterar" width="45px" />
+				<listheader label="NF" sort="auto" />
+				<listheader label="Valor" sort="auto" />
+				<listheader label="Volume" sort="auto" />
+				<listheader label="Peso" sort="auto" />
+				<listheader label="Deletar" width="50px" />
+			</listhead>
+			<listitem self="@{each=reminder}">
+				<listcell id="entityUpdateQuick"
+					image="/img/png/page-edit-icon24x24.png" />
+				<listcell label="@{reminder.numeroNotaFical}" />
+				<listcell label="@{reminder.valor}" />
+				<listcell label="@{reminder.volume}" />
+				<listcell label="@{reminder.peso}" />
+				<listcell id="entityDeleteQuick"
+					image="/img/png/delete-icon16x16.png" />
+			</listitem>
+		</listbox>
+
+		<div id="entityDetail">
+
+			<!-- view mode -->
+			<div id="entityView"
+				visible="@{notaFiscalController.viewMode}">
+
+				<grid width="100%">
+					<columns>
+						<column align="right" style="width:80px" />
+						<column align="left" />
+					</columns>
+					<rows>
+						<row>
+							Nº NF:
+							<label
+								value="@{notaFiscalController.selected.numeroNotaFical}" />
+							Valor:
+							<label
+								value="@{notaFiscalController.selected.valor}" />
+						</row>
+						<row>
+							Volume:
+							<label
+								value="@{notaFiscalController.selected.volume}" />
+							Peso:
+							<label
+								value="@{notaFiscalController.selected.peso}" />
+						</row>
+					</rows>
+				</grid>
+
+			</div>
+
+
+			<image id="entityCreate"
+				src="/img/png/file-new-icon32x32.png"
+				visible="@{notaFiscalController.viewMode}" />
+
+			<include src="/cadastro/notaFiscal.zul" height="100%" />
+		</div>
+
+
+
+	</window>
+</zk>

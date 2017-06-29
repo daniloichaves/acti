@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<window id="entityWin" ctrlKeys="#up#down" title="Lista de Produtos">
+
+	<hbox use="br.com.jgle.acti.component.SearchHbox" />
+
+	<listbox id="entityList" width="100%" height="100%" mold="paging"
+		model="@{produtoController.reminders}"
+		selectedItem="@{produtoController.selected}" pageSize="@{produtoController.pageSize}">
+
+		<listhead sizable="true">
+			<listheader label="Alterar" width="45px" />
+			<listheader label="Almoxarifado" sort="auto" />
+			<listheader label="Produto" sort="auto" />
+			<listheader label="Qtd" sort="auto" />
+			<listheader label="Valor Médio" sort="auto" />
+			<listheader label="Total" />
+			<listheader label="Deletar" width="50px" />
+		</listhead>
+		<listitem self="@{each=reminder}">
+			<listcell id="entityUpdateQuick"
+				image="/img/png/page-edit-icon24x24.png" />
+			<listcell label="@{reminder.almoxarifado.nome}" />
+			<listcell label="@{reminder.descricao}" />
+			<listcell label="10" />
+			<listcell label="2,65" />
+			<listcell label="20,65" />
+			<listcell id="entityDeleteQuick"
+				image="/img/png/delete-icon16x16.png" />
+		</listitem>
+	</listbox>
+
+	<div id="entityDetail">
+
+		<!-- view mode -->
+		<div id="entityView" visible="@{produtoController.viewMode}">
+
+			<grid width="100%">
+				<columns>
+					<column align="right" style="width:80px" />
+					<column align="left" />
+				</columns>
+				<rows>
+					<row>
+						Código:
+						<label
+							value="@{produtoController.selected.codigo}" />
+					</row>
+					<row>
+						Observacao:
+						<label
+							value="@{produtoController.selected.descricao}" />
+
+					</row>
+				</rows>
+			</grid>
+
+		</div>
+
+		<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+			visible="@{produtoController.viewMode}" />
+
+		<include src="/cadastro/estoque/produto.zul" />
+	</div>
+
+</window>

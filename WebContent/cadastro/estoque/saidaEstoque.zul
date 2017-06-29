@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${saidaEstoqueController}"
+		visible="@{saidaEstoqueController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Entradas/ Compras">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Unidade: " />
+					<combobox
+						selectedItem="@{saidaEstoqueController.selected.unidade}"
+						autodrop="true">
+						<comboitem
+							forEach="${saidaEstoqueController.unidades}"
+							label="${each.nomeFantasia}" description="${each.razaoSocial}"
+							value="${each}" />
+					</combobox>
+					<label value="Almoxarifado: " />
+					<combobox
+						selectedItem="@{saidaEstoqueController.selected.almoxarifado}"
+						autodrop="true">
+						<comboitem
+							forEach="${saidaEstoqueController.almoxarifados}"
+							label="${each.nome}" value="${each}" />
+					</combobox>
+				</row>
+				<row>
+					<label value="Nº Doc/ Nº NF: " />
+					<textbox style="text-transform:uppercase"
+						value="@{saidaEstoqueController.selected.numeroNotaFical}" />
+					<label value="Fornecedor: " />
+					<combobox
+						selectedItem="@{saidaEstoqueController.selected.fornecedor}"
+						autodrop="true">
+						<comboitem
+							forEach="${saidaEstoqueController.fornecedores}"
+							label="${each.razaosocialnome}"
+							description="${each.nomefantasiasobrenome}" value="${each}" />
+					</combobox>
+				</row>
+				<row>
+					<label value="Data/Hora: " />
+					<datebox cols="25" format="dd/MM/yyyy a hh:mm"
+						onCreate="self.setValue(new Date())" mold="rounded"
+						value="@{saidaEstoqueController.selected.dataCriacao}" />
+					<label value="Data/Hora Prev. Entrega: " />
+					<datebox cols="25" format="dd/MM/yyyy a hh:mm"
+						mold="rounded"
+						value="@{saidaEstoqueController.selected.dataEntrega}" />
+				</row>
+				<!--				<row>-->
+				<!--					<label value="Data/Hora: " />-->
+				<!--					<datebox cols="25" format="dd/MM/yyyy a hh:mm"-->
+				<!--						onCreate="self.value = new Date()" mold="rounded" disabled="true" />-->
+				<!--					<label value="Situação: " />-->
+				<!--					<hbox>-->
+				<!--						<radio label="Compra" checked="true"></radio>-->
+				<!--						<radio label="Consinação"></radio>-->
+				<!--						<radio label="Acerto Estoque"></radio>-->
+				<!--					</hbox>-->
+				<!--				</row>-->
+				<row spans="2">
+					<hbox>
+						<label value="Valor Frete: " />
+						<doublebox constraint="" format="R$ #,##0.00"
+							value="@{saidaEstoqueController.selected.valorFrete}" />
+					</hbox>
+					<hbox>
+						<label value="ICMS: " />
+						<doublebox constraint="" format="R$ #,##0.00"
+							value="@{saidaEstoqueController.selected.ICMS}" />
+					</hbox>
+					<hbox>
+						<label value="Total IPI: " />
+						<doublebox constraint="" format="R$ #,##0.00"
+							value="@{saidaEstoqueController.selected.totalIPI}" />
+					</hbox>
+				</row>
+				<row spans="4">
+					<groupbox mold="default">
+						<caption label="Situação:" />
+						<radiogroup
+							selectedItem="@{saidaEstoqueController.selected.situacao}">
+							<radio label="COMPRA" value="COMPRA" />
+							<radio label="CONSIGNAÇÂO"
+								value="CONSIGNACAO" />
+							<radio label="ACERTO ESTOQUE"
+								value="ACERTOESTOQUE" />
+							<radio label="EMPRÉSTIMO"
+								value="EMPRESTIMO" />
+						</radiogroup>
+					</groupbox>
+				</row>
+				<row>
+					<label value="Observacao: " />
+					<textbox style="text-transform:uppercase"
+						width="100%" value="@{saidaEstoqueController.selected.observacao}"
+						constraint="" rows="3" />
+					<label value="Solicitante: " />
+					<combobox
+						selectedItem="@{saidaEstoqueController.selected.solicitante}"
+						autodrop="true">
+						<comboitem
+							forEach="${saidaEstoqueController.funcionarios}"
+							label="${each.nome}" description="${each.sobrenome}"
+							value="${each}">
+						</comboitem>
+					</combobox>
+				</row>
+			</rows>
+		</grid>
+
+		<include id="itensSaida"
+			src="/cadastro/estoque/saidaEstoqueItemList.zul"
+			controller="${saidaEstoqueController.saidaItemEstoqueController}" />
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{saidaEstoqueController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

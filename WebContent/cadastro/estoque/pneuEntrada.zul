@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit" apply="${pneuController}"
+		visible="@{pneuController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Pneu de Veículo">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Aquisição" />
+					<hbox>
+						<radiogroup
+							selectedItem="@{pneuController.selected.aquisicao}">
+							<radio label="Novo" value="Novo"
+								checked="true" />
+							<radio label="Semi-Novo" value="Semi-Novo" />
+						</radiogroup>
+					</hbox>
+					<label />
+				</row>
+				<row>
+					<label value="Marca: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{pneuController.selected.marca}" />
+					<label value="Tamanho: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{pneuController.selected.tamanho}" />
+
+				</row>
+				<row>
+					<label value="Modelo: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{pneuController.selected.modelo}" />
+					<label value="Referência: " />
+					<textbox style="text-transform:uppercase"
+						value="@{pneuController.selected.referencia}" />
+				</row>
+				<row>
+					<label value="Vida Útil(KM): " />
+					<intbox constraint="no negative"
+						value="@{pneuController.selected.vidaUtil}" />
+					<label value="Hodômetro(KM): " />
+					<intbox style="text-transform:uppercase"
+						constraint="" value="@{pneuController.selected.hodometro}" />
+				</row>
+				<row>
+					<label value="Nº Série Fabricação: " />
+					<textbox style="text-transform:uppercase"
+						value="@{pneuController.selected.numSerieFabricante}" />
+				</row>
+				
+				<group label="Situação do Pneu" spans="4" />
+				<row spans="4">
+					<radiogroup
+						selectedItem="@{pneuController.selected.situacao}">
+
+						<radio label="Novo(Almoxarifado)"
+							value="Novo(Almoxarifado)" checked="true" />
+
+						<radio label="Rodando" value="Rodando" />
+
+						<radio label="Em Manutenção"
+							value="Em Manutenção" />
+
+						<radio label="Sem mais Utilização"
+							value="Sem mais Utilização" />
+					</radiogroup>
+				</row>
+
+				<group label="Informações de aquisição" spans="4" />
+				<row>
+					<label value="Fornecedor: " />
+					<combobox
+						selectedItem="@{pneuController.selected.fornecedor}"
+						autodrop="true">
+
+						<comboitem
+							forEach="${pneuController.fornecedores}"
+							label="${each.razaosocialnome}" value="${each}" />
+
+					</combobox>
+					<label value="Data: " />
+					<datebox cols="25" format="dd/MM/yyyy"
+						onCreate="self.value = new Date()" mold="rounded"
+						value="@{pneuController.selected.dataCriacao}" />
+				</row>
+				<row>
+					<label value="Quantidade: " />
+					<intbox id="quantidade"
+						value="@{pneuController.selected.quantidade}" />
+					<label value="Valor Unitário: " />
+					<doublebox id="valorUnitario"
+						constraint="no negative: Valor não pode ser negativo"
+						format="R$ #,##0.00"
+						value="@{pneuController.selected.valorUnitario}" />
+				</row>
+				<row>
+					<label value="Desconto: " />
+					<doublebox id="desconto"
+						constraint="no negative: Valor não pode ser negativo"
+						format="R$ #,##0.00"
+						value="@{pneuController.selected.valorTotal}" />
+					<label value="Valor Total: " />
+					<doublebox id="total"
+						constraint="no negative: Valor não pode ser negativo"
+						format="R$ #,##0.00"
+						value="@{pneuController.selected.valorTotal}" />
+				</row>
+
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete" visible="@{pneuController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

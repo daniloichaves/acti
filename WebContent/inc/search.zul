@@ -1,0 +1,79 @@
+<?page title="Sistema Integrado para Transportadoras" contentType="text/html;charset=UTF-8" complete="true"?>
+<zk>
+	<zscript>
+	public void trocarBusca() {
+		if (boxBuscaSimples.isVisible()) {
+			boxBuscaAvancada.setVisible(true);
+			boxBuscaSimples.setVisible(false);
+		} else {
+			boxBuscaSimples.setVisible(true);
+			boxBuscaAvancada.setVisible(false);
+		}
+	}
+	public void addRegistro() {
+		Hbox hbox = new Hbox();
+
+		Combobox atributoLabel = new Combobox();
+		atributoLabel.setId("atributoLabel");
+				
+		Combobox camparador = new Combobox();
+		for (br.com.jgle.acti.component.FiltroVO.AttributeComparator ac : br.com.jgle.acti.component.FiltroVO.AttributeComparator.values()) {
+			Comboitem comboitem = new Comboitem();
+			comboitem.setLabel(ac.getAttributeCompator());
+			comboitem.setValue(ac);
+			comboitem.setParent(camparador);
+		}
+
+		Textbox valor = new Textbox();
+		Combobox operador = new Combobox();
+		for (br.com.jgle.acti.component.FiltroVO.AttributeOperator op : br.com.jgle.acti.component.FiltroVO.AttributeOperator.values()) {
+			Comboitem comboitem = new Comboitem();
+			comboitem.setLabel(op.getAttributeCompator());
+			comboitem.setValue(op);
+			comboitem.setParent(operador);
+		}
+		Image remover = new Image();
+		remover.setSrc("/img/png/delete-icon16x16.png");
+		remover.addEventListener("onClick", new org.zkoss.zk.ui.event.EventListener() {
+			public void onEvent(Event event) throws Exception {
+				removeRegistro(event);
+			}
+		});
+
+		hbox.appendChild(atributo);
+		hbox.appendChild(camparador);
+		hbox.appendChild(valor);
+		hbox.appendChild(operador);
+		hbox.appendChild(remover);
+
+		boxBuscaAvancada.appendChild(hbox);
+	}
+	public void removeRegistro(Event event) {
+
+		boxBuscaAvancada.removeChild(event.getTarget().getParent());
+	}
+</zscript>
+	<vbox>
+		<hbox id="boxBuscaSimples" visible="true">
+			<label value="Busca Simples" />
+			<textbox id="entitySearch" style="text-transform:uppercase" />
+			<image id="imageSearch" src="/img/png/search-icon32x32.png" />
+		</hbox>
+
+		<vbox id="boxBuscaAvancada" visible="false">
+			<hbox>
+				<label value="Busca avançada"></label>
+				<image id="imageSearchAvancada"
+					src="/img/png/search-icon32x32.png">
+				</image>
+				<image id="imageAddRegistro" onClick="addRegistro()"
+					src="/img/png/file-new-icon16x16.png">
+				</image>
+			</hbox>
+		</vbox>
+
+		<label id="trocarView" value="Trocar busca"
+			onClick="trocarBusca()">
+		</label>
+	</vbox>
+</zk>

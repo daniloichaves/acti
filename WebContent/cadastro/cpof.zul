@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${cpofController}"
+		visible="@{cpofController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de CPOF">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Código: " />
+					<intbox constraint=""
+						value="@{cpofController.selected.codigo}" />
+					<label value="Descrição: " />
+					<textbox style="text-transform:uppercase" rows="2"
+						constraint="" value="@{cpofController.selected.descricao}" />
+				</row>
+				<row>
+					<label value="Observação: " />
+					<textbox style="text-transform:uppercase" rows="5"
+						value="@{cpofController.selected.observacao}" />
+					<label />
+					<label />
+				</row>
+			</rows>
+		</grid>
+
+		<grid>
+			<rows>
+				<group label="Alíquotas" spans="5" />
+				<row>
+					<hbox>
+						<checkbox id="isentoICMS"
+							checked="@{cpofController.selected.isentoICMS}"
+							onClick="alterarAliquotaEstado()" />
+						<label value="Isento de ICMS" />
+					</hbox>
+
+					<label value="Aliq Padrão(%): " />
+					<hbox>
+						<doublebox id="aliquotaPadrao" format="##0.00"
+							width="50px" value="@{cpofController.selected.aliquotaPadrao}" />
+						<label value="%" />
+					</hbox>
+
+					<label value="Adcionar Aliquota Padrão: " />
+					<image src="/img/png/save-as-icon32x32.png"
+						onClick="alterarAliquotaValorPadraoEstado()" />
+				</row>
+			</rows>
+		</grid>
+
+		<zscript>
+	void alterarAliquotaEstado() {
+		if (isentoICMS.isChecked()) {
+			aliquotaAC.setValue(0d);
+			aliquotaAL.setValue(0d);
+			aliquotaAP.setValue(0d);
+			aliquotaAM.setValue(0d);
+			aliquotaBA.setValue(0d);
+			aliquotaCE.setValue(0d);
+			aliquotaDF.setValue(0d);
+			aliquotaES.setValue(0d);
+			aliquotaGO.setValue(0d);
+			aliquotaMA.setValue(0d);
+			aliquotaMG.setValue(0d);
+			aliquotaMS.setValue(0d);
+			aliquotaMT.setValue(0d);
+			aliquotaPA.setValue(0d);
+			aliquotaPB.setValue(0d);
+			aliquotaPE.setValue(0d);
+			aliquotaPI.setValue(0d);
+			aliquotaPR.setValue(0d);
+			aliquotaRJ.setValue(0d);
+			aliquotaRN.setValue(0d);
+			aliquotaRO.setValue(0d);
+			aliquotaRR.setValue(0d);
+			aliquotaRS.setValue(0d);
+			aliquotaSE.setValue(0d);
+			aliquotaSC.setValue(0d);
+			aliquotaSP.setValue(0d);
+			aliquotaTO.setValue(0d);
+		}
+
+	}
+	void alterarAliquotaValorPadraoEstado() {
+		isentoICMS.setChecked(false);
+
+		aliquotaAC.setValue(aliquotaPadrao.getValue());
+		aliquotaAL.setValue(aliquotaPadrao.getValue());
+		aliquotaAP.setValue(aliquotaPadrao.getValue());
+		aliquotaAM.setValue(aliquotaPadrao.getValue());
+		aliquotaBA.setValue(aliquotaPadrao.getValue());
+		aliquotaCE.setValue(aliquotaPadrao.getValue());
+		aliquotaDF.setValue(aliquotaPadrao.getValue());
+		aliquotaES.setValue(aliquotaPadrao.getValue());
+		aliquotaGO.setValue(aliquotaPadrao.getValue());
+		aliquotaMA.setValue(aliquotaPadrao.getValue());
+		aliquotaMG.setValue(aliquotaPadrao.getValue());
+		aliquotaMS.setValue(aliquotaPadrao.getValue());
+		aliquotaMT.setValue(aliquotaPadrao.getValue());
+		aliquotaPA.setValue(aliquotaPadrao.getValue());
+		aliquotaPB.setValue(aliquotaPadrao.getValue());
+		aliquotaPE.setValue(aliquotaPadrao.getValue());
+		aliquotaPI.setValue(aliquotaPadrao.getValue());
+		aliquotaPR.setValue(aliquotaPadrao.getValue());
+		aliquotaRJ.setValue(aliquotaPadrao.getValue());
+		aliquotaRN.setValue(aliquotaPadrao.getValue());
+		aliquotaRO.setValue(aliquotaPadrao.getValue());
+		aliquotaRR.setValue(aliquotaPadrao.getValue());
+		aliquotaRS.setValue(aliquotaPadrao.getValue());
+		aliquotaSE.setValue(aliquotaPadrao.getValue());
+		aliquotaSC.setValue(aliquotaPadrao.getValue());
+		aliquotaSP.setValue(aliquotaPadrao.getValue());
+		aliquotaTO.setValue(aliquotaPadrao.getValue());
+
+	}
+</zscript>
+
+		<grid>
+			<rows>
+				<group label="Estados" spans="9" />
+				<row>
+					<vbox>
+						<label value="AC: " />
+						<hbox>
+							<doublebox id="aliquotaAC" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaAC}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="AL: " />
+						<hbox>
+							<doublebox id="aliquotaAL" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaAL}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="AP: " />
+						<hbox>
+							<doublebox id="aliquotaAP" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaAP}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="AM: " />
+						<hbox>
+							<doublebox id="aliquotaAM" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaAM}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="BA: " />
+						<hbox>
+							<doublebox id="aliquotaBA" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaBA}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="CE: " />
+						<hbox>
+							<doublebox id="aliquotaCE" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaCE}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="DF: " />
+						<hbox>
+							<doublebox id="aliquotaDF" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaDF}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="ES: " />
+						<hbox>
+							<doublebox id="aliquotaES" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaES}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="GO: " />
+						<hbox>
+							<doublebox id="aliquotaGO" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaGO}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+				</row>
+				<row>
+					<vbox>
+						<label value="MA: " />
+						<hbox>
+							<doublebox id="aliquotaMA" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaMA}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="MG: " />
+						<hbox>
+							<doublebox id="aliquotaMG" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaMG}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="MS: " />
+						<hbox>
+							<doublebox id="aliquotaMS" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaMS}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="MT: " />
+						<hbox>
+							<doublebox id="aliquotaMT" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaMT}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="PA: " />
+						<hbox>
+							<doublebox id="aliquotaPA" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaPA}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="PB: " />
+						<hbox>
+							<doublebox id="aliquotaPB" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaPB}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="PE: " />
+						<hbox>
+							<doublebox id="aliquotaPE" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaPE}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="PI: " />
+						<hbox>
+							<doublebox id="aliquotaPI" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaPI}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="PR: " />
+						<hbox>
+							<doublebox id="aliquotaPR" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaPR}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+				</row>
+				<row>
+					<vbox>
+						<label value="RJ: " />
+						<hbox>
+							<doublebox id="aliquotaRJ" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaRJ}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="RN: " />
+						<hbox>
+							<doublebox id="aliquotaRN" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaRN}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="RO: " />
+						<hbox>
+							<doublebox id="aliquotaRO" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaRO}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="RR: " />
+						<hbox>
+							<doublebox id="aliquotaRR" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaRR}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="RS: " />
+						<hbox>
+							<doublebox id="aliquotaRS" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaRS}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="SE: " />
+						<hbox>
+							<doublebox id="aliquotaSE" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaSE}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="SC: " />
+						<hbox>
+							<doublebox id="aliquotaSC" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaSC}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="SP: " />
+						<hbox>
+							<doublebox id="aliquotaSP" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaSP}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+					<vbox>
+						<label value="TO: " />
+						<hbox>
+							<doublebox id="aliquotaTO" format="##0.00"
+								width="50px" value="@{cpofController.selected.aliquotaTO}" />
+							<label value="%" />
+						</hbox>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete" visible="@{cpofController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

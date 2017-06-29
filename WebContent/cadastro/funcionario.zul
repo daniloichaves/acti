@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${funcionarioController}"
+		visible="@{funcionarioController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Funcionário">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Login: " />
+					<combobox
+						selectedItem="@{funcionarioController.selected.login}"
+						autodrop="true">
+
+						<comboitem
+							forEach="${funcionarioController.logins}" label="${each.nome}"
+							description="${each.login}" value="${each}" />
+					</combobox>
+					<label value="Unidade: " />
+					<combobox
+						selectedItem="@{funcionarioController.selected.unidade}"
+						autodrop="true">
+
+						<comboitem
+							forEach="${funcionarioController.unidades}" label="${each.nomeFantasia}"
+							description="${each.razaoSocial}" value="${each}" />
+					</combobox>
+				</row>
+				<row>
+					<label value="Cargo: " />
+					<combobox
+						selectedItem="@{funcionarioController.selected.cargo}">
+						<comboitem label="MOTORISTA" value="MOTORISTA" />
+						<comboitem label="VENDEDOR" value="VENDEDOR" />
+						<comboitem label="ADMINISTRADOR"
+							value="ADMINISTRADOR" />
+						<comboitem label="GERENTE" value="GERENTE" />
+						<comboitem label="VICE-PRESIDENTE"
+							value="VICE-PRESIDENTE" />
+						<comboitem label="PRESIDENTE"
+							value="PRESIDENTE" />
+					</combobox>
+					<label value="Tipo: " />
+					<combobox
+						selectedItem="@{funcionarioController.selected.tipo}">
+						<comboitem label="CONTRATADO"
+							value="CONTRATADO" />
+						<comboitem label="TERCERIZADO"
+							value="TERCERIZADO" />
+						<comboitem label="PRESTADOR DE SERVIÇO"
+							value="PRESTADOR DE SERVICO" />
+						<comboitem label="ESTAGIÁRIO"
+							value="ESTAGIARIO" />
+					</combobox>
+				</row>
+				<row>
+					<label value="Nome: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{funcionarioController.selected.nome}" />
+					<label value="Sobrenome: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{funcionarioController.selected.sobrenome}" />
+				</row>
+				<row>
+					<label value="Sexo: " />
+					<combobox
+						selectedItem="@{funcionarioController.selected.sexo}">
+						<comboitem label="Masculino" value="M" />
+						<comboitem label="Feminino" value="F" />
+					</combobox>
+					<label value="CPF: " />
+					<textbox id="cpfBox" style="text-transform:uppercase"
+						constraint="" value="@{funcionarioController.selected.cpf}" >
+						<attribute name="onClick">
+							Clients.evalJavaScript("setMask('" + cpfBox.getUuid() + "', 'cpf')");
+						</attribute>
+					</textbox>
+				</row>
+				<row>
+					<label value="RG: " />
+					<textbox id="rgBox" style="text-transform:uppercase"
+						constraint="" value="@{funcionarioController.selected.rg}" >
+						<attribute name="onClick">
+							Clients.evalJavaScript("setMask('" + rgBox.getUuid() + "', '99.999.999-*')");
+						</attribute>
+					</textbox>
+					<label value="Expedição:: " />
+					<datebox
+						value="@{funcionarioController.selected.dataExpedicao}" />
+				</row>
+				<row>
+					<label value="Expedição: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{funcionarioController.selected.expedicao}" />
+					<label value="Titulo de Eleitor: " />
+					<intbox style="text-transform:uppercase"
+						constraint=""
+						value="@{funcionarioController.selected.tituloEleitorNum}" />
+				</row>
+				<row>
+					<label value="Caterira de Trabalho: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{funcionarioController.selected.carteiraTrabalhoNumero}" />
+					<label value="Serie: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{funcionarioController.selected.carteiraTrabalhoSerie}" />
+				</row>
+				<row>
+					<label value="Número INSS: " />
+					<textbox id="inssBox" style="text-transform:uppercase"
+						constraint=""
+						value="@{funcionarioController.selected.numeroINSS}" >
+						<attribute name="onClick">
+							Clients.evalJavaScript("setMask('" + inssBox.getUuid() + "', '999.99999.99-9')");
+						</attribute>
+					</textbox>
+					<label value="Valor INSS: " />
+					<doublebox constraint="" format="R$ #,##0.00"
+						value="@{funcionarioController.selected.valorINSS}" />
+				</row>
+				<row>
+					<label value="Nome do(a) Conjuge: " />
+					<textbox style="text-transform:uppercase"
+						value="@{funcionarioController.selected.nomeConjuge}" />
+					<label value="Qtd Filhos: " />
+					<intbox
+						constraint="no negative: Valor não pode ser negativo"
+						value="@{funcionarioController.selected.qtdFilhos}" />
+				</row>
+			</rows>
+		</grid>
+		<grid>
+			<rows>
+				<row>
+					<label value="Número PIS/PASEP: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{funcionarioController.selected.numeroPIS}" />
+					<label value="Data de Retratação" />
+					<datebox
+						value="@{funcionarioController.selected.dataRetracaoPIS}" />
+					<label value="Banco Depositário" />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{funcionarioController.selected.bancoDeposito}" />
+				</row>
+
+			</rows>
+		</grid>
+		<grid>
+			<rows>
+				<group label="Dados RH" spans="4" />
+				<row>
+					<label value="Data admissão: " />
+					<datebox
+						value="@{funcionarioController.selected.dataAdmissao}" />
+					<label value="Data registro: " />
+					<datebox
+						value="@{funcionarioController.selected.registro}" />
+				</row>
+				<row>
+					<label value="Cargo: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{funcionarioController.selected.cargoRegistro}" />
+					<label value="Salário: " />
+					<doublebox
+						constraint="no negative: Valor não pode ser negativo"
+						format="R$ #,##0.00"
+						value="@{funcionarioController.selected.salario}" />
+				</row>
+				<row>
+					<label value="Seção: " />
+					<textbox style="text-transform:uppercase"
+						value="@{funcionarioController.selected.secao}" />
+					<label value="Forma pagamento: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{funcionarioController.selected.formaPagamento}" />
+				</row>
+				<row>
+					<label value="Data Demissão: " />
+					<datebox
+						value="@{funcionarioController.selected.dataDemissao}" />
+					<label value="Carga horária: " />
+					<doublebox
+						value="@{funcionarioController.selected.cargaHoraria}" />
+				</row>
+
+
+				<group label="Horário de Trabalho" spans="4" />
+				<row>
+					<label value="Entrada: " />
+					<timebox
+						value="@{funcionarioController.selected.horaEntrada}" />
+					<label value="Saida: " />
+					<timebox
+						value="@{funcionarioController.selected.horaSaida}" />
+				</row>
+			</rows>
+		</grid>
+		<grid>
+			<rows>
+				<group label="Dados de Beneficiários" spans="6" />
+				<row>
+					<label value="Nome dos Dependentes: " />
+					<textbox style="text-transform:uppercase"
+						value="@{funcionarioController.selected.dependenteNome}" />
+					<label value="Parentesco: " />
+					<textbox style="text-transform:uppercase"
+						value="@{funcionarioController.selected.dependenteParentesco}" />
+					<label value="Data Nascimento: " />
+					<datebox
+						value="@{funcionarioController.selected.dependenteNascimento}" />
+				</row>
+
+			</rows>
+		</grid>
+
+		<include id="enderecoList" src="/cadastro/enderecoList.zul"
+			controller="${funcionarioController.enderecoController}" />
+
+		<include id="telefoneList" src="/cadastro/telefoneList.zul"
+			controller="${funcionarioController.telefoneController}" />
+
+		<include id="emailList" src="/cadastro/emailList.zul"
+			controller="${funcionarioController.emailController}" />
+
+		<include id="contaBancoList" src="/cadastro/contaBancoList.zul"
+			controller="${funcionarioController.contaBancoController}" />
+
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{funcionarioController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

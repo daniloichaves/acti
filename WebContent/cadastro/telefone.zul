@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${telefoneController}"
+		visible="@{telefoneController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Telefone">
+
+		<grid>
+			<rows>
+				<row>
+					<hbox>
+						<label value="Tipo: " />
+						<combobox
+							value="@{telefoneController.selected.tipo}">
+							<comboitem label="COMERCIAL"
+								value="COMERCIAL" />
+							<comboitem label="CELULAR" value="CELULAR" />
+							<comboitem label="RESIDENCIAL"
+								value="RESIDENCIAL" />
+							<comboitem label="FAX" value="FAX" />
+						</combobox>
+					</hbox>
+					<hbox>
+						<label value="DDI: " />
+						<intbox constraint=""
+							value="@{telefoneController.selected.ddi}" />
+					</hbox>
+					<hbox>
+						<label value="DDD: " />
+						<intbox id="dddBox" constraint="no empty"
+							value="@{telefoneController.selected.ddd}" />
+					</hbox>
+				</row>
+				<row>
+					<hbox>
+						<label value="Número: " />
+						<textbox id="numeroBox"
+							constraint="no empty: Por favor, digite um numero"
+							value="@{telefoneController.selected.numero}" >
+							<attribute name="onClick">
+								Clients.evalJavaScript("setMask('" + numeroBox.getUuid() + "', '9999-9999')");
+							</attribute>
+						</textbox>
+					</hbox>
+					<hbox>
+						<label value="Ramal: " />
+						<intbox constraint=""
+							value="@{telefoneController.selected.ramal}" />
+					</hbox>
+					<hbox>
+						<label value="Contato: " />
+						<textbox style="text-transform:uppercase"
+							value="@{telefoneController.selected.contato}" />
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" onClick="validate()" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{telefoneController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+		
+		<zscript>
+			<![CDATA[
+  			void validate() {
+   		 		//validate data
+   		 		dddBox.getValue();
+   		 		numeroBox.getValue();
+  			}
+  			]]>
+  		</zscript>
+	</window>
+</zk>

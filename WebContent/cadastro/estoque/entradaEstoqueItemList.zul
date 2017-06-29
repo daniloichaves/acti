@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<zk>
+	<zscript>
+	<![CDATA[
+	import br.com.jgle.acti.controller.estoque.EntradaItemEstoqueController;
+	System.out.println("myList: " + requestScope.get("controller"));
+	EntradaItemEstoqueController entradaItemEstoqueController = (EntradaItemEstoqueController) requestScope.get("controller");
+]]>
+	</zscript>
+
+	<window id="entityWin" apply="${entradaItemEstoqueController}"
+		ctrlKeys="#up#down"
+		title="Lista de Entradas/ Compras - Itens Entrada">
+
+		<listbox id="entityList" width="100%" height="100%"
+			mold="paging" model="@{entradaItemEstoqueController.reminders}"
+			selectedItem="@{entradaItemEstoqueController.selected}"
+			pageSize="@{entradaItemEstoqueController.pageSize}">
+
+			<listhead sizable="true">
+				<listheader label="Alterar" width="45px" />
+				<listheader label="Cod Prod" sort="auto" />
+				<listheader label="Desc Prod" sort="auto" />
+				<listheader label="Qtd" sort="auto" />
+				<listheader label="Valor Unit." sort="auto" />
+				<listheader label="Total" />
+				<listheader label="IPI" />
+				<listheader label="Desc" />
+				<listheader label="Total Bruto" />
+				<listheader label="Deletar" width="50px" />
+			</listhead>
+			<listitem self="@{each=reminder}">
+				<listcell id="entityUpdateQuick"
+					image="/img/png/page-edit-icon24x24.png" />
+				<listcell label="@{reminder.produto.codigo}" />
+				<listcell label="@{reminder.produto.descricao}" />
+				<listcell label="@{reminder.quantidade}" />
+				<listcell label="@{reminder.valorUnitario}" />
+				<listcell label="@{reminder.valorTotal}" />
+				<listcell label="@{reminder.ipi}" />
+				<listcell label="@{reminder.desconto}" />
+				<listcell label="@{reminder.valorTotalBruto}" />
+				<listcell id="entityDeleteQuick"
+					image="/img/png/delete-icon16x16.png" />
+			</listitem>
+		</listbox>
+
+		<div id="entityDetail">
+
+			<!-- view mode -->
+			<div id="entityView"
+				visible="@{entradaItemEstoqueController.viewMode}">
+
+				<grid width="100%">
+					<rows>
+						<row>
+							Cod Prod:
+							<label
+								value="@{entradaItemEstoqueController.selected.produto.codigo}" />
+							Desc Prod:
+							<label
+								value="@{entradaItemEstoqueController.selected.produto.descricao}" />
+						</row>
+						<row>
+							Total:
+							<label
+								value="@{entradaItemEstoqueController.selected.unidade.valorTotal}" />
+							Total Bruto:
+							<label
+								value="@{entradaItemEstoqueController.selected.valorTotalBruto}" />
+						</row>
+					</rows>
+				</grid>
+
+			</div>
+
+			<include
+				src="/cadastro/estoque/entradaEstoqueItem.zul" />
+		</div>
+
+		<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+			visible="@{entradaItemEstoqueController.viewMode}" />
+
+	</window>
+</zk>

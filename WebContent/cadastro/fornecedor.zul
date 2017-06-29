@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode IGUAL AO CLIENTE-->
+	<window id="entityEdit" apply="${clienteFornecedorController}"
+		visible="@{clienteFornecedorController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Fornecedor">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Tipo de Registro: " />
+					<combobox id="tipoRegistroBox"
+						value="@{clienteFornecedorController.selected.tipoRegistro}">
+<!-- 						<comboitem label="Cliente" value="Cliente" /> -->
+<!-- 						<comboitem label="Fornecedor" value="Fornecedor" /> -->
+						<comboitem label="Corretora" value="Corretora" />
+						<comboitem label="Seguradora" value="Seguradora" />
+					</combobox>
+					<label value="Tipo de Pessoa: " />
+					<combobox id="tipoPessoaBox"
+						value="@{clienteFornecedorController.selected.tipoPessoa}">
+						<comboitem label="JURÍDICA" value="JURIDICA" />
+						<comboitem label="FÍSICA" value="FISICA" />
+						<attribute name="onChange">
+							String tipoPessoa = (String) tipoPessoaBox.getSelectedItem().getValue();
+							if (tipoPessoa.equals("FISICA")) {
+								Clients.evalJavaScript("setMask('" + cnpjCPFBox.getUuid() + "', 'cpf')");
+								// Clients.evalJavaScript("setMask('" + iergBox.getUuid() + "', 'rj')");
+							} else {
+								Clients.evalJavaScript("setMask('" + cnpjCPFBox.getUuid() + "', 'cnpj')");
+								// Clients.evalJavaScript("setMask('" + iergBox.getUuid() + "', 'ie')");
+							}
+							cnpjCPFBox.setDisabled(false);
+							nomeRazaoSocialBox.setDisabled(false);
+							fantasiaSobrenome.setDisabled(false);
+							iergBox.setDisabled(false);
+							observacaoBox.setDisabled(false);
+							tipOCobrancaBox.setDisabled(false);
+						</attribute>
+					</combobox>
+				</row>
+				<row>
+					<label value="CNPJ / CPF: " />
+					<textbox id="cnpjCPFBox" style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite um CNPJ / CPF"
+						value="@{clienteFornecedorController.selected.cnpjcpf}" disabled="true"/>
+					<label />
+					<label />
+				</row>
+				<row>
+					<label value="Razão Social/ Nome " />
+					<textbox id="nomeRazaoSocialBox" style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite a Razão Social / Nome"
+						value="@{clienteFornecedorController.selected.razaosocialnome}" disabled="true"/>
+					<label value="Nome Fantasia/ Sobrenome " />
+					<textbox id="fantasiaSobrenome" style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite a Nome Fantasia/ Sobrenome"
+						value="@{clienteFornecedorController.selected.nomefantasiasobrenome}" disabled="true"/>
+				</row>
+
+				<row>
+					<label value="Incrição Estatual / RG: " />
+					<textbox id="iergBox" style="text-transform:uppercase"
+						constraint=""
+						value="@{clienteFornecedorController.selected.ierg}" disabled="true"/>
+					<label value="Data Cadastro: " />
+					<datebox id="dataCadastroBox" width="150px"
+						onCreate="self.setValue(new Date())"
+						value="@{clienteFornecedorController.selected.dataCadastro}" disabled="true"/>
+				</row>
+
+				<row visible="@{clienteFornecedorController.selected.id > 0}">
+					<label value="Vendedor: " />
+					<combobox
+						selectedItem="@{clienteFornecedorController.selected.vendedor}"
+						autodrop="true">
+
+						<comboitem
+							forEach="${clienteFornecedorController.vendedores}"
+							label="${each.nome }" value="${each}" />
+					</combobox>
+					<label value="Comissão: " />
+					<doublebox
+						value="@{clienteFornecedorController.selected.comissaoVendedor}">
+					</doublebox>
+				</row>
+				<row visible="@{clienteFornecedorController.selected.id > 0}">
+					<label value="Representante: " />
+					<combobox
+						selectedItem="@{clienteFornecedorController.selected.representante}"
+						autodrop="true">
+
+						<comboitem
+							forEach="${clienteFornecedorController.representantes}"
+							label="${each.nome }" value="${each}" />
+					</combobox>
+					<label value="Comissão: " />
+					<doublebox
+						value="@{clienteFornecedorController.selected.comissaoRepresentante}">
+					</doublebox>
+				</row>
+				<row>
+					<label value="Observação: " />
+					<textbox id="observacaoBox" style="text-transform:uppercase" rows="3"
+						value="@{clienteFornecedorController.selected.observacao}" disabled="true"/>
+
+					<label value="Tipo Cobrança: " />
+					<combobox id="tipOCobrancaBox"
+						value="@{clienteFornecedorController.selected.tipoCobranca}" disabled="true">
+						<comboitem label="Banco" value="BANCO" />
+						<comboitem label="Boleto" value="BOLETO" />
+					</combobox>
+				</row>
+				<row spans="4">
+					<groupbox mold="default">
+						<caption
+							label="Este cliente possui restrições para não emitir" />
+						<checkbox label="Ordem de Coleta" />
+						<checkbox label="Conhecimento" />
+						<checkbox label="Manifesto" />
+<!-- 						<checkbox label="Fatura" /> -->
+<!-- 						<checkbox label="Comissão" /> -->
+					</groupbox>
+				</row>
+			</rows>
+		</grid>
+
+		<include id="enderecoList" src="/cadastro/enderecoList.zul"
+			controller="${clienteFornecedorController.enderecoController}" />
+
+		<include id="telefoneList" src="/cadastro/telefoneList.zul"
+			controller="${clienteFornecedorController.telefoneController}" />
+
+		<include id="emailList" src="/cadastro/emailList.zul"
+			controller="${clienteFornecedorController.emailController}" />
+
+		<include id="contaBancoList" src="/cadastro/contaBancoList.zul"
+			controller="${clienteFornecedorController.contaBancoController}" />
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" onClick="validate()"/>
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{clienteFornecedorController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+		<zscript>
+			<![CDATA[
+  			void validate() {
+   		 		//validate data
+   		 		cnpjCPFBox.getValue();
+   		 		nomeRazaoSocialBox.getValue();
+  			}
+  			]]>
+  		</zscript>
+	</window>
+</zk>

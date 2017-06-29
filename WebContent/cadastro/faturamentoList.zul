@@ -1,0 +1,233 @@
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+
+<window title="Lista de Faturamento">
+		
+		<listbox id="list" width="100%" height="100%" mold="paging" pageSize="5">
+			<listhead sizable="true">
+				<listheader label="Alterar" width="45px"/>
+				<listheader label="Tipo" sort="auto"/>
+				<listheader label="Data" sort="auto"/>
+				<listheader label="Conhecimento" sort="auto"/>
+				<listheader label="Remetente" sort="auto"/>
+				<listheader label="Destinatário" sort="auto"/>
+				<listheader label="Imp" sort="auto"/>
+				<listheader label="Fat" sort="auto"/>
+				<listheader label="Pm" sort="auto"/>
+				<listheader label="Mf" sort="auto"/>
+				<listheader label="Valor"/>
+				<listheader label="Deletar" width="50px"/>
+			</listhead>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="PF"/>
+				<listcell label="05/04/2010"/>
+				<listcell label="1.564"/>
+				<listcell label="WestTrack"/>
+				<listcell label="JGle"/>
+				<listcell label="S"/>
+				<listcell label="S"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="1.350,00"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="FOB"/>
+				<listcell label="03/05/2010"/>
+				<listcell label="1.564"/>
+				<listcell label="WestTrack"/>
+				<listcell label="Google"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="1.350,00"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="CIF"/>
+				<listcell label="05/04/2010"/>
+				<listcell label="1.564"/>
+				<listcell label="WestTrack"/>
+				<listcell label="JGle"/>
+				<listcell label="S"/>
+				<listcell label="S"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="1.350,00"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="FOB"/>
+				<listcell label="03/05/2010"/>
+				<listcell label="1.564"/>
+				<listcell label="WestTrack"/>
+				<listcell label="Google"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="1.350,00"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="CIF"/>
+				<listcell label="05/04/2010"/>
+				<listcell label="1.564"/>
+				<listcell label="WestTrack"/>
+				<listcell label="JGle"/>
+				<listcell label="S"/>
+				<listcell label="S"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="1.350,00"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="FOB"/>
+				<listcell label="03/05/2010"/>
+				<listcell label="1.564"/>
+				<listcell label="WestTrack"/>
+				<listcell label="Google"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="1.350,00"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="CIF"/>
+				<listcell label="05/04/2010"/>
+				<listcell label="1.564"/>
+				<listcell label="WestTrack"/>
+				<listcell label="JGle"/>
+				<listcell label="S"/>
+				<listcell label="S"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="1.350,00"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="FOB"/>
+				<listcell label="03/05/2010"/>
+				<listcell label="1.564"/>
+				<listcell label="WestTrack"/>
+				<listcell label="Google"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="1.350,00"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="CIF"/>
+				<listcell label="05/04/2010"/>
+				<listcell label="1.564"/>
+				<listcell label="WestTrack"/>
+				<listcell label="JGle"/>
+				<listcell label="S"/>
+				<listcell label="S"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="1.350,00"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="FOB"/>
+				<listcell label="03/05/2010"/>
+				<listcell label="1.564"/>
+				<listcell label="WestTrack"/>
+				<listcell label="Google"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="1.350,00"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="CIF"/>
+				<listcell label="05/04/2010"/>
+				<listcell label="1.564"/>
+				<listcell label="WestTrack"/>
+				<listcell label="JGle"/>
+				<listcell label="S"/>
+				<listcell label="S"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="1.350,00"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="FOB"/>
+				<listcell label="03/05/2010"/>
+				<listcell label="1.564"/>
+				<listcell label="WestTrack"/>
+				<listcell label="Google"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="N"/>
+				<listcell label="S"/>
+				<listcell label="1.350,00"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+		</listbox>
+		
+		<image src="/img/png/file-new-icon32x32.png">
+			<attribute name="onClick">
+					cad.visible = true;
+			</attribute>
+		</image>		
+		
+		<include id="cad" visible="false" src="/cadastro/faturamento.zul"/>
+	</window>

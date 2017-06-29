@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${enderecoController}"
+		visible="@{enderecoController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Endereço">
+
+		<grid>
+			<rows>
+				<row spans="1">
+					<hbox width="30px">
+						<label id="cepTextLabel" value="CEP: " />
+						<textbox id="cepBox" maxlength="8"
+							constraint="no empty: Por favor, digite um cep"
+							value="@{enderecoController.selected.cep}" />
+						<image id="cepSearch"
+							src="/img/png/search-icon16x16.png" />
+					</hbox>
+					<hbox>
+						<hbox>
+							<label value="Tipo: " />
+							<combobox
+								selectedItem="@{enderecoController.selected.tipo}">
+<!-- 								<comboitem label="COBRANÇA" -->
+<!-- 									value="COBRANCA" /> -->
+<!-- 								<comboitem label="ENTREGA" -->
+<!-- 									value="ENTREGA" /> -->
+<!-- 								<comboitem label="COLETA" -->
+<!-- 									value="ENTREGA" /> -->
+<!-- 								<comboitem label="PARADA OBRIGATÓRIA" -->
+<!-- 									value="PARADAOBRIGATORIA" /> -->
+<!-- 								<comboitem -->
+<!-- 									label="PARADA AUTORIZADA PARA HIGIENE E REFEIÇÃO" -->
+<!-- 									value="PARADAAUTORIZADOSHIG" /> -->
+<!-- 								<comboitem -->
+<!-- 									label="PARADA AUTORIZADA PARA PERNOITE" -->
+<!-- 									value="PARADAAUTORIZADPERNOITE" /> -->
+									
+								<comboitem
+									forEach="${enderecoController.tipoEnderecos}"
+									label="${each}" value="${each}" />
+							</combobox>
+						</hbox>
+					</hbox>
+					<hbox>
+						<label value="Número: " />
+						<intbox id="numeroBox"
+							constraint="no empty: Por favor, digite um número"
+							value="@{enderecoController.selected.numero}" />
+					</hbox>
+					<label />
+				</row>
+				<row>
+					<label value="Endereço: " />
+					<textbox id="enderecoBox"
+						style="text-transform:uppercase" rows="2"
+						constraint="no empty: Por favor, digite um endereço"
+						value="@{enderecoController.selected.endereco}" />
+					<label value="Bairro: " />
+					<textbox id="bairroBox"
+						style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite um bairro"
+						value="@{enderecoController.selected.bairro}" />
+				</row>
+				<!--				<row>-->
+				<!---->
+				<!--					<label value="Estado: " />-->
+				<!--					<textbox style="text-transform:uppercase"-->
+				<!--						constraint="" value="@{enderecoController.selected.estado}" />-->
+				<!--				</row>-->
+				<row>
+					<label value="UF: " />
+					<combobox id="ufBox"
+						use="br.com.jgle.acti.component.UFCombobox"
+						selectedItem="@{enderecoController.selected.uf}" autodrop="true"
+						value="SP">
+					</combobox>
+					<label value="Cidade: " />
+					<textbox id="cidadeBox"
+						style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite uma cidade"
+						value="@{enderecoController.selected.cidade}" />
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" onClick="validate()"/>
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{enderecoController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+		<zscript>
+			<![CDATA[
+  			void validate() {
+   		 		//validate data
+   		 		cepBox.getValue();
+   		 		numeroBox.getValue();
+   		 		enderecoBox.getValue();
+   		 		bairroBox.getValue();
+   		 		cidadeBox.getValue();
+   		 		ufBox.getValue();
+  			}
+  			]]>
+  		</zscript>
+	</window>
+</zk>

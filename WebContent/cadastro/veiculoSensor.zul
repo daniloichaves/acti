@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${veiculoSensorController}"
+		visible="@{veiculoSensorController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Sensor">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Sensor: " />
+					<combobox selectedItem="@{veiculoSensorController.selected.sensor}"						
+						autodrop="true">
+
+						<comboitem forEach="${veiculoSensorController.sensores}"
+							label="${each.sensor }" value="${each}" />
+
+					</combobox>
+
+					<label value="Número terminal: " />
+					<textbox id="numeroTerminalBox" constraint="no empty" style="text-transform:uppercase"
+						value="@{veiculoSensorController.selected.numeroTerminal}" />
+				</row>
+				<row>
+					<label value="Status: " />
+					<combobox id="statusBox" constraint="no empty"
+						selectedItem="@{veiculoSensorController.selected.status}">
+						<comboitem label="FUNCIONANDO"
+							value="FUNCIONANDO" />
+						<comboitem label="DEFEITO" value="DEFEITO" />
+					</combobox>
+
+					<label value="Data Validade: " />
+					<datebox cols="25" format="dd/MM/yyyy"
+						mold="rounded"
+						value="@{veiculoSensorController.selected.dataValidade}" />
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" onClick="validate()"/>
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{veiculoSensorController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+		
+		<zscript>
+			<![CDATA[
+  			void validate() {
+   		 		//validate data
+   		 		statusBox.getValue();
+   		 		numeroTerminalBox.getValue();
+  			}
+  			]]>
+  		</zscript>
+	</window>
+</zk>

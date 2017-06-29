@@ -1,0 +1,332 @@
+<?page title="Sistema Integrado para Transportadoras" contentType="text/html;charset=UTF-8" complete="true"?>
+<zk>
+
+	<window title="Menu" id="pageMenu" border="1">
+
+		<tree>
+			<treecols>
+				<treecol label="" width="80%"/>
+				<treecol label=""/>
+			</treecols>
+			<treechildren>
+				<treeitem>
+					<treerow>
+						<treecell label="Conhecimentos"
+							onClick="principal.src = &quot;/cadastro/conhecimentoList.zul&quot;" />
+						<treecell>
+							<image
+								src="/img/png/file-new-icon16x16.png" align="middle"
+								onClick="principal.src = &quot;/cadastro/conhecimento.zul&quot;" />
+						</treecell>
+					</treerow>
+				</treeitem>
+				<treeitem>
+					<treerow>
+						<treecell label="Coletas"
+							onClick="principal.src = &quot;/cadastro/coletaList.zul&quot;" />
+						<treecell>
+							<image
+								src="/img/png/file-new-icon16x16.png" align="middle"
+								onClick="principal.src = &quot;/cadastro/coleta.zul&quot;" />
+						</treecell>
+					</treerow>
+				</treeitem>
+				<treeitem>
+					<treerow>
+						<treecell label="Manifestos"
+							onClick="principal.src = &quot;/cadastro/manifestoList.zul&quot;" />
+						<treecell>
+							<image
+								src="/img/png/file-new-icon16x16.png" align="middle"
+								onClick="principal.src = &quot;/cadastro/manifesto.zul&quot;" />
+						</treecell>
+					</treerow>
+				</treeitem>
+				<treeitem>
+					<treerow>
+						<treecell label="Estoque"
+							onClick="principal.src = &quot;/cadastro/estoqueList.zul&quot;" />
+						<treecell>
+							<image
+								src="/img/png/file-new-icon16x16.png" align="middle"
+								onClick="principal.src = &quot;/cadastro/estoque.zul&quot;" />
+						</treecell>
+					</treerow>
+				</treeitem>
+				<treeitem open="true">
+					<treerow>
+						<treecell label="Cadastro" />
+					</treerow>
+					<treechildren width="100%">
+						<treeitem>
+							<treerow>
+								<treecell label="Clientes"
+									onClick="principal.src = &quot;/cadastro/clienteList.zul&quot;" />
+								<treecell>
+									<image
+										src="/img/png/file-new-icon16x16.png" align="middle"
+										onClick="principal.src = &quot;/cadastro/cliente.zul&quot;" />
+								</treecell>
+							</treerow>
+						</treeitem>
+						<treeitem>
+							<treerow>
+								<treecell label="Proprietários"
+									onClick="principal.src = &quot;/cadastro/proprietarioList.zul&quot;" />
+								<treecell>
+									<image
+										src="/img/png/file-new-icon16x16.png" align="middle"
+										onClick="principal.src = &quot;/cadastro/proprietario.zul&quot;" />
+								</treecell>
+							</treerow>
+						</treeitem>
+						<treeitem>
+							<treerow>
+								<treecell label="Motoristas"
+									onClick="principal.src = &quot;/cadastro/motoristaList.zul&quot;" />
+								<treecell>
+									<image
+										src="/img/png/file-new-icon16x16.png" align="middle"
+										onClick="principal.src = &quot;/cadastro/motorista.zul&quot;" />
+								</treecell>
+							</treerow>
+						</treeitem>
+						<treeitem>
+							<treerow>
+								<treecell label="Veiculos"
+									onClick="principal.src = &quot;/cadastro/veiculoList.zul&quot;" />
+								<treecell>
+									<image
+										src="/img/png/file-new-icon16x16.png" align="middle"
+										onClick="principal.src = &quot;/cadastro/veiculo.zul&quot;" />
+								</treecell>
+							</treerow>
+						</treeitem>
+						
+						<treeitem open="false">
+							<treerow>
+								<treecell label="Cadastro Base" />
+							</treerow>
+							<treechildren>
+								<treeitem>
+									<treerow>
+										<treecell label="Unidades"
+											onClick="principal.src = &quot;/cadastro/unidadeList.zul&quot;" />
+										<treecell>
+											<image
+												src="/img/png/file-new-icon16x16.png" align="middle"
+												onClick="principal.src = &quot;/cadastro/unidade.zul&quot;" />
+										</treecell>
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="Funcionários"
+											onClick="principal.src = &quot;/cadastro/funcionarioList.zul&quot;" />
+										<treecell>
+											<image
+												src="/img/png/file-new-icon16x16.png" align="middle"
+												onClick="principal.src = &quot;/cadastro/funcionario.zul&quot;" />
+										</treecell>
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="Cidades"
+											onClick="principal.src = &quot;/cadastro/cidadeList.zul&quot;" />
+										<treecell>
+											<image
+												src="/img/png/file-new-icon16x16.png" align="middle"
+												onClick="principal.src = &quot;/cadastro/cidade.zul&quot;" />
+										</treecell>
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="Formas de Cobrança"
+											onClick="principal.src = &quot;/cadastro/formasCobrancaList.zul&quot;" />
+										<treecell>
+											<image
+												src="/img/png/file-new-icon16x16.png" align="middle"
+												onClick="principal.src = &quot;/cadastro/formasCobranca.zul&quot;" />
+										</treecell>
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="Departamentos"
+											onClick="principal.src = &quot;/cadastro/departamentoList.zul&quot;" />
+										<treecell>
+											<image
+												src="/img/png/file-new-icon16x16.png" align="middle"
+												onClick="principal.src = &quot;/cadastro/departamento.zul&quot;" />
+										</treecell>
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="CPOFs"
+											onClick="principal.src = &quot;/cadastro/cpofList.zul&quot;" />
+										<treecell>
+											<image
+												src="/img/png/file-new-icon16x16.png" align="middle"
+												onClick="principal.src = &quot;/cadastro/cpof.zul&quot;" />
+										</treecell>
+									</treerow>
+								</treeitem>
+							</treechildren>
+						</treeitem>
+					</treechildren>
+				</treeitem>
+
+				<treeitem open="true">
+					<treerow>
+						<treecell label="Roterizador" />
+					</treerow>
+					<treechildren>
+						<treeitem open="false">
+							<treerow>
+								<treecell label="Ordem Coleta"
+									onClick="principal.src = &quot;/roterizador/ordemcoleta.zul&quot;" />
+							</treerow>
+							<treechildren>
+								<treeitem>
+									<treerow>
+										<treecell label="Norte"
+											onClick="principal.src = &quot;/roterizador/ordemcoleta/norte.zul&quot;" />
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="Sul"
+											onClick="principal.src = &quot;/roterizador/ordemcoleta/sul.zul&quot;" />
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="Leste"
+											onClick="principal.src = &quot;/roterizador/ordemcoleta/leste.zul&quot;" />
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="Oeste"
+											onClick="principal.src = &quot;/roterizador/ordemcoleta/oeste.zul&quot;" />
+									</treerow>
+								</treeitem>
+							</treechildren>
+						</treeitem>
+						<treeitem open="false">
+							<treerow>
+								<treecell label="Ordem Entrega"
+									onClick="principal.src = &quot;/roterizador/ordementrega.zul&quot;" />
+							</treerow>
+							<treechildren>
+								<treeitem>
+									<treerow>
+										<treecell label="Norte"
+											onClick="principal.src = &quot;/roterizador/ordementrega/norte.zul&quot;" />
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="Sul"
+											onClick="principal.src = &quot;/roterizador/ordementrega/sul.zul&quot;" />
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="Leste" />
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="Oeste" />
+									</treerow>
+								</treeitem>
+							</treechildren>
+						</treeitem>
+					</treechildren>
+				</treeitem>
+
+				<treeitem open="false">
+					<treerow>
+						<treecell label="Relatórios" />
+					</treerow>
+					<treechildren>
+						<treeitem>
+							<treerow>
+								<treecell label="Empresa"
+									onClick="principal.src = &quot;/grafico/EmpresaRegiao.zul&quot;" />
+							</treerow>
+						</treeitem>
+						<treeitem>
+							<treerow>
+								<treecell label="Proprietário" 
+									onClick="principal.src = &quot;/grafico/EmpresaRegiao2.zul&quot;" />
+							</treerow>
+						</treeitem>
+						<treeitem>
+							<treerow>
+								<treecell label="Motorista" />
+							</treerow>
+						</treeitem>
+					</treechildren>
+				</treeitem>
+				
+				<treeitem open="false">
+					<treerow>
+						<treecell label="Configurações" />
+					</treerow>
+					<treechildren>
+						<treeitem>
+							<treerow>
+								<treecell label="Usuários"
+									onClick="principal.src = &quot;/grafico/EmpresaRegiao.zul&quot;" />
+							</treerow>
+						</treeitem>
+						<treeitem>
+							<treerow>
+								<treecell label="Proprietário" 
+									onClick="principal.src = &quot;/grafico/EmpresaRegiao2.zul&quot;" />
+							</treerow>
+						</treeitem>
+						<treeitem>
+							<treerow>
+								<treecell label="Motorista"
+									onClick="principal.src = &quot;/grafico/EmpresaRegiao2.zul&quot;" />
+							</treerow>
+						</treeitem>
+					</treechildren>
+				</treeitem>
+				
+				<treeitem>
+					<treerow>
+						<treecell label="Financeiro" 
+							onClick="principal.src = &quot;/outros/financeiro.zul&quot;" />
+					</treerow>
+				</treeitem>
+				
+				<treeitem>
+					<treerow>
+						<treecell label="Faturas" 
+							onClick="principal.src = &quot;/outros/fatura.zul&quot;" />
+					</treerow>
+				</treeitem>
+				
+				<treeitem>
+					<treerow>
+						<treecell label="Registros de Log" 
+							onClick="principal.src = &quot;/outros/log.zul&quot;" />
+					</treerow>
+				</treeitem>
+
+			</treechildren>
+		</tree>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

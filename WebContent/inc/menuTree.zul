@@ -1,0 +1,1173 @@
+<?page title="Sistema Integrado para Transportadoras" contentType="text/html;charset=UTF-8" complete="true"?>
+<zk>
+
+	<zscript>
+		<![CDATA[
+	import br.com.jgle.acti.entity.Login;
+	Login user = (Login) session.getAttribute("usuario");
+	Boolean showmenu = Boolean.FALSE;
+	if (pageScope.get("showMenu") != null)
+		showmenu = (Boolean) pageScope.get("showMenu");
+	public void adicionarAba(String paginaZul, String titulo) {
+		try {
+
+			/*
+			for (java.util.Iterator it = childrenTabbox.getTabs().getChildren().iterator(); it.hasNext();) {
+				final Tab t = (Tab) it.next();
+				if (t.getLabel().equals(titulo)) {
+					t.setSelected(true);
+					t.setVisible(true);
+					return;
+				}
+			}
+			 */
+
+			Include include = new Include();
+			include.setSrc(paginaZul);
+			// Deixar para não dar problema na hora de abrir menu iguais
+			//include.setProgressing(true);
+			include.setLocalized(true);
+
+			Tabpanel tabpanel = new Tabpanel();
+			tabpanel.setHeight("100%");
+			tabpanel.appendChild(include);
+			//Executions.createComponents("/cadastro/loginList.zul", tabpanel, null);
+
+			Tab tab = new Tab(titulo);
+			tab.setHeight("100%");
+			tab.setClosable(true);
+			tab.setSelected(true);
+			/*
+			tab.addEventListener("onDoubleClick", new org.zkoss.zk.ui.event.EventListener() {
+				public void onEvent(Event arg0) throws Exception {
+					self.setVisible(false);
+					Tab tab = (Tab) childrenTabbox.getTabs().getFirstChild();
+					tab.setSelected(true);
+				}
+			});
+			 */
+
+			// Verifica se não esta na tela de Acesso Menu
+			if (!showmenu) {
+				if (childrenTabbox.getTabs() == null) {
+					childrenTabbox.appendChild(new Tabs());
+					childrenTabbox.appendChild(new Tabpanels());
+				}
+
+				childrenTabbox.getTabs().appendChild(tab);
+				childrenTabbox.getTabpanels().appendChild(tabpanel);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Messagebox.show(e.getMessage());
+		}
+	}
+	System.out.println("showMenu: " + showmenu);
+	if (user != null)
+		System.out.println("user: " + user.getNome());
+	public void usuarioPermitido(Component comp) {
+		// System.out.println("comp: " + comp);
+
+		if (user == null)
+			return;
+
+		String idMenu = comp.getId();
+		if (showmenu || user.hasAcesso(idMenu))
+			return;
+
+		comp.setVisible(false);
+	}
+]]>
+</zscript>
+
+	<tree id="menuTree" height="100%" width="100%" fixedLayout="true">
+		<treecols>
+			<treecol label="" width="95%" />
+			<treecol label="" />
+		</treecols>
+		<treechildren>
+			<treeitem>
+				<treerow>
+					<treecell id="manifesto" label="Manifestos"
+						onCreate="usuarioPermitido(self)"
+						onClick="adicionarAba(&quot;/cadastro/manifestoList.zul&quot;, &quot;Manifestos&quot;)" />
+					<!--						<treecell>-->
+					<!--							<image src="/img/png/file-new-icon16x16.png"-->
+					<!--								align="middle"-->
+					<!--								onClick="adicionarAba(&quot;/cadastro/manifesto.zul&quot;, &quot;Manifestos&quot;)" />-->
+					<!--						</treecell>-->
+				</treerow>
+			</treeitem>
+			<treeitem>
+				<treerow>
+					<treecell id="conhecimento" label="Conhecimentos"
+						onCreate="usuarioPermitido(self)"
+						onClick="adicionarAba(&quot;/cadastro/conhecimentoList.zul&quot;, &quot;Conhecimento&quot;)" />
+					<!--						<treecell>-->
+					<!--							<image src="/img/png/file-new-icon16x16.png"-->
+					<!--								align="middle"-->
+					<!--								onClick="adicionarAba(&quot;/cadastro/conhecimento.zul&quot;, &quot;Conhecimento&quot;)" />-->
+					<!--						</treecell>-->
+				</treerow>
+			</treeitem>
+			<treeitem>
+<!-- 				label="Coletas/OSC's" -->
+				<treerow>
+					<treecell id="coletaOsc" label="Coletas"
+						onCreate="usuarioPermitido(self)"
+						onClick="adicionarAba(&quot;/cadastro/coletaList.zul&quot;, &quot;Coletas/OSC's&quot;)" />
+					<!--						<treecell>-->
+					<!--							<image src="/img/png/file-new-icon16x16.png"-->
+					<!--								align="middle"-->
+					<!--								onClick="adicionarAba(&quot;/cadastro/coleta.zul&quot;, &quot;Coletas/OSC's&quot;)" />-->
+					<!--						</treecell>-->
+				</treerow>
+			</treeitem>
+			<treeitem>
+				<treerow>
+					<treecell id="rota" label="Rota"
+						onCreate="usuarioPermitido(self)"
+						onClick="adicionarAba(&quot;/cadastro/rotaList.zul&quot;, &quot;Rota&quot;)" />
+					<!--						<treecell>-->
+					<!--							<image src="/img/png/file-new-icon16x16.png"-->
+					<!--								align="middle"-->
+					<!--								onClick="adicionarAba(&quot;/cadastro/rota.zul&quot;, &quot;Rota&quot;)" />-->
+					<!--						</treecell>-->
+				</treerow>
+			</treeitem>
+
+			<treeitem open="false">
+				<treerow>
+					<treecell id="roterizador" label="Roterizador" />
+				</treerow>
+				<treechildren>
+					<treeitem open="false">
+						<treerow>
+							<treecell id="roterizOrdemColeta" label="Ordem Coleta"
+								onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/roterizador/ordemcoleta.zul&quot;, &quot;Rot Ordem Coleta&quot;)" />
+						</treerow>
+						<!--						<treechildren visible="false">-->
+						<!--							<treeitem>-->
+						<!--								<treerow>-->
+						<!--									<treecell label="Norte"-->
+						<!--										onCreate="usuarioPermitido(self)"-->
+						<!--										onClick="principal.src = &quot;/roterizador/ordemcoleta/norte.zul&quot;" />-->
+						<!--								</treerow>-->
+						<!--							</treeitem>-->
+						<!--							<treeitem>-->
+						<!--								<treerow>-->
+						<!--									<treecell label="Sul"-->
+						<!--										onCreate="usuarioPermitido(self)"-->
+						<!--										onClick="principal.src = &quot;/roterizador/ordemcoleta/sul.zul&quot;" />-->
+						<!--								</treerow>-->
+						<!--							</treeitem>-->
+						<!--							<treeitem>-->
+						<!--								<treerow>-->
+						<!--									<treecell label="Leste"-->
+						<!--										onCreate="usuarioPermitido(self)"-->
+						<!--										onClick="principal.src = &quot;/roterizador/ordemcoleta/leste.zul&quot;" />-->
+						<!--								</treerow>-->
+						<!--							</treeitem>-->
+						<!--							<treeitem>-->
+						<!--								<treerow>-->
+						<!--									<treecell label="Oeste"-->
+						<!--										onCreate="usuarioPermitido(self)"-->
+						<!--										onClick="principal.src = &quot;/roterizador/ordemcoleta/oeste.zul&quot;" />-->
+						<!--								</treerow>-->
+						<!--							</treeitem>-->
+						<!--						</treechildren>-->
+					</treeitem>
+					<treeitem open="false">
+						<treerow>
+							<treecell id="roterizOrdemEntrega" label="Ordem Entrega"
+								onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/roterizador/ordementrega.zul&quot;, &quot;Rot Ordem Entrega&quot;)" />
+						</treerow>
+						<!--						<treechildren visible="false">-->
+						<!--							<treeitem>-->
+						<!--								<treerow>-->
+						<!--									<treecell label="Norte"-->
+						<!--										onCreate="usuarioPermitido(self)"-->
+						<!--										onClick="principal.src = &quot;/roterizador/ordementrega/norte.zul&quot;" />-->
+						<!--								</treerow>-->
+						<!--							</treeitem>-->
+						<!--							<treeitem>-->
+						<!--								<treerow>-->
+						<!--									<treecell label="Sul"-->
+						<!--										onCreate="usuarioPermitido(self)"-->
+						<!--										onClick="principal.src = &quot;/roterizador/ordementrega/sul.zul&quot;" />-->
+						<!--								</treerow>-->
+						<!--							</treeitem>-->
+						<!--							<treeitem>-->
+						<!--								<treerow>-->
+						<!--									<treecell label="Leste"-->
+						<!--										onCreate="usuarioPermitido(self)" />-->
+						<!--								</treerow>-->
+						<!--							</treeitem>-->
+						<!--							<treeitem>-->
+						<!--								<treerow>-->
+						<!--									<treecell label="Oeste"-->
+						<!--										onCreate="usuarioPermitido(self)" />-->
+						<!--								</treerow>-->
+						<!--							</treeitem>-->
+						<!--						</treechildren>-->
+					</treeitem>
+				</treechildren>
+			</treeitem>
+
+			<treeitem open="false">
+				<treerow>
+					<treecell id="movimentacaoPneu"
+						label="Movimentação Pneu" />
+				</treerow>
+				<treechildren>
+					<treeitem>
+						<treerow>
+							<treecell id="movimentacaoPneuEntrada"
+								label="Entrada" onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/cadastro/estoque/pneuEntradaList.zul&quot;, &quot;Entrada Pneu&quot;)" />
+							<!--								<treecell>-->
+							<!--									<image-->
+							<!--										src="/img/png/file-new-icon16x16.png" align="middle"-->
+							<!--										onClick="adicionarAba(&quot;/cadastro/estoque/pneuEntrada.zul&quot;, &quot;Entrada Pneus&quot;)" />-->
+							<!--								</treecell>-->
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="movimentacaoPneuSaida"
+								label="Saida" onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/cadastro/estoque/pneuSaidaList.zul&quot;, &quot;Saida Pneu&quot;)" />
+							<!--								<treecell>-->
+							<!--									<image-->
+							<!--										src="/img/png/file-new-icon16x16.png" align="middle"-->
+							<!--										onClick="adicionarAba(&quot;/cadastro/estoque/pneuSaida.zul&quot;, &quot;Saida Pneu&quot;)" />-->
+							<!--								</treecell>-->
+						</treerow>
+					</treeitem>
+				</treechildren>
+			</treeitem>
+
+			<treeitem open="false">
+				<treerow>
+					<treecell label="Cadastro" />
+				</treerow>
+				<treechildren width="100%">
+					<treeitem>
+						<treerow>
+<!-- 								label="Clientes/ Fornecedores" onCreate="usuarioPermitido(self)" -->
+							<treecell id="clienteFornecedore"
+								label="Clientes" onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/cadastro/clienteList.zul&quot;, &quot;Clientes&quot;)" />
+							<!--								<treecell>-->
+							<!--									<image-->
+							<!--										src="/img/png/file-new-icon16x16.png" align="middle"-->
+							<!--										onClick="adicionarAba(&quot;/cadastro/cliente.zul&quot;, &quot;Clientes/Fornecedores&quot;)" />-->
+							<!--								</treecell>-->
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="fornecedor"
+								label="Fornecedores" onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/cadastro/clienteList.zul&quot;, &quot;Clientes&quot;)" />
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="proprietario"
+								label="Proprietários" onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/cadastro/proprietarioList.zul&quot;, &quot;Proprietários&quot;)" />
+							<!--								<treecell>-->
+							<!--									<image-->
+							<!--										src="/img/png/file-new-icon16x16.png" align="middle"-->
+							<!--										onClick="adicionarAba(&quot;/cadastro/proprietario.zul&quot;, &quot;Proprietários&quot;)" />-->
+							<!--								</treecell>-->
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="motorista" label="Motoristas"
+								onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/cadastro/motoristaList.zul&quot;, &quot;Motoristas&quot;)" />
+							<!--								<treecell>-->
+							<!--									<image-->
+							<!--										src="/img/png/file-new-icon16x16.png" align="middle"-->
+							<!--										onClick="adicionarAba(&quot;/cadastro/motorista.zul&quot;, &quot;Motoristas&quot;)" />-->
+							<!--								</treecell>-->
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="veiculo" label="Veiculos"
+								onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/cadastro/veiculoList.zul&quot;, &quot;Veiculos&quot;)" />
+							<!--								<treecell>-->
+							<!--									<image-->
+							<!--										src="/img/png/file-new-icon16x16.png" align="middle"-->
+							<!--										onClick="adicionarAba(&quot;/cadastro/veiculo.zul&quot;, &quot;Veiculos&quot;)" />-->
+							<!--								</treecell>-->
+						</treerow>
+					</treeitem>
+
+					<treeitem open="false">
+						<treerow>
+							<treecell label="Cadastro Base" />
+						</treerow>
+						<treechildren>
+							<treeitem>
+								<treerow>
+									<treecell id="cpof" label="CPOFs"
+										onCreate="usuarioPermitido(self)"
+										onClick="adicionarAba(&quot;/cadastro/cpofList.zul&quot;, &quot;CPOFs&quot;)" />
+									<!--										<treecell>-->
+									<!--											<image-->
+									<!--												src="/img/png/file-new-icon16x16.png" align="middle"-->
+									<!--												onClick="adicionarAba(&quot;/cadastro/cpof.zul&quot;, &quot;CPOFs&quot;)" />-->
+									<!--										</treecell>-->
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell id="funcionario"
+										label="Funcionários" onCreate="usuarioPermitido(self)"
+										onClick="adicionarAba(&quot;/cadastro/funcionarioList.zul&quot;, &quot;Funcionários&quot;)" />
+									<!--										<treecell>-->
+									<!--											<image-->
+									<!--												src="/img/png/file-new-icon16x16.png" align="middle"-->
+									<!--												onClick="adicionarAba(&quot;/cadastro/funcionario.zul&quot;, &quot;Funcionários&quot;)" />-->
+									<!--										</treecell>-->
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell id="unidade"
+										label="Unidades" onCreate="usuarioPermitido(self)"
+										onClick="adicionarAba(&quot;/cadastro/unidadeList.zul&quot;, &quot;Unidade&quot;)" />
+									<!--										<treecell>-->
+									<!--											<image-->
+									<!--												src="/img/png/file-new-icon16x16.png" align="middle"-->
+									<!--												onClick="adicionarAba(&quot;/cadastro/unidade.zul&quot;, &quot;Unidade&quot;)" />-->
+									<!--										</treecell>-->
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell id="login" label="Login"
+										onCreate="usuarioPermitido(self)"
+										onClick="adicionarAba(&quot;/cadastro/loginList.zul&quot;, &quot;Login&quot;)" />
+									<!--										<treecell>-->
+									<!--											<image-->
+									<!--												src="/img/png/file-new-icon16x16.png" align="middle"-->
+									<!--												onClick="adicionarAba(&quot;/cadastro/login.zul&quot;, &quot;Login&quot;)" />-->
+									<!--										</treecell>-->
+								</treerow>
+							</treeitem>
+							<treeitem disabled="true">
+								<treerow>
+									<treecell id="formasCobranca"
+										label="Formas de Cobrança" onCreate="usuarioPermitido(self)"
+										onClick="adicionarAba(&quot;/cadastro/formasCobrancaList.zul&quot;, &quot;Formas de Cobrança&quot;)" />
+									<!--										<treecell>-->
+									<!--											<image-->
+									<!--												src="/img/png/file-new-icon16x16.png" align="middle"-->
+									<!--												onClick="adicionarAba(&quot;/cadastro/formasCobranca.zul&quot;, &quot;Formas de Cobrança&quot;)" />-->
+									<!--										</treecell>-->
+								</treerow>
+							</treeitem>
+							<treeitem disabled="true">
+								<treerow>
+									<treecell id="cidades"
+										label="Cidades" onCreate="usuarioPermitido(self)"
+										onClick="adicionarAba(&quot;/cadastro/cidadeList.zul&quot;, &quot;Cidades&quot;)" />
+									<!--										<treecell>-->
+									<!--											<image-->
+									<!--												src="/img/png/file-new-icon16x16.png" align="middle"-->
+									<!--												onClick="adicionarAba(&quot;/cadastro/cidade.zul&quot;, &quot;Cidades&quot;)" />-->
+									<!--										</treecell>-->
+								</treerow>
+							</treeitem>
+							<treeitem disabled="true">
+								<treerow>
+									<treecell id="departamentos"
+										label="Departamentos" onCreate="usuarioPermitido(self)"
+										onClick="adicionarAba(&quot;/cadastro/departamentoList.zul&quot;, &quot;Departamentos&quot;)" />
+									<!--										<treecell>-->
+									<!--											<image-->
+									<!--												src="/img/png/file-new-icon16x16.png" align="middle"-->
+									<!--												onClick="adicionarAba(&quot;/cadastro/departamento.zul&quot;, &quot;Departamentos&quot;)" />-->
+									<!--										</treecell>-->
+								</treerow>
+							</treeitem>
+
+						</treechildren>
+					</treeitem>
+
+					<treeitem open="false">
+						<treerow>
+							<treecell label="PGR" />
+						</treerow>
+						<treechildren>
+							<treeitem>
+								<treerow>
+									<treecell id="projeto"
+										label="Projeto" onCreate="usuarioPermitido(self)"
+										onClick="adicionarAba(&quot;/pgr/projetoList.zul&quot;, &quot;PGR Projeto&quot;)" />
+									<!--										<treecell>-->
+									<!--											<image-->
+									<!--												src="/img/png/file-new-icon16x16.png" align="middle"-->
+									<!--												onClick="adicionarAba(&quot;/cadastro/cpof.zul&quot;, &quot;CPOFs&quot;)" />-->
+									<!--										</treecell>-->
+								</treerow>
+							</treeitem>
+						</treechildren>
+					</treeitem>
+				</treechildren>
+			</treeitem>
+
+			<treeitem open="false">
+				<treerow>
+					<treecell label="Estoque" />
+				</treerow>
+				<treechildren>
+					<treeitem>
+						<treerow>
+							<treecell id="estoqueEntrada"
+								label="Entradas" onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/cadastro/estoque/entradaEstoqueList.zul&quot;, &quot;Entradas/ Compras&quot;)" />
+							<!--								<treecell>-->
+							<!--									<image-->
+							<!--										src="/img/png/file-new-icon16x16.png" align="middle"-->
+							<!--										onClick="adicionarAba(&quot;/cadastro/estoque/entradaEstoque.zul&quot;, &quot;Entradas/ Compras&quot;)" />-->
+							<!--								</treecell>-->
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="estoqueSaida" label="Saidas"
+								onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/cadastro/estoque/saidaEstoqueList.zul&quot;, &quot;Saídas&quot;)" />
+							<!--								<treecell>-->
+							<!--									<image-->
+							<!--										src="/img/png/file-new-icon16x16.png" align="middle"-->
+							<!--										onClick="adicionarAba(&quot;/cadastro/estoque/saidaEstoque.zul&quot;, &quot;Saídas&quot;)" />-->
+							<!--								</treecell>-->
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="estoqueProduto"
+								label="Produtos" onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/cadastro/estoque/produtoList.zul&quot;, &quot;Produtos&quot;)" />
+							<!--								<treecell>-->
+							<!--									<image-->
+							<!--										src="/img/png/file-new-icon16x16.png" align="middle"-->
+							<!--										onClick="adicionarAba(&quot;/cadastro/estoque/produto.zul&quot;, &quot;Produtos&quot;)" />-->
+							<!--								</treecell>-->
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="estoqueKitProduto"
+								label="Kit de Produtos" onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/cadastro/estoque/kitProdutoList.zul&quot;, &quot;Kit de Produtos&quot;)" />
+							<!--								<treecell>-->
+							<!--									<image-->
+							<!--										src="/img/png/file-new-icon16x16.png" align="middle"-->
+							<!--										onClick="adicionarAba(&quot;/cadastro/estoque/kitProduto.zul&quot;, &quot;Kit de Produtos&quot;)" />-->
+							<!--								</treecell>-->
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="estoqueAlmoxarifado"
+								label="Almoxarifados" onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/cadastro/estoque/almoxarifadoList.zul&quot;, &quot;Almoxarifados&quot;)" />
+							<!--								<treecell>-->
+							<!--									<image-->
+							<!--										src="/img/png/file-new-icon16x16.png" align="middle"-->
+							<!--										onClick="adicionarAba(&quot;/cadastro/estoque/almoxarifado.zul&quot;, &quot;Almoxarifados&quot;)" />-->
+							<!--								</treecell>-->
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="estoqueGrupoSubGrupos"
+								label="Grupos e Subgrupos" onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/cadastro/estoque/gruposSubgruposList.zul&quot;, &quot;Grupos&quot;)" />
+							<!--								<treecell>-->
+							<!--									<image-->
+							<!--										src="/img/png/file-new-icon16x16.png" align="middle"-->
+							<!--										onClick="adicionarAba(&quot;/cadastro/estoque/gruposSubgrupos.zul&quot;, &quot;Grupos&quot;)" />-->
+							<!--								</treecell>-->
+						</treerow>
+					</treeitem>
+				</treechildren>
+			</treeitem>
+
+			<treeitem open="false">
+				<treerow>
+					<treecell label="Brasil Risk" />
+				</treerow>
+				<treechildren>
+					<treeitem>
+						<treerow>
+							<treecell id="brasilRiskMotorista"
+								label="Cadastro de Motorista" onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/integracao/brasilRisk/brasilRiskMotoristaList.zul&quot;, &quot;Brasil Risk - Cadastro Motorista&quot;)" />
+
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="brasilRiskVeiculo"
+								label="Cadastro de Veiculo" onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/integracao/brasilRisk/brasilRiskVeiculoList.zul&quot;, &quot;Brasil Risk - Cadastro Veiculo&quot;)" />
+
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="brasilRiskConhecimento"
+								label="Cadastro de Conhecimento"
+								onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/integracao/brasilRisk/brasilRiskConhecimentoList.zul&quot;, &quot;Brasil Risk - Cadastro de Conhecimento&quot;)" />
+
+						</treerow>
+					</treeitem>
+				</treechildren>
+			</treeitem>
+
+			<treeitem open="false">
+				<treerow>
+					<treecell id="web" label="Web" />
+				</treerow>
+				<treechildren>
+					<treeitem>
+						<treerow>
+							<treecell id="webmail" label="Web Mail"
+								onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/web/webmail.zul&quot;, &quot;Mapa&quot;)" />
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="mapa" label="Mapa"
+								onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/web/mapa.zul&quot;, &quot;Mapa&quot;)" />
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="twitter" label="Twitter"
+								onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/web/twitter.zul&quot;, &quot;Twitter&quot;)" />
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="facebook" label="Facebook"
+								onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/web/facebook.zul&quot;, &quot;Facebook&quot;)" />
+						</treerow>
+					</treeitem>
+				</treechildren>
+			</treeitem>
+
+
+			<treeitem open="false">
+				<treerow>
+					<treecell id="administracao" label="Administração" />
+				</treerow>
+				<treechildren>
+					<treeitem>
+						<treerow>
+							<treecell id="acessoMenu"
+								label="Acesso Menu" onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/administracao/acessoMenu.zul&quot;, &quot;Acesso Menu&quot;)" />
+
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="logAcesso" label="Log Acessos"
+								onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/administracao/logAcesso.zul&quot;, &quot;Log Acessos&quot;)" />
+
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="admView" label="ADM View"
+								onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/administracao/admView.zul&quot;, &quot;ADM View&quot;)" />
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell id="monitor" label="Monitoramento"
+								onCreate="usuarioPermitido(self)"
+								onClick="adicionarAba(&quot;/administracao/monitor.zul&quot;, &quot;Monitoramento&quot;)" />
+						</treerow>
+					</treeitem>
+					<treeitem disabled="true">
+						<treerow>
+							<treecell id="usuario" label="Usuários"
+								onCreate="usuarioPermitido(self)"
+								onClick="principal.src = &quot;/grafico/EmpresaRegiao.zul&quot;" />
+						</treerow>
+					</treeitem>
+					<treeitem disabled="true">
+						<treerow>
+							<treecell id="admProprietario"
+								label="Proprietário" onCreate="usuarioPermitido(self)"
+								onClick="principal.src = &quot;/grafico/EmpresaRegiao2.zul&quot;" />
+						</treerow>
+					</treeitem>
+					<treeitem disabled="true">
+						<treerow>
+							<treecell id="admMotorista"
+								label="Motorista" onCreate="usuarioPermitido(self)"
+								onClick="principal.src = &quot;/grafico/EmpresaRegiao2.zul&quot;" />
+						</treerow>
+					</treeitem>
+				</treechildren>
+			</treeitem>
+
+			<treeitem disabled="true">
+				<treerow>
+					<treecell label="Estoque Produto"
+						onCreate="usuarioPermitido(self)"
+						onClick="adicionarAba(&quot;/cadastro/estoque/estoqueList.zul&quot;, &quot;Estoque&quot;)" />
+					<!--						<treecell>-->
+					<!--							<image src="/img/png/file-new-icon16x16.png"-->
+					<!--								align="middle"-->
+					<!--								onClick="adicionarAba(&quot;/cadastro/estoque/estoque.zul&quot;, &quot;Estoque&quot;)" />-->
+					<!--						</treecell>-->
+				</treerow>
+			</treeitem>
+
+			<treeitem open="false" disabled="true">
+				<treerow>
+					<treecell label="Relatórios" />
+				</treerow>
+				<treechildren>
+					<treeitem open="false">
+						<treerow>
+							<treecell label="Coleta" />
+						</treerow>
+						<treechildren>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Remetente"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Destinatário"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Motorista"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Veículo"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Destino"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Coletados"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Não Coletados"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+						</treechildren>
+					</treeitem>
+
+
+					<treeitem open="false">
+						<treerow>
+							<treecell label="Conhecimento" />
+						</treerow>
+						<treechildren>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Remetente"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Destinatário"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Rota"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Dt Operação"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Cancelados"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Fretes Combinados"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Motorista"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Veículo"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+
+							<treeitem open="false">
+								<treerow>
+									<treecell label="Faturados(S/N)" />
+								</treerow>
+								<treechildren>
+									<treeitem>
+										<treerow>
+											<treecell
+												label="Por Remetente" onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+									<treeitem>
+										<treerow>
+											<treecell
+												label="Por Destinatário" onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+									<treeitem>
+										<treerow>
+											<treecell label="Por Rota"
+												onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+									<treeitem>
+										<treerow>
+											<treecell
+												label="Dt Motorista" onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+									<treeitem>
+										<treerow>
+											<treecell label="Veiculo"
+												onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+									<treeitem>
+										<treerow>
+											<treecell
+												label="Por Nº Fatura" onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+								</treechildren>
+							</treeitem>
+
+							<treeitem open="false">
+								<treerow>
+									<treecell label="Manifestados(S/N)" />
+								</treerow>
+								<treechildren>
+									<treeitem>
+										<treerow>
+											<treecell
+												label="Por Remetente" onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+									<treeitem>
+										<treerow>
+											<treecell
+												label="Por Destinatário" onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+									<treeitem>
+										<treerow>
+											<treecell label="Por Rota"
+												onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+									<treeitem>
+										<treerow>
+											<treecell
+												label="Por Motorista" onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+									<treeitem>
+										<treerow>
+											<treecell
+												label="Por Veículo" onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+									<treeitem>
+										<treerow>
+											<treecell
+												label="Por Nº Manifesto" onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+									<treeitem>
+										<treerow>
+											<treecell
+												label="Rota Remetente/Destino"
+												onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+								</treechildren>
+							</treeitem>
+
+							<treeitem open="false">
+								<treerow>
+									<treecell
+										label="Recolhim.ICMS/Rota" />
+								</treerow>
+								<treechildren>
+									<treeitem>
+										<treerow>
+											<treecell
+												label="Quebra por Rota" onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+									<treeitem>
+										<treerow>
+											<treecell
+												label="Quebra por Origem - Cid. Remetente"
+												onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+									<treeitem>
+										<treerow>
+											<treecell label="Por CFOP"
+												onCreate="usuarioPermitido(self)"
+												onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+										</treerow>
+									</treeitem>
+								</treechildren>
+							</treeitem>
+
+							<treeitem>
+								<treerow>
+									<treecell label="Entregues/Pagos"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Consignatário"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell
+										label="Embarque/ Averbação" onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Ainda no Galpão"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell
+										label="Comissão/ Conhecimento"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell
+										label="Contador/ Conhecimento"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell
+										label="Seguro/ Conhecimento" onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Previsão de Peso"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+						</treechildren>
+					</treeitem>
+
+					<treeitem open="false">
+						<treerow>
+							<treecell label="Manifestos" />
+						</treerow>
+						<treechildren>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Dt Operação"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Rota"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Carta Frete Paga"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Motorista"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Veículo"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Destino"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Cartas Frestes"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+						</treechildren>
+					</treeitem>
+
+					<treeitem open="false">
+						<treerow>
+							<treecell label="Faturas" />
+						</treerow>
+						<treechildren>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Sacado"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Venct - Rota"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell
+										label="Por Praça/ Vencimento"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell
+										label="Por Dt Faturamento - Rota"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Em Cartorio"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Por Situação"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Para Correio"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Futuras Quitadas"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell
+										label="Contra Apresentação" onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell
+										label="Por Praça/Dt. Fat./Quitadas/Canceladas"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Canceladas/Vencto"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell
+										label="Com Desconto/Avarias/Vencto"
+										onCreate="usuarioPermitido(self)"
+										onClick="principal.src = &quot;/relatorio/.zul&quot;" />
+								</treerow>
+							</treeitem>
+						</treechildren>
+					</treeitem>
+
+					<treeitem>
+						<treerow>
+							<treecell label="Empresa"
+								onCreate="usuarioPermitido(self)"
+								onClick="principal.src = &quot;/grafico/EmpresaRegiao.zul&quot;" />
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell label="Proprietário"
+								onCreate="usuarioPermitido(self)"
+								onClick="principal.src = &quot;/grafico/EmpresaRegiao2.zul&quot;" />
+						</treerow>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell label="Motorista" />
+						</treerow>
+					</treeitem>
+				</treechildren>
+			</treeitem>
+
+			<treeitem disabled="true">
+				<treerow>
+					<treecell label="Financeiro"
+						onCreate="usuarioPermitido(self)"
+						onClick="principal.src = &quot;/outros/financeiro.zul&quot;" />
+				</treerow>
+			</treeitem>
+
+			<treeitem disabled="true">
+				<treerow>
+					<treecell label="Faturas"
+						onCreate="usuarioPermitido(self)"
+						onClick="principal.src = &quot;/outros/fatura.zul&quot;" />
+				</treerow>
+			</treeitem>
+		</treechildren>
+	</tree>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

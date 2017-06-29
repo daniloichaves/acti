@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<style id="css" src="/css/acti.css" />
+
+	<window title="Cadastro de Estoque" id="cadastro"
+		contentStyle="overflow:auto">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Data/Hora: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						onCreate="self.value = new Date()" mold="rounded" disabled="true" />
+					<label value="Tipo: " />
+					<hbox>
+						<radio label="JGle"></radio>
+						<radio label="Westtrack"></radio>
+					</hbox>
+				</row>
+				<row>
+					<label value="Cliente: " />
+					<combobox>
+						<comboitem label="JGle"></comboitem>
+						<comboitem label="Westtrack"></comboitem>
+					</combobox>
+					<label value="Produto: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="Fabricante: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+					<label value="Fornecedor: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+				</row>
+				<row>
+					<label value="Aliq: " />
+					<textbox constraint="" />
+					<label value="Qtde Vols Ant: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Qtde Unid/Vol: " />
+					<textbox constraint="" />
+					<label value="Novo valor Unit R$: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Lote(Localização): " />
+					<textbox constraint="" />
+					<label value="Entrada por qtde Vols: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Entradas qtde Unidades: " />
+					<textbox constraint="" />
+					<label value="Qtde Vols. Atual: " />
+					<textbox constraint="" />
+				</row>
+				<row>
+					<label value="Box(Localização): " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+					<label />
+					<label />
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<fisheyebar attachEdge="top">
+				<fisheye image="/img/png/save-as-icon48x48.png"
+					label="Salvar" onClick="alert(self.label)" />
+				<fisheye image="/img/png/delete-icon48x48.png"
+					label="Deletar" onClick="alert(self.label)" />
+				<fisheye image="/img/png/Cancel-2-icon48x48.png"
+					label="Cancelar" onClick="alert(self.label)">
+					<attribute name="onClick">
+	cadastro.visible = false;
+</attribute>
+				</fisheye>
+
+			</fisheyebar>
+
+		</div>
+
+		<include id="telefoneList" src="/cadastro/telefoneList.zul" />
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

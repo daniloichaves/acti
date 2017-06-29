@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+	<window id="loginWindow" border="normal" height="100%" width="100%"
+		apply="${loginValidicaoController}">
+
+		<borderlayout>
+			<north height="15%" splittable="true" collapsible="true">
+				<include id="header" context="" src="/inc/header.zul" />
+			</north>
+
+			<center style="padding: 35px 0 0 200px;">
+				<div align="justify">
+					<groupbox mold="3d" width="50%" droppable="true">
+						<caption label="Login" />
+						<grid>
+							<rows>
+								<row>
+									Usuário:
+									<textbox id="usuario" name="login"
+										constraint="no empty: Por favor, digite o seu login" />
+								</row>
+								<row>
+									Senha:
+									<textbox id="senha" name="senha"
+										type="password"
+										constraint="no empty: Por favor, digite a sua senha" />
+								</row>
+								<row>
+									Thema:
+									<combobox id="thema" >
+										<comboitem label="Breeze" value="breeze"/>
+										<comboitem label="Sapphire" value="sapphire"/>
+										<comboitem label="Silvertail" value="silvertail"/>
+										<comboitem label="Classic" value="classic"/>
+									</combobox>
+								</row>
+								<row spans="2" align="right">
+									<button id="entrar" label="Entrar" />
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</div>
+			</center>
+
+			<south size="3%">
+				<label
+					value="JGle Solutions Technology © 2010 - Todos os direitos reservados - melhor visualizado em 1024x768 pixels ou superior." />
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

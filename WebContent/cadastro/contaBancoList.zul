@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<zk>
+	<zscript>
+	<![CDATA[
+	import br.com.jgle.acti.controller.AbstractController;
+	System.out.println("myList: " + requestScope.get("controller"));
+	AbstractController contaBancoController = (AbstractController) requestScope
+			.get("controller");
+]]>
+	</zscript>
+
+	<window id="entityWin" ctrlKeys="#up#down"
+		title="Lista de Contas de Banco">
+
+		<listbox id="entityList" width="100%" height="100%"
+			mold="paging" model="@{contaBancoController.reminders}"
+			selectedItem="@{contaBancoController.selected}" pageSize="@{contaBancoController.pageSize}">
+
+			<listhead sizable="true">
+				<listheader label="Alterar" width="45px" />
+				<listheader label="Tipo" sort="auto" />
+				<listheader label="Banco" sort="auto" />
+				<listheader label="Agência" sort="auto" />
+				<listheader label="Conta" sort="auto" />
+				<listheader label="Deletar" width="50px" />
+			</listhead>
+			<listitem self="@{each=reminder}">
+				<listcell id="entityUpdateQuick"
+					image="/img/png/page-edit-icon24x24.png" />
+				<listcell label="@{reminder.tipo}" />
+				<listcell label="@{reminder.banco.banco}" />
+				<listcell label="@{reminder.agencia}" />
+				<listcell label="@{reminder.conta}" />
+				<listcell id="entityDeleteQuick"
+					image="/img/png/delete-icon16x16.png" />
+			</listitem>
+		</listbox>
+
+		<div id="entityDetail">
+
+			<!-- view mode -->
+			<div id="entityView"
+				visible="@{contaBancoController.viewMode}">
+
+				<!-- 
+					<grid width="100%">
+					<rows>
+					<row>
+					Tipo:
+					<label
+					value="@{contaBancoController.selected.tipo}" />
+					Banco:
+					<label
+					value="@{contaBancoController.selected.banco}" />
+					</row>
+					<row>
+					Agência:
+					<label
+					value="@{contaBancoController.selected.agencia}" />
+					Conta:
+					<label
+					value="@{contaBancoController.selected.conta}" />
+					</row>
+					<row>
+					Contato:
+					<label
+					value="@{contaBancoController.selected.contato}" />
+					Observação:
+					<label
+					value="@{contaBancoController.selected.observacao}" />
+					</row>
+					</rows>
+					</grid>
+				-->
+
+			</div>
+
+			<image id="entityCreate"
+				src="/img/png/file-new-icon32x32.png"
+				visible="@{contaBancoController.viewMode}" />
+
+			<include src="/cadastro/contaBanco.zul" />
+		</div>
+	</window>
+</zk>

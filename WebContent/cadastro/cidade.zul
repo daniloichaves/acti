@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<style id="css" src="/css/acti.css" />
+
+	<window title="Cadastro de Cidade" id="cadastro"
+		contentStyle="overflow:auto">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Nome: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" />
+					<label value="UF: " />
+					<combobox use="br.com.jgle.acti.component.UFCombobox"
+						selectedItem="controller.selected.uf}"
+						autodrop="true" value="SP">
+					</combobox>
+				</row>
+				<row>
+					<label value="Abrev: " />
+					<textbox style="text-transform:uppercase" />
+					<label value="Km: " />
+					<textbox />
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<fisheyebar attachEdge="top">
+
+				<fisheye image="/img/png/save-as-icon48x48.png"
+					label="Salvar" onClick="alert(self.label)" />
+				<fisheye image="/img/png/delete-icon48x48.png"
+					label="Deletar" onClick="alert(self.label)" />
+				<fisheye image="/img/png/Cancel-2-icon48x48.png"
+					label="Cancelar" onClick="alert(self.label)">
+					<attribute name="onClick">
+	cadastro.visible = false;
+</attribute>
+				</fisheye>
+
+			</fisheyebar>
+
+		</div>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

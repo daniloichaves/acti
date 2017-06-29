@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit" apply="${grupoMercadoriaController}"
+		visible="@{grupoMercadoriaController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Sub-Limite">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Código: " />
+					<intbox
+						value="@{grupoMercadoriaController.selected.id}" disabled="false" />
+					<label />
+					<label />
+				</row>
+				<row>
+					<label value="Grupo " />
+
+					<combobox
+						selectedItem="@{grupoMercadoriaController.selected.grupo}"
+						autodrop="true"
+						constraint="no empty: Por favor, selecione um grupo">
+
+						<comboitem
+							forEach="${grupoMercadoriaController.grupos}"
+							label="${each.nome}" description="${each.parent.nome}"
+							value="${each}" />
+					</combobox>
+
+					<label value="Valor: " />
+					<doublebox
+						constraint="no negative: Valor não pode ser negativo"
+						format="R$ #,##0.00"
+						value="@{grupoMercadoriaController.selected.limiteMaximo}" />
+				</row>
+				<row visible="false">
+					<label value="Observação: " />
+					<textbox style="text-transform:uppercase" rows="2"
+						value="@{grupoMercadoriaController.selected.observacao}" />
+				</row>
+			</rows>
+		</grid>
+
+		<separator bar="true" />
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{grupoMercadoriaController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

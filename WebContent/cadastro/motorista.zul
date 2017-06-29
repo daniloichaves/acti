@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${motoristaController}"
+		visible="@{motoristaController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Motorista">
+
+		<grid fixedLayout="true">
+			<rows>
+				<row>
+					<label value="Nome: " />
+					<textbox style="text-transform:uppercase"
+						constraint="no empty"
+						value="@{motoristaController.selected.nome}" />
+					<label value="Sobrenome: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{motoristaController.selected.sobrenome}" />
+				</row>
+				<row>
+					<label value="Apelido: " />
+					<textbox style="text-transform:uppercase"
+						value="@{motoristaController.selected.apelido}" />
+					<label value="CPF: " />
+					<textbox id="cpfBox"
+						style="text-transform:uppercase" constraint=""
+						value="@{motoristaController.selected.cpf}">
+						<attribute name="onClick">
+	Clients.evalJavaScript("setMask('" + cpfBox.getUuid() + "', 'cpf')");
+</attribute>
+					</textbox>
+				</row>
+				<row>
+					<label value="RG: " />
+					<textbox id="rgBox" style="text-transform:uppercase"
+						constraint="" value="@{motoristaController.selected.rg}">
+						<attribute name="onClick">
+	Clients.evalJavaScript("setMask('" + rgBox.getUuid() + "', '99.999.999-*')");
+</attribute>
+					</textbox>
+					<label value="Orgão Expeditor: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{motoristaController.selected.orgaoExpeditor}" />
+				</row>
+				<row>
+					<label value="Data Emissão do RG: " />
+					<datebox id="derg" width="150px"
+						value="@{motoristaController.selected.dataEmissao}" />
+					<label value="Data Nascimento: " />
+					<datebox id="db" width="150px"
+						value="@{motoristaController.selected.dataNascimento}" />
+				</row>
+				<row>
+					<label value="Vínculo: " />
+					<combobox constraint="no empty"
+						selectedItem="@{motoristaController.selected.vinculo}">
+						<comboitem label="Frota" value="FROTA" />
+						<comboitem label="Autonomo" value="AUTONOMO" />
+						<comboitem label="Agregado" value="AGREGADO" />
+					</combobox>
+<!-- 					Virou Lista -->
+<!-- 					<label value="Referência: " /> -->
+<!-- 					<textbox style="text-transform:uppercase" -->
+<!-- 						constraint="" value="@{motoristaController.selected.referencia}" /> -->
+				</row>
+			</rows>
+		</grid>
+		
+		<include id="enderecoList" src="/cadastro/enderecoList.zul"
+			controller="${motoristaController.enderecoController}" />
+
+		<include id="telefoneList" src="/cadastro/telefoneList.zul"
+			controller="${motoristaController.telefoneController}" />
+
+		<include id="emailList" src="/cadastro/emailList.zul"
+			controller="${motoristaController.emailController}" />
+
+		<include id="contaBancoList" src="/cadastro/contaBancoList.zul"
+			controller="${motoristaController.contaBancoController}" />
+
+		<include id="motoristaReferenciaList" src="/cadastro/motoristaReferenciaList.zul"
+			controller="${motoristaController.motoristaReferenciaController}" />
+
+		<grid fixedLayout="true">
+			<rows>
+				<group label="Dados da habilitação do motorista"
+					spans="4" />
+				<row>
+					<label value="CNH Registro: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{motoristaController.selected.cnhRegistro}" />
+					<label value="CNH: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{motoristaController.selected.cnh}" />
+				</row>
+				<row>
+					<label value="CNH Categoria: " />
+					<combobox
+						selectedItem="@{motoristaController.selected.categoria}"
+						value="">
+						<comboitem label="A" value="A" />
+						<comboitem label="B" value="B" />
+						<comboitem label="C" value="C" />
+						<comboitem label="D" value="D" />
+						<comboitem label="E" value="E" />
+						<comboitem label="AB" value="AB" />
+						<comboitem label="AC" value="AC" />
+						<comboitem label="AD" value="AD" />
+						<comboitem label="AE" value="AE" />
+					</combobox>
+					<label value="CNH Validade: " />
+					<datebox cols="25" format="dd/MM/yyyy"
+						mold="rounded" width="150px"
+						value="@{motoristaController.selected.cnhDataValidate}" />
+				</row>
+				<row>
+					<label value="CNH UF: " />
+					<combobox
+						use="br.com.jgle.acti.component.UFCombobox"
+						selectedItem="@{motoristaController.selected.cnhUf}"
+						autodrop="true" />
+					<label value="Prontuário: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{motoristaController.selected.prontuario}" />
+				</row>
+
+				<group label="Dados Complementares" spans="4" />
+				<row>
+					<label value="Natural de: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{motoristaController.selected.natualDe}" />
+					<label value="Nome do Pai: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{motoristaController.selected.nomePai}" />
+				</row>
+				<row>
+					<label value="Nome da Mãe: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{motoristaController.selected.nomeMae}" />
+					<label value="Esposa/ Conjuge: " />
+					<textbox style="text-transform:uppercase"
+						constraint=""
+						value="@{motoristaController.selected.esposaConjuge}" />
+				</row>
+				<row>
+					<label value="Número INSS " />
+					<textbox id="inssBox"
+						style="text-transform:uppercase" constraint=""
+						value="@{motoristaController.selected.numeroINSS}">
+						<attribute name="onClick">
+	Clients.evalJavaScript("setMask('" + inssBox.getUuid() + "', '999.99999.99-9')");
+</attribute>
+					</textbox>
+					<label value="Observação: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" rows="4"
+						value="@{motoristaController.selected.observacao}" />
+				</row>
+				<row>
+					<label value="Se envolveu em algum acidente: " />
+					<decimalbox
+						constraint="no negative: Valor não pode ser negativo"
+						value="@{motoristaController.selected.qtdAcidente}" />
+					<label value="Transportou para essa empresa: " />
+					<decimalbox
+						constraint="no negative: Valor não pode ser negativo"
+						value="@{motoristaController.selected.qtdTransporteRealizado}" />
+				</row>
+				<row>
+					<label value="Vitíma de roubo: " />
+					<decimalbox constraint=""
+						value="@{motoristaController.selected.qtdRoubo}" />
+					<label />
+					<label />
+				</row>
+				
+				<group label="Valores" spans="4"/>
+				<row>
+					<label value="Comissão (%) " />
+					<decimalbox
+						constraint="no negative: Valor não pode ser negativo"
+						format="#,##0.##"
+						value="@{motoristaController.selected.comissaoPorc}" />
+					<label value="Com. Valor Fixo: " />
+					<decimalbox
+						constraint="no negative: Valor não pode ser negativo"
+						format="#,##0.00"
+						value="@{motoristaController.selected.comissaoFixo}" />
+				</row>
+				<row>
+					<label value="CE " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{motoristaController.selected.ce}" />
+					<label />
+					<label />
+				</row>
+
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{motoristaController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+</zk>

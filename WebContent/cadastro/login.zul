@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style id="css" src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${loginController}"
+		visible="@{loginController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Login">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Login: " />
+					<textbox style="text-transform:uppercase" id="login"
+						constraint="no empty: Por favor, digite um login."
+						value="@{loginController.selected.login, save-when='self.onChange'}" />
+				</row>
+				<row>
+					<label value="Senha: " />
+					<textbox style="text-transform:uppercase" id="senha"
+						type="password"
+						constraint="no empty: Por favor, digite uma senha."
+						value="@{loginController.selected.senha}" />
+				</row>
+
+				<row>
+					<label value="Nome: " />
+					<textbox style="text-transform:uppercase" id="nome"
+						constraint="" value="@{loginController.selected.nome}" />
+				</row>
+				<row>
+					<label value="Email: " />
+					<textbox style="text-transform:uppercase" id="email"
+						constraint="/.+@.+\.[a-z]+/: Por favor, digite um e-mail válido."
+						value="@{loginController.selected.email}" />
+				</row>
+				<row>
+					<label value="Unidade: " />
+					<combobox
+						selectedItem="@{loginController.selected.unidade}"
+						autodrop="true">
+
+						<comboitem forEach="${loginController.unidades}"
+							label="${each.razaoSocial }" value="${each}" />
+
+					</combobox>
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete" visible="@{loginController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit" apply="${escoltaArmadaTrajetoController}"
+		visible="@{escoltaArmadaTrajetoController.editMode}"
+		ctrlKeys="#up#down" title="Cadastro Endereço de Escolta Armada">
+
+		<grid>
+			<columns>
+				<column width="10%" />
+				<column width="20%" />
+			</columns>
+			<rows>
+				<row>
+					<label value="Código: " />
+					<intbox
+						value="@{escoltaArmadaTrajetoController.selected.id}"
+						disabled="true" />
+					<label value="Observação: " />
+					<textbox style="text-transform:uppercase" rows="5"
+						value="@{escoltaArmadaTrajetoController.selected.observacao}" />
+				</row>
+			</rows>
+		</grid>
+
+		<grid>
+			<rows>
+				<group label="Ponto A" spans="4" />
+				<row spans="1">
+					<hbox width="30px">
+						<label id="cepTextLabel" value="CEP: " />
+						<textbox id="cepBox" maxlength="8"
+							constraint="no empty: Por favor, digite um cep"
+							value="@{enderecoController.selected.cep}" />
+						<image id="cepSearch"
+							src="/img/png/search-icon16x16.png" />
+					</hbox>
+					<hbox>
+						<hbox>
+							<label value="Tipo: " />
+							<combobox
+								selectedItem="@{enderecoController.selected.tipo}">
+								<comboitem label="COBRANÇA"
+									value="COBRANCA" />
+								<comboitem label="ENTREGA"
+									value="ENTREGA" />
+								<comboitem label="COLETA"
+									value="ENTREGA" />
+								<comboitem label="PARADA OBRIGATÓRIA"
+									value="PARADAOBRIGATORIA" />
+								<comboitem
+									label="PARADA AUTORIZADA PARA HIGIENE E REFEIÇÃO"
+									value="PARADAAUTORIZADOSHIG" />
+								<comboitem
+									label="PARADA AUTORIZADA PARA PERNOITE"
+									value="PARADAAUTORIZADPERNOITE" />
+								<comboitem label="ESCOLTA ARMADA"
+									value="ESCOLTA ARMADA" />
+							</combobox>
+						</hbox>
+					</hbox>
+					<label />
+					<label />
+				</row>
+				<row>
+					<label value="Endereço: " />
+					<textbox id="enderecoBox"
+						style="text-transform:uppercase" rows="2"
+						constraint="no empty: Por favor, digite um endereço"
+						value="@{enderecoController.selected.endereco}" />
+					<label value="Bairro: " />
+					<textbox id="bairroBox"
+						style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite um bairro"
+						value="@{enderecoController.selected.bairro}" />
+				</row>
+				<row>
+					<label value="Cidade: " />
+					<textbox id="cidadeBox"
+						style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite uma cidade"
+						value="@{enderecoController.selected.cidade}" />
+					<label value="UF: " />
+					<combobox id="ufBox"
+						use="br.com.jgle.acti.component.UFCombobox"
+						selectedItem="@{enderecoController.selected.uf}" autodrop="true"
+						value="SP">
+					</combobox>
+				</row>
+			</rows>
+		</grid>
+
+		<grid>
+			<rows>
+				<group label="Ponto B" spans="4" />
+				<row spans="1">
+					<hbox width="30px">
+						<label id="cepTextLabelB" value="CEP: " />
+						<textbox id="cepBoxB" maxlength="8"
+							constraint="no empty: Por favor, digite um cep"
+							value="@{enderecoController.selected.cep}" />
+						<image id="cepSearchB"
+							src="/img/png/search-icon16x16.png" />
+					</hbox>
+					<hbox>
+						<hbox>
+							<label value="Tipo: " />
+							<combobox
+								selectedItem="@{enderecoController.selected.tipo}">
+								<comboitem label="COBRANÇA"
+									value="COBRANCA" />
+								<comboitem label="ENTREGA"
+									value="ENTREGA" />
+								<comboitem label="COLETA"
+									value="ENTREGA" />
+								<comboitem label="PARADA OBRIGATÓRIA"
+									value="PARADAOBRIGATORIA" />
+								<comboitem
+									label="PARADA AUTORIZADA PARA HIGIENE E REFEIÇÃO"
+									value="PARADAAUTORIZADOSHIG" />
+								<comboitem
+									label="PARADA AUTORIZADA PARA PERNOITE"
+									value="PARADAAUTORIZADPERNOITE" />
+								<comboitem label="ESCOLTA ARMADA"
+									value="ESCOLTA ARMADA" />
+							</combobox>
+						</hbox>
+					</hbox>
+					<label />
+					<label />
+				</row>
+				<row>
+					<label value="Endereço: " />
+					<textbox id="enderecoBoxB"
+						style="text-transform:uppercase" rows="2"
+						constraint="no empty: Por favor, digite um endereço"
+						value="@{enderecoController.selected.endereco}" />
+					<label value="Bairro: " />
+					<textbox id="bairroBoxB"
+						style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite um bairro"
+						value="@{enderecoController.selected.bairro}" />
+				</row>
+				<row>
+					<label value="Cidade: " />
+					<textbox id="cidadeBoxB"
+						style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite uma cidade"
+						value="@{enderecoController.selected.cidade}" />
+					<label value="UF: " />
+					<combobox id="ufBoxB"
+						use="br.com.jgle.acti.component.UFCombobox"
+						selectedItem="@{enderecoController.selected.uf}" autodrop="true"
+						value="SP">
+					</combobox>
+				</row>
+			</rows>
+		</grid>
+
+		<separator bar="true" />
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{escoltaArmadaTrajetoController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

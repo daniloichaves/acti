@@ -1,0 +1,33 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="normal" style="background:#c5e6ef;"
+		height="100px">
+		<div>
+			<div style="float:right;">
+				<label id="sair" value="Sair" onClick="clear()" />
+			</div>
+			<div style="float:right">
+				<textbox  sclass="demo-search-inp"
+					style="padding-bottom: 1px; padding-left: 18px; padding-right: 0px; background: url('/img/search.png') white no-repeat 0px 0px; padding-top: 0px; " />
+				<separator orient="vertical" />
+				<!--				<button label="Pesquisar ACTI" />-->
+				<image src="img/png/search-icon32x32.png" />
+			</div>
+			<image style="padding:0 10px;" src="/img/acti-logo_2.gif" />
+			<label
+				style="position:relative; top:-30px;padding-left: 50px; font-size:24px;color:#008BB6;font-weight:bold;"
+				value="Aplicação de Controle de Transporte Integrado" />
+
+
+		</div>
+		<zscript>
+	void clear() {
+		session.invalidate();
+		sessionScope.clear();
+		sair.setVisible(false);
+		Executions.sendRedirect("/login.zul");
+	}
+</zscript>
+
+	</window>
+</zk>

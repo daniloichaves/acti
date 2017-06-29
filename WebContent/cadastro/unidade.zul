@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${unidadeController}"
+		visible="@{unidadeController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Unidade">
+
+		<grid>
+			<rows>
+				<row spans="2">
+					<checkbox label="Matriz"
+						checked="@{unidadeController.selected.matriz}">
+					</checkbox>
+					<label value="CNPJ: " />
+					<textbox id="cnpjBox" style="text-transform:uppercase"
+						constraint="" value="@{unidadeController.selected.cnpj}" >
+						<attribute name="onClick">
+							Clients.evalJavaScript("setMask('" + cnpjBox.getUuid() + "', 'cnpj')");
+						</attribute>
+					</textbox>
+
+				</row>
+				<row>
+					<label value="Razão Social: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{unidadeController.selected.razaoSocial}" />
+					<label value="Nome Fantasia: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{unidadeController.selected.nomeFantasia}" />
+
+				</row>
+				<row>
+					<label value="Incrição Estatual: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{unidadeController.selected.ie}" />
+					<label value="Sigla: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{unidadeController.selected.sigla}" />
+				</row>
+
+				<!--				<row>-->
+				<!--					<label value="Gerente: " />-->
+				<!--					<textbox style="text-transform:uppercase"-->
+				<!--						constraint="" value="@{unidadeController.selected.gerente}" />-->
+				<!--				</row>-->
+
+			</rows>
+		</grid>
+
+		<separator bar="true" />
+		<include id="enderecoList" src="/cadastro/enderecoList.zul"
+			controller="${unidadeController.enderecoController}" />
+
+		<separator bar="true" />
+		<include id="telefoneList" src="/cadastro/telefoneList.zul"
+			controller="${unidadeController.telefoneController}" />
+		
+		<separator bar="true" />
+		<include id="emailList" src="/cadastro/emailList.zul"
+			controller="${unidadeController.emailController}" />
+		
+		<separator bar="true" />
+		<include id="contaBancoList" src="/cadastro/contaBancoList.zul"
+			controller="${unidadeController.contaBancoController}" />
+
+		<!--		<include id="ultimasServicoList"-->
+		<!--			src="/cadastro/ultimosServicoList.zul" />-->
+
+		<separator bar="true" />
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{unidadeController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<window id="entityWin" title="Lista de Saída de Pneu">
+
+	<hbox use="br.com.jgle.acti.component.SearchHbox"
+		selected="@{pneuSaidaController.selected}" />
+
+	<listbox id="entityList" width="100%" height="100%" mold="paging"
+		model="@{pneuSaidaController.reminders}"
+		selectedItem="@{pneuSaidaController.selected}" pageSize="@{pneuSaidaController.pageSize}">
+		<listhead sizable="true">
+			<listheader label="Alterar" width="45px" />
+			<listheader label="Pneu marca" sort="auto" />
+			<listheader label="Pneu modelo" sort="auto" />
+			<listheader label="Veiculo Dono" sort="auto" />
+			<listheader label="Veiculo Placa" sort="auto" />
+			<listheader label="Hodômetro(KM):" sort="auto" />
+			<listheader label="Quantidade" sort="auto" />
+			<listheader label="Data" sort="auto" />
+			<listheader label="Deletar" width="50px" />
+		</listhead>
+		<listitem self="@{each=reminder}">
+			<listcell id="entityUpdateQuick"
+				image="/img/png/page-edit-icon24x24.png" />
+			<listcell label="@{reminder.pneu.marca}" />
+			<listcell label="@{reminder.pneu.modelo}" />
+			<listcell
+				label="@{reminder.veiculo.proprietario.nomeProprietario}" />
+			<listcell label="@{reminder.veiculo.placa}" />
+			<listcell label="@{reminder.hodometro}" />
+			<listcell label="@{reminder.quantidade}" />
+			<listcell label="@{reminder.dataCriacao }" />
+			<listcell id="entityDeleteQuick"
+				image="/img/png/delete-icon16x16.png" />
+		</listitem>
+	</listbox>
+
+	<div id="entityDetail">
+
+		<!-- view mode -->
+		<div id="entityView"
+			visible="@{pneuSaidaController.viewMode}">
+			<!-- 
+			<grid width="100%">
+				<rows>
+					<row>
+						Pneu marca:
+						<label
+							value="@{pneuSaidaController.selected.pneu.marca}" />
+						Pneu modelo
+						<label
+							value="@{pneuSaidaController.selected.pneu.modelo}" />
+					</row>
+					<row>
+						Veiculo Dono:
+						<label
+							value="@{pneuSaidaController.selected.veiculo.veiculo.proprietario.nomeProprietario}" />
+						Veiculo Placa:
+						<label
+							value="@{pneuSaidaController.selected.veiculo.placa}" />
+					</row>
+					<row>
+						Quantidade:
+						<label
+							value="@{pneuSaidaController.selected.quantidade}" />
+						Data:
+						<label
+							value="@{pneuSaidaController.selected.dataCriacao,converter='org.zkoss.zkplus.databind.DateFormatConverter'}"
+							self="@{format(dd/MM/yyyy)}" />
+					</row>
+				</rows>
+			</grid>
+			 -->
+		</div>
+
+		<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+			visible="@{pneuSaidaController.viewMode}" />
+
+		<include src="/cadastro/estoque/pneuSaida.zul" />
+
+	</div>
+
+</window>

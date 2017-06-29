@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<zk>
+	<zscript>
+	<![CDATA[
+	import br.com.jgle.acti.controller.AbstractController;
+	System.out.println("myList: " + requestScope.get("controller"));
+	AbstractController telefoneController = (AbstractController) requestScope
+			.get("controller");
+]]>
+	</zscript>
+
+	<window id="entityWin" ctrlKeys="#up#down" title="Lista de Telefones">
+
+
+		<listbox id="entityList" model="@{telefoneController.reminders}"
+			selectedItem="@{telefoneController.selected}" width="100%"
+			height="100%" mold="paging" pageSize="@{telefoneController.pageSize}">
+
+			<listhead sizable="true">
+				<listheader label="Alterar" width="45px" />
+				<listheader label="Tipo" sort="auto" />
+				<listheader label="DDD" sort="auto" />
+				<listheader label="Número" sort="auto" />
+				<listheader label="Contado" sort="auto" />
+				<listheader label="Deletar" width="50px" />
+			</listhead>
+			<listitem self="@{each=reminder}">
+				<listcell id="entityUpdateQuick"
+					image="/img/png/page-edit-icon24x24.png" />
+				<listcell label="@{reminder.tipo}" />
+				<listcell label="@{reminder.ddd}" />
+				<listcell label="@{reminder.numero}" />
+				<listcell label="@{reminder.contato}" />
+				<listcell id="entityDeleteQuick"
+					image="/img/png/delete-icon16x16.png" />
+			</listitem>
+
+		</listbox>
+
+		<div id="entityDetail">
+
+			<!-- view mode -->
+			<div id="entityView"
+				visible="@{telefoneController.viewMode}">
+
+				<!-- 
+				<grid width="100%">
+					<columns>
+						<column align="right" style="width:80px" />
+						<column align="left" />
+					</columns>
+					<rows>
+						<row>
+							Tipo:
+							<label
+								value="@{telefoneController.selected.tipo}" />
+							DDI:
+							<label
+								value="@{telefoneController.selected.ddi}" />
+						</row>
+						<row>
+							DDD:
+							<label
+								value="@{telefoneController.selected.ddd}" />
+							Número:
+							<label
+								value="@{telefoneController.selected.numero}" />
+						</row>
+					</rows>
+				</grid>
+				 -->
+			</div>
+
+			<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+				visible="@{telefoneController.viewMode}" />
+
+			<include src="/cadastro/telefone.zul" />
+		</div>
+
+	</window>
+</zk>

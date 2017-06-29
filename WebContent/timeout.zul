@@ -1,0 +1,32 @@
+<?page title="Aplicação de Controle de Transporte Integrado" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="normal" height="100%" width="100%">
+
+		<borderlayout>
+			<north height="15%" splittable="true" collapsible="true">
+				<include id="header" context="" src="/inc/header.zul" />
+			</north>
+
+			<center style="padding: 35px 0 0 200px;">
+				<div align="justify">
+					<vbox>
+						<!--The page or component you request is no longer available.-->
+						<!--This is normally caused by timeout, opening too many Web pages, or rebooting-->
+						<!--the server.-->
+
+						A página foi expirada por favor, logar-se
+						novamente.
+
+						<button label="Login" href="/login.zul" />
+					</vbox>
+				</div>
+			</center>
+
+			<south size="3%">
+				<label
+					value="JGle Solutions Technology © 2010 - Todos os direitos reservados - melhor visualizado em 1024x768 pixels ou superior." />
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

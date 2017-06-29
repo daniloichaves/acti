@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit" apply="${notaFiscalController}"
+		visible="@{notaFiscalController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Nota Fiscal">
+
+		<grid>
+			<rows>
+				<row>
+					<hbox>
+						<label value="Nº NF: " />
+						<textbox style="text-transform:uppercase"
+							value="@{notaFiscalController.selected.numeroNotaFical}" />
+					</hbox>
+					<hbox>
+						<label value="Valor: " />
+						<doublebox
+							constraint="no negative: Valor não pode ser negativo"
+							format="R$ #,##0.00"
+							value="@{notaFiscalController.selected.valor}" />
+					</hbox>
+					<hbox>
+						<label value="Tipo Produto: " />
+						<textbox style="text-transform:uppercase"
+							value="@{notaFiscalController.selected.tipoProduto}" />
+					</hbox>
+				</row>
+				<row>
+					<hbox>
+						<label value="Volume/ Qtd: " />
+						<intbox constraint=""
+							value="@{notaFiscalController.selected.volume}" />
+					</hbox>
+					<hbox>
+						<label value="Peso: " />
+						<doublebox
+							constraint="no negative: Valor não pode ser negativo"
+							format="#.###" value="@{notaFiscalController.selected.peso}" />
+					</hbox>
+					<hbox>
+						<label value="Unidade: " />
+						<combobox
+							selectedItem="@{notaFiscalController.selected.unidadeMedida}">
+							<comboitem label="PC" value="PC" />
+							<comboitem label="KG" value="KG" />
+							<comboitem label="L" value="L" />
+							<comboitem label="PC" value="PC" />
+							<comboitem label="CM" value="CM" />
+							<comboitem label="M" value="M" />
+						</combobox>
+					</hbox>
+				</row>
+				<row>
+					<label value="Observação: " />
+					<textbox style="text-transform:uppercase" rows="3"
+						value="@{notaFiscalController.selected.observacao}" />
+				</row>
+			</rows>
+		</grid>
+
+		<separator bar="true" />
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{notaFiscalController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

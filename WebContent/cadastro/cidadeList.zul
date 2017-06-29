@@ -1,0 +1,43 @@
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<window title="Lista de Cidades">
+		
+		<listbox id="list" width="100%" height="100%" mold="paging" pageSize="5">
+			<listhead sizable="true">
+				<listheader label="Alterar" width="45px"/>
+				<listheader label="Nome" sort="auto"/>
+				<listheader label="UF" sort="auto"/>
+				<listheader label="Abrev" sort="auto"/>
+				<listheader label="Deletar" width="50px"/>
+			</listhead>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="São Paulo"/>
+				<listcell label="SP"/>
+				<listcell label="SSP"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="São Bernado"/>
+				<listcell label="SP"/>
+				<listcell label="SSB"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>			
+
+		</listbox>
+		
+		<image src="/img/png/file-new-icon32x32.png">
+			<attribute name="onClick">
+					cad.visible = true;
+			</attribute>
+		</image>		
+		
+		
+		<include id="cad" visible="false" src="/cadastro/telefone.zul"/>
+	</window>

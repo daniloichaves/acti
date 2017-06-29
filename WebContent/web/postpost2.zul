@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<style id="css" src="/css/acti.css" />
+
+	<window>
+		<listbox id="format" mold="select" onSelect="showReport()">
+			<listitem label="PDF" value="pdf" selected="true" />
+			<listitem label="XML" value="xml" />
+			<listitem label="HTML" value="html" />
+			<listitem label="Word (RTF)" value="rtf" />
+			<listitem label="Excel" value="xls" />
+			<listitem label="Excel (JXL)" value="jxl" />
+			<listitem label="CSV" value="csv" />
+			<listitem label="OpenOffice (ODT)" value="odt"
+				unless="false" />
+		</listbox>
+		<button label="Report!" onClick='showReport()' />
+		<jasperreport id="report" height="360px" />
+
+		<zscript>
+	void showReport() {
+		//Preparing parameters
+		Map parameters = new HashMap();
+		parameters.put("ReportTitle", "Address Report");
+		parameters.put("DataFile", "CustomDataSource from java");
+
+		report.setSrc("/relatorio/teste.jasper");
+		report.setParameters(parameters);
+		report.setType((String) format.getSelectedItem().getValue());
+	}
+</zscript>
+	</window>
+</zk>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<window id="entityWin" ctrlKeys="#up#down"
+	title="Roterizador Ordem de Entrega">
+
+	<zscript>
+	void invalidate() {
+		entityWin.invalidate();
+	}
+</zscript>
+
+	<script content="zk.googleAPIkey='ABQIAAAAL5W7NVHwrWYE3JzrRsBJ5hTNOr8vgXOQPTkanHJhOUOv_qsDxBSJYejru4p5jPF3yzK_s4GVLgDCaQ'" />
+	<script content="zk.googleAPIkey='ABQIAAAAL5W7NVHwrWYE3JzrRsBJ5hTNOr8vgXOQPTkanHJhOUOv_qsDxBSJYejru4p5jPF3yzK_s4GVLgDCaQ'" />
+	<script content="googleAPIkey='ABQIAAAAL5W7NVHwrWYE3JzrRsBJ5hTNOr8vgXOQPTkanHJhOUOv_qsDxBSJYejru4p5jPF3yzK_s4GVLgDCaQ'"/>
+
+	
+
+	<div id="entityDetail">
+
+		<!-- view mode -->
+		<div id="entityView" visible="@{coletaController.viewMode}">
+
+			<hbox id="searchHbox"
+				use="br.com.jgle.acti.component.SearchHbox"
+				selected="@{coletaController.selected}" />
+
+			<listbox id="entityList" width="100%" height="100%"
+				model="@{coletaController.remindersLimited}"
+				selectedItem="@{coletaController.selected}">
+
+				<listhead sizable="true">
+<!--					<listheader label="Alterar" width="45px" />-->
+					<listheader label="OS Nº" sort="auto" />
+					<listheader label="Data" sort="auto" />
+					<listheader label="Remetente" sort="auto" />
+					<listheader label="Destinatário" sort="auto" />
+					<listheader label="Endereço Entrega" sort="auto" />
+					<listheader label="Deletar" width="50px" />
+					<!--			<listheader label="Imp" sort="auto" />-->
+					<!--			<listheader label="Pl" sort="auto" />-->
+					<!--			<listheader label="Frt" sort="auto" />-->
+					<!--			<listheader label="Valor NF" />-->
+				</listhead>
+				<listitem self="@{each=reminder}">
+<!--					<listcell id="entityUpdateQuick"-->
+<!--						image="/img/png/page-edit-icon24x24.png" />-->
+					<listcell label="@{reminder.id}" />
+					<listcell
+						label="@{reminder.dataHoraColeta,converter='org.zkoss.zkplus.databind.DateFormatConverter'}" />
+					<listcell
+						label="@{reminder.remetente.nomeRazaoSocial}" />
+					<listcell
+						label="@{reminder.destinatario.nomeRazaoSocial}" />
+					<listcell label="@{reminder.destinatario.endereco}" />
+					<listcell id="entityDeleteQuick"
+						image="/img/png/delete-icon16x16.png" />
+				</listitem>
+			</listbox>
+			<paging id="userPaging" />
+
+			<!-- 
+			<grid width="100%">
+				<rows>
+					<row>
+						Tipo Frete:
+						<label
+							value="@{coletaController.selected.tipoFrete}" />
+						CPOF:
+						<label
+							value="@{coletaController.selected.cpof.descricao}" />
+					</row>
+					<row>
+						Data Coleta:
+						<label
+							value="@{coletaController.selected.dataHoraColeta}" />
+						Solicitante:
+						<label
+							value="@{coletaController.selected.solicitante}" />
+					</row>
+					<row>
+						Telefone:
+						<label
+							value="@{coletaController.selected.telefone}" />
+						Ramal:
+						<label
+							value="@{coletaController.selected.ramal}" />
+					</row>
+				</rows>
+			</grid>
+			 -->
+
+			<gmaps id="mymap" width="100%" height="400px"
+				showSmallCtrl="true" showLargeCtrl="true" lat="-21.493964"
+				lng="-48.317871" zoom="5"
+				style="border:1px solid black;margin-top:5px">
+				<!-- 
+					<attribute name="onMapDoubleClick">
+					double lat = event.lat;
+					double lng = event.lng;
+					//add a gmarker on the vertex
+					new org.zkoss.gmaps.Gmarker("", lat, lng).setParent(mymap);
+					//add a polyline vertex point
+					mypoly.addPoint(lat, lng, 3);
+					//display the vertex latitude and longitude
+					lbl.value = lbl.value + event.lat + "," + event.lng + ";\n";
+					org.zkoss.gmaps.Gmarker gmarker = event.getGmarker();
+					if (gmarker != null) {
+					gmarker.setOpen(true);
+					}
+					</attribute>
+				-->
+
+				<gpolyline id="mypoly" color="#3333cc" weight="10" />
+			</gmaps>
+
+			<slider id="zoom" maxpos="17" curpos="${mymap.zoom}"
+				onScroll="mymap.setZoom(self.getCurpos())" />
+
+			<button label="normal"
+				onClick="mymap.setMapType(&quot;normal&quot;)" />
+			<button label="satellite"
+				onClick="mymap.setMapType(&quot;satellite&quot;)" />
+			<button label="hybrid"
+				onClick="mymap.setMapType(&quot;hybrid&quot;)" />
+
+			<button label="Atualizar Mapa" onClick="invalidate()" />
+
+			<vbox visible="false">
+				data:
+				<label id="lbl" pre="true" />
+			</vbox>
+
+		</div>
+
+		<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+			visible="@{coletaController.viewMode}" />
+	</div>
+
+	<include src="/cadastro/coleta.zul" />
+
+</window>

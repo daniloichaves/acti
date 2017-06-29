@@ -1,0 +1,26 @@
+<?root-attributes xmlns:v="urn:schemas-microsoft-com:vml"?><!-- For IE -->
+<zk>
+<!-- Replace "abcdefg" to proper Google Maps key per your host -->
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=abcdefg"
+type="text/javascript"></script>
+<gmaps id="mymap" width="600px" height="360px" showSmallCtrl="true" 
+showTypeCtrl="true" lat="40.71213418976525" lng="-73.96785736083984" zoom="15" >
+    <attribute name="onMapDoubleClick">
+      double lat = event.lat;
+      double lng = event.lng;
+      //add a gmarker on the vertex
+      new Gmarker("", lat, lng).setParent(mymap); 
+      //add a polyline vertex point
+      mypoly.addPoint(lat, lng, 3); 
+      //display the vertex latitude and longitude
+      lbl.value = lbl.value+ event.lat + ","+event.lng+";\n";
+    </attribute>
+    <gpolyline id="mypoly" color="#3333cc" weight="10"/>
+</gmaps>
+<button label="normal" onClick="mymap.setMapType(&quot;normal&quot;)"/>
+<button label="satellite" onClick="mymap.setMapType(&quot;satellite&quot;)"/>
+<button label="hybrid" onClick="mymap.setMapType(&quot;hybrid&quot;)"/>
+<vbox>
+data: <label id="lbl" pre="true"/>
+</vbox>
+</zk>

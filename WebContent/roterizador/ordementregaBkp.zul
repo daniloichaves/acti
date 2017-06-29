@@ -1,0 +1,77 @@
+<?page title="Roterizador - Norte" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Roterizador - Ordem de Entrega" border="normal" width="100%"
+		height="100%">
+		
+		<tabbox>
+			<tabs>
+				<tab label="Norte"/>
+				<tab label="Sul"/>
+				<tab label="Leste"/>
+				<tab label="Oeste"/>
+			</tabs>
+			
+			<tabpanels>
+				<tabpanel>
+
+					<listbox width="100%" height="100%" mold="paging">
+						<listhead sizable="true">
+							<listheader label="Empresa" sort="auto" />
+							<listheader label="Endereço" sort="auto" />
+							<listheader label="Volume" />
+							<listheader label="Peso" />
+							<listheader label="NF" />
+							<listheader label="Valor" />
+						</listhead>
+						<listitem>
+							<listcell label="Jgle Solutions" />
+							<listcell label="Rua leopoldina, 234" />
+							<listcell label="76" />
+							<listcell label="10t" />
+							<listcell label="312" />
+							<listcell label="1564.70" />
+						</listitem>
+						<listitem>
+							<listcell label="Westtrack" />
+							<listcell label="Rua dos andantes, 85" />
+							<listcell label="65" />
+							<listcell label="10t" />
+							<listcell label="54" />
+							<listcell label="597.00" />
+						</listitem>
+						<listitem>
+							<listcell label="Google" />
+							<listcell label="Av. Jose da Silva, 45" />
+							<listcell label="54" />
+							<listcell label="10t" />
+							<listcell label="7657" />
+							<listcell label="11564.00" />
+						</listitem>
+						<listitem>
+							<listcell label="Oi" />
+							<listcell label="Av. raimundos, 25" />
+							<listcell label="65" />
+							<listcell label="10t" />
+							<listcell label="67577" />
+							<listcell label="1645.00" />
+						</listitem>
+					</listbox>			
+
+				</tabpanel>
+				
+				<tabpanel>
+<!--					<include src="/roterizador/ordemcoleta/sul.zul"/>	-->
+				</tabpanel>
+				
+				<tabpanel>
+<!--					<include src="/roterizador/ordemcoleta/leste.zul"/>-->
+				</tabpanel>
+				
+				<tabpanel>
+<!--					<include src="/roterizador/ordemcoleta/oeste.zul"/>-->
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+		
+	</window>
+</zk>

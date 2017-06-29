@@ -1,0 +1,17 @@
+<window>
+	<zscript><![CDATA[
+	import org.zkoss.zkplus.spring.SpringUtil;
+	import test.*;
+	DataSource dataSource = SpringUtil.getBean("DataSourceTest");
+	List list = dataSource.getElementsList();
+]]>
+ </zscript>
+
+	<grid>
+		<rows>
+			<row forEach="${list}">
+				<label value="${each}" />
+			</row>
+		</rows>
+	</grid>
+</window>

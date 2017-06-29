@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${motoristaReferenciaController}"
+		visible="@{motoristaReferenciaController.editMode}"
+		ctrlKeys="#up#down" title="Cadastro de Endereço">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Contato " />
+					<textbox id="contatoBox"
+						style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite um contato"
+						value="@{motoristaReferenciaController.selected.contato}" />
+					<label value="Telefone: " />
+					<textbox id="telefoneBox"
+						style="text-transform:uppercase"
+						constraint="no empty: Por favor, digite um telefone"
+						value="@{motoristaReferenciaController.selected.telefone}">
+						<attribute name="onClick">
+	Clients.evalJavaScript("setMask('" + telefoneBox.getUuid() + "', '(99) 9999-9999')");
+</attribute>
+					</textbox>
+
+				</row>
+				<row>
+					<label value="Empresa: " />
+					<textbox id="empresaBox"
+						style="text-transform:uppercase"
+						value="@{motoristaReferenciaController.selected.empresa}" />
+					<label value="Parentesco: " />
+					<textbox id="parentescoBox"
+						style="text-transform:uppercase"
+						value="@{motoristaReferenciaController.selected.parentesco}" />
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png"
+				onClick="validate()" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{motoristaReferenciaController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+		<zscript>
+			<![CDATA[
+	void validate() {
+		//validate data
+		contatoBox.getValue();
+		telefoneBox.getValue();
+	}
+]]>
+  		</zscript>
+	</window>
+</zk>

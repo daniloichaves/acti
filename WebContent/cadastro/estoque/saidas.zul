@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<style id="css" src="/css/acti.css" />
+
+	<window title="Cadastro de Entradas/ Compras" id="cadastro"
+		contentStyle="overflow:auto">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Data/Hora: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						onCreate="self.value = new Date()" mold="rounded" disabled="true" />
+					<label value="Unidade: " />
+					<combobox>
+						<comboitem label="MATRIX"></comboitem>
+						<comboitem label="FILIAL"></comboitem>
+					</combobox>
+				</row>
+				<row spans="4">
+					<label value="Destino de Uso: " />
+					<combobox>
+						<comboitem label="USO2"></comboitem>
+						<comboitem label="USO1"></comboitem>
+					</combobox>
+					<label value="Solicitante: " />
+					<combobox>
+						<comboitem label="JGle"></comboitem>
+						<comboitem label="Westtrack"></comboitem>
+					</combobox>
+					<label value="Veiculo: " />
+					<combobox>
+						<comboitem label="Corsa Hatch"></comboitem>
+						<comboitem label="Caminhão"></comboitem>
+					</combobox>
+				</row>
+			</rows>
+		</grid>
+		
+		<include id="itensEntrada" src="/cadastro/estoque/entradasComprasItensEntradaList.zul" />
+
+		<div align="center">
+			<fisheyebar attachEdge="top">
+				<fisheye image="/img/png/save-as-icon48x48.png"
+					label="Salvar" onClick="alert(self.label)" />
+				<fisheye image="/img/png/delete-icon48x48.png"
+					label="Deletar" onClick="alert(self.label)" />
+				<fisheye image="/img/png/Cancel-2-icon48x48.png"
+					label="Cancelar" onClick="alert(self.label)">
+				</fisheye>
+			</fisheyebar>
+
+		</div>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

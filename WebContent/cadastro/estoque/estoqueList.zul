@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+
+<window title="Lista de Estoque">
+		
+		<listbox id="list" width="100%" height="100%" mold="paging">
+			<listhead sizable="true">
+				<listheader label="Alterar" width="45px"/>
+				<listheader label="TIPO" sort="auto"/>
+				<listheader label="Data" sort="auto"/>
+				<listheader label="Qtd Vol. Ant." sort="auto"/>
+				<listheader label="E/S vols." sort="auto"/>
+				<listheader label="Qtd Vol. Atual" sort="auto"/>
+				<listheader label="Cliente"/>
+				<listheader label="NF"/>
+				<listheader label="Deletar" width="50px"/>
+			</listhead>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="E"/>
+				<listcell label="10/11/2010 12:10"/>
+				<listcell label="150"/>
+				<listcell label="200"/>
+				<listcell label="350"/>
+				<listcell label="JGle"/>
+				<listcell label="4568"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+			<listitem>
+				<attribute name="onClick">
+					cad.visible = true;
+				</attribute>
+				<listcell image="/img/png/page-edit-icon24x24.png"/>
+				<listcell label="S"/>
+				<listcell label="15/01/2009 14:00"/>
+				<listcell label="360"/>
+				<listcell label="60"/>
+				<listcell label="300"/>
+				<listcell label="Westtrack"/>
+				<listcell label="98"/>
+				<listcell image="/img/png/delete-icon16x16.png"/>
+			</listitem>
+		</listbox>
+		
+		<image src="/img/png/file-new-icon32x32.png">
+			<attribute name="onClick">
+					cad.visible = true;
+			</attribute>
+		</image>		
+		
+		
+		<include id="cad" visible="false" src="/cadastro/estoque.zul"/>
+	</window>

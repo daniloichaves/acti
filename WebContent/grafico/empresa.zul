@@ -1,0 +1,20 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="new page title" border="normal" style="overflow:auto">
+		<vbox>
+		 <zscript>
+		   PieModel piemodel = new SimplePieModel();
+		   piemodel.setValue("C/C++", new Double(12.5));
+		   piemodel.setValue("Java", new Double(50.2));
+		   piemodel.setValue("VB", new Double(20.5));
+		   piemodel.setValue("PHP", new Double(15.5));
+		 </zscript>
+		 	<label value="pie" />
+		 	<chart id="piechart" title="Pie Chart" width="500" height="250"
+		 		type="pie" threeD="false" fgAlpha="128" onClick="drilldown()" />
+		 	<zscript>
+		   piechart.setModel(piemodel);
+		 </zscript>
+		 </vbox>
+	</window>
+</zk>

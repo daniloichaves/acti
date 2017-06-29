@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit" apply="${contaBancoController}"
+		visible="@{contaBancoController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Conta Banco">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Tipo: " />
+					<combobox
+						constraint="no empty: Por favor, escolha um tipo"
+						selectedItem="@{contaBancoController.selected.tipo}">
+
+						<comboitem label="Corrente" value="CORRENTE" />
+						<comboitem label="Poupança" value="POUPANCA" />
+					</combobox>
+					<label value="Banco: " />
+					<combobox
+						selectedItem="@{contaBancoController.selected.banco}"
+						constraint="no empty: Por favor, digite um banco"
+						autodrop="true">
+
+						<comboitem
+							forEach="${contaBancoController.bancos}"
+							label="${each.banco }" value="${each}" />
+					</combobox>
+				</row>
+				<row>
+					<label value="Agência: " />
+					<hbox>
+						<intbox
+							value="@{contaBancoController.selected.agencia}" />
+						<textbox style="text-transform:uppercase" width="50px"
+							value="@{contaBancoController.selected.agenciaDigito}" />
+					</hbox>
+					<label value="Conta: " />
+					<hbox>
+						<intbox
+							constraint="no empty: Por favor, digite uma agência"
+							value="@{contaBancoController.selected.conta}" />
+						<textbox style="text-transform:uppercase" width="50px"
+							value="@{contaBancoController.selected.contaDigito}" />
+					</hbox>
+				</row>
+				<row>
+					<label value="Contato: " />
+					<textbox style="text-transform:uppercase"
+						constraint="" value="@{contaBancoController.selected.contato}" />
+					<label value="Depto: " />
+					<textbox style="text-transform:uppercase"
+						value="@{contaBancoController.selected.depto}" />
+				</row>
+				<row>
+					<label value="Observação: " />
+					<textbox style="text-transform:uppercase" rows="2"
+						constraint="" value="@{contaBancoController.selected.observacao}" />
+					<label />
+					<label />
+				</row>
+
+				<group label="Dados para o Boleto" spans="4" />
+				<row>
+					<label value="Dados cedente: " />
+					<textbox style="text-transform:uppercase" />
+					<label value="Tipo pessoa: " />
+					<combobox id="tipoPessoaBox"
+						value="@{contaBancoController.selected.tipoPessoa}">
+						<comboitem label="JURÍDICA" value="JURIDICA" />
+						<comboitem label="FÍSICA" value="FISICA" />
+						<attribute name="onChange">
+							String tipoPessoa = (String) tipoPessoaBox.getSelectedItem().getValue();
+							if (tipoPessoa.equals("FISICA")) {
+								Clients.evalJavaScript("setMask('" + cnpjCPFBox.getUuid() + "', 'cpf')");
+							} else {
+								Clients.evalJavaScript("setMask('" + cnpjCPFBox.getUuid() + "', 'cnpj')");
+							}
+						</attribute>
+					</combobox>
+				</row>
+				<row>
+					<label value="CPF/ CNPJ: " />
+					<textbox id="cnpjCPFBox" style="text-transform:uppercase"
+						constraint=""
+						value="@{contaBancoController.selected.cnpjcpf}" />
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete"
+				visible="@{contaBancoController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

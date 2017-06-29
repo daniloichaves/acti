@@ -1,0 +1,197 @@
+Alterar theme
+http://code.google.com/p/zkthemes/wiki/GetStarted
+
+Redes sociais
+http://blog.springsource.com/2010/11/03/socializing-spring-applications/
+http://www.bluebus.com.br/show/1/100542/e_agora_1_infografico_para_mostrar_a_evolucao_do_social_crm_veja_aqui
+
+Concorrente jGle
+http://www.velti.com.br/
+http://www.activecorp.com.br/activetrans.html
+http://www.americasoft.com.br/
+http://guarulhos.olx.com.br/sistema-para-transportadoras-software-tms-completo-consuta-via-site-meta-informatica-iid-13776479#pics
+
+Valores
+ http://www.manualdeservicosdigitais.com.br/download/manual-de-precos-e-servicos-digitais-apadi.pdf
+
+Web Services
+ http://www.javacodegeeks.com/2010/11/jaxws-with-spring-and-maven-tutorial.html
+
+Ajustes 
+* remover os aply
+
+Relatorios
+ http://blog.camilolopes.com.br/relatorio-ireport-jasperreport-com-hibernate/
+ http://www.guj.com.br/posts/list/227809.java#1167390
+ 
+Modulo 
+ http://www.stella.caelum.com.br/roadmap.html
+
+Transportadora
+	http://pt.wikipedia.org/wiki/Conhecimento_de_Transporte
+	http://pt.wikipedia.org/wiki/Averba%C3%A7%C3%A3o
+
+Modulos Fazer
+ - Tarefas
+ - Google analytics
+ 
+CT-e
+http://www.cte.fazenda.gov.br/
+http://www.guj.com.br/posts/list/197980.java#994154
+http://www.guj.com.br/posts/list/45/132054.java#1054182
+
+http://hom.nfe.fazenda.gov.br/PORTAL/docs/projeto_nf-e_institucional.wmv
+
+ZK
+http://www.zkoss.org/forum/listComment/11022
+
+Planilha/ Roterizador
+zk planilha excel
+http://books.zkoss.org/wiki/Small_Talks/2010/December/New_Features_of_ZK_Spreadsheet_2.0
+http://www.zkoss.org/download/zkspreadsheet.dsp
+http://docs.zkoss.org/wiki/Wrapped_gmaps_fckeditor
+
+http://www.zkoss.org/product/zkspreadsheet.dsp
+
+mascara
+http://syncplicity.com/Video/Overview.aspx
+http://www.jornaljava.com/2010/12/razoes-que-provam-que-o-ruby-nao-presta/
+
+
+Maven
+http://books.zkoss.org/wiki/ZK_Installation_Guide/Setting_up_IDE/Maven/Use_ZK_Maven_Repository
+http://www.stella.caelum.com.br/roadmap.html
+
+Integração
+http://www.zkoss.org/forum/listComment/7908/1/20#reply
+
+Handling huge data using ZK - Paginação 
+http://docs.zkoss.org/wiki/Handling_huge_data_using_ZK
+
+Internacionalização
+
+http://www.google.com/apps/intl/en/business/more.html
+
+Spring Community
+http://blog.springsource.com/2010/11/03/socializing-spring-applications/
+
+http://www.springsource.com/download/community
+
+Hospedagem de servidor
+http://www.guj.com.br/posts/list/213692.java#1088290
+
+Avaliar Hospedagem
+http://www.integrator.com.br/index.php
++- 350,00 anual
+
+Ajuste site
+http://sixrevisions.com/website-management/things-you-should-do-immediately-after-launching-a-website/
+
+Levar para cloud 
+http://www.devmedia.com.br/post-17572-Conecte-Java-nas-nuvens-com-jclouds.html
+
+Iteração
+*http://docs.zkoss.org/wiki/Build_CRUD_Application_with_ZK_Studio_in_6_Steps
+http://docs.zkoss.org/wiki/Spring
+http://docs.zkoss.org/wiki/Hibernate_%2B_Spring_%2B_ZK
+http://java.dzone.com/articles/using-desktop-model-view
+http://www.simonmassey.org/zktodo2.html
+http://docs.zkoss.org/wiki/ZK_MVC_Made_Easy
+http://docs.zkoss.org/wiki/ZK_5.0_and_Client%2BServer_Fusion
+*http://www.zkoss.org/forum/listComment/6615;jsessionid=4EE5EA88D634F9B86E6821E64EE4A278.zkzh
+
+Java
+http://www.javacodegeeks.com/2010/08/java-best-practices-vector-arraylist.html
+
+Spring Secure
+http://www.guj.com.br/posts/list/215342.java#1097974
+
+Gráficos ZK
+http://docs.zkoss.org/wiki/ZK_Charts#available_chart_types
+
+Sistema Concorrente
+http://www.admtransp.com.br/produtos.php
+http://www.bsoftsistemas.com/index.php?area=inicio
+http://renasoft.com.br/html/soft_transp5plus.htm?gclid=CLLS8evkvqMCFRwhnAodiijgcg
+http://www.metasupri.com.br/solucoes.asp?gclid=CNe9tb3mvqMCFQ4TswodQRe7cg#
+
+
+http://www.sitglobal.com.br
+http://www.allisson.com.br
+
+Spring
+http://www.springsource.com/download/community
+
+Autenticação
+http://docs.zkoss.org/wiki/Spring_Security_trabalhando_com_ZK
+http://www.zkoss.org/forum/listComment/9225
+
+Verificar outra Ferramenta de GIS
+http://maplink.uol.com.br/v2/webservices.aspx?OR=ApontadorProdutos
+
+Upper
+textbox style="text-transform:uppercase"
+
+Mapas
+http://code.google.com/apis/maps/index.html
+http://code.google.com/apis/maps/documentation/staticmaps/
+http://www.devmedia.com.br/post-17838-Consumindo-WebService--GoogleMap.html
+
+Mask 
+http://www.meiocodigo.com/projects/meiomask/
+http://code.google.com/p/zk-sample-code/source/browse/trunk/WebContent/samples/sam/inputbox/meioMask.zul?r=26
+http://www.meiocodigo.com/projects/meiomask/#mm_masks
+
+Email Gmail
+http://www.devmedia.com.br/post-18034-Enviando-email-com-JavaMail-utilizando-Gmail.html
+http://www.devmedia.com.br/post-18792-Utilizando-a-API-Commons-Mail.html
+
+Struts 2 + GAE
+http://whyjava.wordpress.com/2009/08/30/creating-struts2-application-on-google-app-engine-gae/
+
+
+**logotipo
+
+*Despesas
+*Itens Serviço
+*Produto
+*Kit de Produto
+*Parametros para impressão
+*Centro de custo
+*Condições de Pagamento
+*Tipos de Pagamento
+*movimentação de pneus
+**Permissões
+
+
+--Módulos Básico
+	
+Tabelas de fretes	
+Vendedores	
+CFOPs         	
+Sintegra 	
+EDI/PROCEDA 	
+Ordem coleta	
+NF serviços	
+Minutas simples	
+Minutas cálculos	
+CTRC (modelo 08)	
+CTMC (multimodal)	
+Manifesto nacional	
+Carta frete	
+Manifesto internacional	
+Manifesto de minutas	
+Estoque/armazenagem	
+NF estoque	
+CRT/MIC DTA	
+Romaneios diversos	
+OS/C – Courier 	
+Faturamento/à receber	
+Configuração sistema	
+Configuração usuários	
+Espião 	
+Financeiro 	
+Controle de frota	
+Relatórios diversos 	
+
+

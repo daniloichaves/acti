@@ -1,0 +1,31 @@
+<?page title="Sistema Integrado para Transportadoras" contentType="text/html;charset=UTF-8" complete="true"?>
+<zk>
+	<window id="mainWindow">
+		
+		<script
+			content="zk.googleAPIkey='ABQIAAAAVaKUxJFygcp4_Y8yeVuZfxSuwPZdYvfOqdJ1NGwchfMMEsbLXRTYWtgax9Rwzrj8hmIACOaXjSSCng'" />
+		
+		<gmaps id="theMap" width="400px" height="400px">
+			<ginfo id="myinfo" open="true">
+				
+				<![CDATA[ Empresa, <a
+				href="http://www.zkoss.org">ZK</a>. ]]>
+				
+			</ginfo>
+
+			<gmarker id="mymark" lat="-23.472888" lng="-46.647263">
+				
+				<![CDATA[ JGle, <a href="http://www.zkoss.org">ZK</a> of
+				Gmarker no topo . ]]>
+				
+			</gmarker>
+
+			<attribute name="onMapClick">
+	Gmarker gmarker = event.getGmarker();
+	if (gmarker != null) {
+		gmarker.setOpen(true);
+	}
+</attribute>
+		</gmaps>
+	</window>
+</zk>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<window id="entityWin" ctrlKeys="#up#down"
+	title="Lista de Manifestos">
+
+	<div id="entityDetail">
+
+		<!-- view mode -->
+		<div id="entityView"
+			visible="@{manifestoController.viewMode}">
+
+			<hbox id="searchHbox"
+				use="br.com.jgle.acti.component.SearchHbox"
+				selected="@{manifestoController.selected}" />
+
+			<listbox id="entityList" width="100%" height="100%"
+				model="@{manifestoController.remindersLimited}"
+				selectedItem="@{manifestoController.selected}">
+				<listhead sizable="true">
+					<listheader label="Alterar" width="45px" />
+					<listheader label="Manifest" sort="auto" />
+					<listheader label="Unidade" sort="auto" />
+					<listheader label="Data Inicio" sort="auto" />
+					<listheader label="Dt. Averb" sort="auto" />
+					<listheader label="Placa" sort="auto" />
+					<listheader label="Rota" sort="auto" />
+					<listheader label="Origem" sort="auto" />
+					<listheader label="Sinal OK" />
+					<listheader label="Data Saida" />
+					<listheader label="Deletar" width="50px" />
+					<!--					<listheader label="MS" />-->
+					<!--					<listheader label="Reg" sort="auto" />-->
+					<!--					<listheader label="Destino" sort="auto" />-->
+				</listhead>
+				<listitem self="@{each=reminder}">
+					<listcell id="entityUpdateQuick"
+						image="/img/png/page-edit-icon24x24.png" />
+					<listcell label="@{reminder.numeroManifesto}" />
+					<listcell label="@{reminder.sigla}" />
+					<listcell
+						label="@{reminder.dataHoraInicialEntrega,converter='org.zkoss.zkplus.databind.DateFormatConverter'}" />
+					<listcell label="" />
+					<listcell label="@{reminder.veiculoEntrega.placa}" />
+					<listcell label="" />
+					<listcell
+						label="@{reminder.almoxarifado.endereco.endereco}" />
+					<listcell label="" />
+					<listcell
+						label="@{reminder.dataHoraInicialEntrega,converter='org.zkoss.zkplus.databind.DateFormatConverter'}" />
+					<listcell id="entityDeleteQuick"
+						image="/img/png/delete-icon16x16.png" />
+				</listitem>
+			</listbox>
+			<paging id="userPaging" />
+
+			<grid width="100%">
+				<rows>
+					<!--					<row>-->
+					<!--						Tipo Frete:-->
+					<!--						<label-->
+					<!--							value="@{manifestoController.selected.tipoFrete}" />-->
+					<!--						CPOF:-->
+					<!--						<label-->
+					<!--							value="@{manifestoController.selected.cpof.descricao}" />-->
+					<!--					</row>-->
+					<!--					<row>-->
+					<!--						Data Coleta:-->
+					<!--						<label-->
+					<!--							value="@{manifestoController.selected.dataHoraColeta}" />-->
+					<!--						Solicitante:-->
+					<!--						<label-->
+					<!--							value="@{manifestoController.selected.solicitante}" />-->
+					<!--					</row>-->
+					<!--					<row>-->
+					<!--						Telefone:-->
+					<!--						<label-->
+					<!--							value="@{manifestoController.selected.telefone}" />-->
+					<!--						Ramal:-->
+					<!--						<label-->
+					<!--							value="@{manifestoController.selected.ramal}" />-->
+					<!--					</row>-->
+				</rows>
+			</grid>
+
+		</div>
+
+		<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+			visible="@{manifestoController.viewMode}" />
+
+		<include src="/cadastro/manifesto.zul" />
+	</div>
+
+</window>

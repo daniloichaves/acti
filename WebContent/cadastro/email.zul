@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<window id="entityEdit" apply="${emailController}"
+		visible="@{emailController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Email">
+
+		<grid>
+			<auxhead>
+				<auxheader width="40px"></auxheader>
+				<auxheader></auxheader>
+			</auxhead>
+			<rows>
+				<row>
+					<label value="Tipo: " />
+					<combobox
+						selectedItem="@{emailController.selected.tipo}" value="COMERCIAL" >
+						<comboitem label="Comercial" value="COMERCIAL" />
+						<comboitem label="Particular"
+							value="PARTICULAR" />
+					</combobox>
+				</row>
+				<row>
+					<label value="Email: " />
+					<textbox style="text-transform:uppercase"
+						width="230px"
+						constraint="/.+@.+\.[a-z]+/: Por favor, insira um endereço de e-mail"
+						value="@{emailController.selected.email}" rows="2" />
+					<label value="Observação: " />
+					<textbox style="text-transform:uppercase" rows="3"
+						width="230px" constraint=""
+						value="@{emailController.selected.observacao}" />
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete" visible="@{emailController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

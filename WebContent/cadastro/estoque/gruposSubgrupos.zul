@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado" complete="true"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityEdit"?>
+
+<zk xmlns:p="htt//www.zkoss.org/2005/zul"
+	xmlns:xsi="htt//www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="htt//www.zkoss.org/2005/zul">
+	<style src="/css/acti.css" />
+
+	<!-- edit mode -->
+	<window id="entityEdit" apply="${grupoController}"
+		visible="@{grupoController.editMode}" ctrlKeys="#up#down"
+		title="Cadastro de Entradas/ Compras">
+
+		<grid>
+			<rows>
+				<row>
+					<label value="Data/Hora: " />
+					<datebox cols="25" format="dd/MM/yyyy a HH:mm"
+						onCreate="self.setValue(new Date())" mold="rounded"
+						disabled="true" />
+					<label value="Grupo: " />
+					<textbox style="text-transform:uppercase"
+						value="@{grupoController.selected.nome}" />
+				</row>
+				<row>
+					<label value="Grupo Pai: " />
+					<combobox
+						selectedItem="@{grupoController.selected.grupo}" autodrop="true"
+						onOpen="@{grupoController.selected.grupo}">
+						<comboitem forEach="${grupoController.grupos}"
+							label="${each.nome}" value="${each}" />
+					</combobox>
+
+
+
+					<label />
+					<label />
+				</row>
+			</rows>
+		</grid>
+
+		<div align="center">
+			<image id="entitySave" src="/img/png/save-as-icon32x32.png" />
+			<image id="entityCancel"
+				src="/img/png/Cancel-2-icon32x32.png" />
+			<image id="entityDelete" visible="@{cpofController.create"
+				src="/img/png/delete-icon32x32.png" />
+		</div>
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

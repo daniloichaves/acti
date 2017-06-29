@@ -1,0 +1,14 @@
+<?page title="Sistema Integrado para Transportadoras" contentType="text/html;charset=UTF-8" complete="true"?>
+<zk>
+
+	<window title="Menu" id="pageMenu" border="1">
+
+		<include src="/inc/menuTree.zul" />
+
+	</window>
+
+	<zscript>
+
+	
+	</zscript>
+</zk>

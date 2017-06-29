@@ -1,0 +1,93 @@
+<?page title="Sistema Integrado para Transportadoras" contentType="text/html;charset=UTF-8" complete="true"?>
+<zk>
+
+	<script type="text/javascript"
+		src="http://www.google.com/jsapi?key=ABQIAAAAL5W7NVHwrWYE3JzrRsBJ5hTNOr8vgXOQPTkanHJhOUOv_qsDxBSJYejru4p5jPF3yzK_s4GVLgDCaQ">
+	</script>
+	<script content="zk.googleAPIkey='ABQIAAAAL5W7NVHwrWYE3JzrRsBJ5hTNOr8vgXOQPTkanHJhOUOv_qsDxBSJYejru4p5jPF3yzK_s4GVLgDCaQ'" />
+	<script content="google.loader.KeyVerified=false" />
+	<script content="google.loader.LoadFailure=true" />
+	
+
+	<zscript><![CDATA[
+	public static void export_to_csv(Listbox listbox) {
+		    String s = ";";
+		    StringBuffer sb = new StringBuffer();
+		
+		    for (Object head : listbox.getHeads()) {
+		      String h = "";
+		      for (Object header : ((Listhead) head).getChildren()) {
+		        h += ((Listheader) header).getLabel() + s;
+		      }
+		      sb.append(h + "\n");
+		    }
+		    for (Object item : listbox.getItems()) {
+		      String i = "";
+		      for (Object cell : ((Listitem) item).getChildren()) {
+		        i += ((Listcell) cell).getLabel() + s;
+		      }
+		      sb.append(i + "\n");
+		    }
+		    org.zul.Filedownload.save(sb.toString().getBytes(), "text/plain", "lista.csv");
+		  }
+]]></zscript>
+
+	<window title="Roterizador Ordem Coleta - Norte" border="normal"
+		width="100%" height="700px">
+
+		<gmaps id="mymap" height="100%" showLargeCtrl="true"
+			style="border:1px solid black;margin-top:5px">
+		</gmaps>
+
+		<borderlayout>
+			<north>
+				<listbox id="listbox" mold="paging" pageSize="2">
+					<listhead sizable="true">
+						<listheader label="Empresa" sort="auto" />
+						<listheader label="Endereço" sort="auto" />
+						<listheader label="Volume" />
+						<listheader label="Peso" />
+						<listheader label="NF" />
+						<listheader label="Valor" />
+					</listhead>
+					<listitem>
+						<listcell label="Jgle Solutions" />
+						<listcell label="Rua leopoldina, 234" />
+						<listcell label="76" />
+						<listcell label="10t" />
+						<listcell label="312" />
+						<listcell label="1564.70" />
+					</listitem>
+					<listitem>
+						<listcell label="Westtrack" />
+						<listcell label="Rua dos andantes, 85" />
+						<listcell label="65" />
+						<listcell label="10t" />
+						<listcell label="54" />
+						<listcell label="597.00" />
+					</listitem>
+					<listitem>
+						<listcell label="Google" />
+						<listcell label="Av. Jose da Silva, 45" />
+						<listcell label="54" />
+						<listcell label="10t" />
+						<listcell label="7657" />
+						<listcell label="11564.00" />
+					</listitem>
+					<listitem>
+						<listcell label="Oi" />
+						<listcell label="Av. raimundos, 25" />
+						<listcell label="65" />
+						<listcell label="10t" />
+						<listcell label="67577" />
+						<listcell label="1645.00" />
+					</listitem>
+				</listbox>
+			</north>
+			<center>
+				<button label="Export to csv"
+					onClick="export_to_csv(listbox)" />
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,174 @@
+<?page title="Gráficos Empresa" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="new page title" border="normal" height="5950px" defaultActionOnShow="moveDown">
+		<vbox>
+			 <zscript>
+			   PieModel piemodel = new SimplePieModel();
+			   piemodel.setValue("Norte", new Double(12.5));
+			   piemodel.setValue("Sul", new Double(50.2));
+			   piemodel.setValue("lest", new Double(20.5));
+			   piemodel.setValue("Oeste", new Double(15.5));
+			 </zscript>
+			 	<label value="pie" />
+			 	<chart id="piechart" title="Pie Chart" width="500" height="250"
+			 		type="pie" threeD="false" fgAlpha="128" onClick="drilldown()" />
+			 	<zscript>
+			   piechart.setModel(piemodel);
+			 </zscript>
+		 </vbox>
+		 
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart2" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="ring" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart2.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 -->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart4" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="bar" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart4.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart5" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="line" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart5.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart6" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="area" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart6.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart7" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="stacked_bar" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart7.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart8" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="stacked_area" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart8.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>		 -->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart9" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="waterfall" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart9.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart10" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="polar" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart10.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart11" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="scatter" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart11.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart12" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="time_series" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart12.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart13" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="step_area" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart13.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart14" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="step" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart14.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart15" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="histogram" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart15.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart16" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="candlestick" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart16.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart title="Pie Chart" width="500" height="250"-->
+<!--			 		type="hilow" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart title="Pie Chart" width="500" height="250"-->
+<!--			 		type="XYZ" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart title="Pie Chart" width="500" height="250"-->
+<!--			 		type="wafer" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart17" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="gantt" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart17.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+<!--		 <vbox>-->
+<!--			 	<label value="pie" />-->
+<!--			 	<chart id="piechart18" title="Pie Chart" width="500" height="250"-->
+<!--			 		type="wind" threeD="false" fgAlpha="128" onClick="drilldown()" />-->
+<!--			 	<zscript>-->
+<!--			   piechart18.setModel(piemodel);-->
+<!--			 </zscript>-->
+<!--		 </vbox>-->
+	</window>
+</zk>

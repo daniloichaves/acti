@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<zk>
+	<zscript>
+	<![CDATA[
+	import br.com.jgle.acti.controller.VeiculoAdicionalController;
+	System.out.println("myList: " + requestScope.get("controller"));
+	VeiculoAdicionalController veiculoAdicionalController = (VeiculoAdicionalController) requestScope.get("controller");
+]]>
+	</zscript>
+
+	<window id="entityWin"
+		ctrlKeys="#up#down" title="Lista de Adicionais">
+
+
+		<listbox id="entityList"
+			model="@{veiculoAdicionalController.reminders}"
+			selectedItem="@{veiculoAdicionalController.selected}" width="100%"
+			height="100%" mold="paging" pageSize="@{veiculoAdicionalController.pageSize}">
+
+			<listhead sizable="true">
+				<listheader label="Alterar" width="45px" />
+<!-- 				<listheader label=Sensor sort="auto" /> -->
+				<listheader label="Nº Terminal" sort="auto" />
+				<listheader label="Status" sort="auto" />
+				<listheader label="Deletar" width="50px" />
+			</listhead>
+			<listitem self="@{each=reminder}">
+				<listcell id="entityUpdateQuick"
+					image="/img/png/page-edit-icon24x24.png" />
+<!-- 				<listcell label="@{reminder.sensor.sensor}" /> -->
+				<listcell label="@{reminder.numeroTerminal}" />
+				<listcell label="@{reminder.status}" />
+				<listcell id="entityDeleteQuick"
+					image="/img/png/delete-icon16x16.png" />
+			</listitem>
+
+		</listbox>
+
+		<div id="entityDetail">
+
+			<!-- view mode -->
+			<div id="entityView"
+				visible="@{veiculoAdicionalController.viewMode}">
+				<!-- 
+					<grid width="100%">
+					<columns>
+					<column align="right" style="width:80px" />
+					<column align="left" />
+					</columns>
+					<rows>
+					<row>
+					Empresa:
+					<label
+					value="@{veiculoAdicionalController.selected.empresa}" />
+					</row>
+					<row>
+					Status:
+					<label
+					value="@{veiculoAdicionalController.selected.status}" />
+					<label />
+					<label />
+					</row>
+					</rows>
+					</grid>
+				-->
+			</div>
+
+			<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+				visible="@{veiculoAdicionalController.viewMode}" />
+
+			<include src="/cadastro/veiculoAdicional.zul" />
+		</div>
+
+	</window>
+</zk>

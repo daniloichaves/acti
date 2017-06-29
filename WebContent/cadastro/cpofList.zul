@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<window id="entityWin" ctrlKeys="#up#down" title="Lista de CPOF's">
+
+	<hbox id="searchHbox" use="br.com.jgle.acti.component.SearchHbox"
+		selected="@{cpofController.selected}" />
+
+	<listbox id="entityList" width="100%" height="100%" mold="paging"
+		model="@{cpofController.reminders}"
+		selectedItem="@{cpofController.selected}" pageSize="@{cpofController.pageSize}">
+
+		<listhead sizable="true">
+			<listheader label="Alterar" width="45px" />
+			<listheader label="Código" sort="auto" />
+			<listheader label="Descrição" sort="auto" />
+			<listheader label="Observação" sort="auto" />
+			<listheader label="Deletar" width="50px" />
+		</listhead>
+		<listitem self="@{each=reminder}">
+			<listcell id="entityUpdateQuick"
+				image="/img/png/page-edit-icon24x24.png" />
+			<listcell label="@{reminder.codigo}" />
+			<listcell label="@{reminder.descricao}" />
+			<listcell label="@{reminder.observacao}" />
+			<listcell id="entityDeleteQuick"
+				image="/img/png/delete-icon16x16.png" />
+		</listitem>
+	</listbox>
+
+	<div id="entityDetail">
+
+		<!-- view mode -->
+		<div id="entityView" visible="@{cpofController.viewMode}">
+
+			<grid width="100%">
+				<columns>
+					<column align="right" style="width:80px" />
+					<column align="left" />
+				</columns>
+				<rows>
+					<row>
+						Código:
+						<label
+							value="@{cpofController.selected.codigo}" />
+					</row>
+					<row>
+						Descrição:
+						<label
+							value="@{cpofController.selected.descricao}" />
+					</row>
+					<row>
+						Obsevação:
+						<label
+							value="@{cpofController.selected.observacao}" />
+					</row>
+				</rows>
+			</grid>
+
+		</div>
+
+		<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+			visible="@{cpofController.viewMode}" />
+
+		<include src="/cadastro/cpof.zul" />
+	</div>
+
+</window>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Aplicação de Controle de Transporte Integrado"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./entityWin"?>
+
+<window id="entityWin" ctrlKeys="#up#down"
+	title="Lista de Entradas/ Compras">
+
+	<hbox use="br.com.jgle.acti.component.SearchHbox" />
+
+	<listbox id="entityList" width="100%" height="100%" mold="paging"
+		model="@{saidaEstoqueController.reminders}"
+		selectedItem="@{saidaEstoqueController.selected}" pageSize="@{saidaEstoqueController.pageSize}">
+
+		<listhead sizable="true">
+			<listheader label="Alterar" width="45px" />
+			<listheader label="Unidade" sort="auto" />
+			<listheader label="Almoxarifado" sort="auto" />
+			<listheader label="Data Entrega" sort="auto" />
+			<listheader label="Fornecedor" sort="auto" />
+			<listheader label="NF" sort="auto" />
+			<listheader label="Total" />
+			<listheader label="Deletar" width="50px" />
+		</listhead>
+		<listitem self="@{each=reminder}">
+			<listcell id="entityUpdateQuick"
+				image="/img/png/page-edit-icon24x24.png" />
+			<listcell label="@{reminder.unidade.razaoSocial}" />
+			<listcell label="@{reminder.almoxarifado.nome}" />
+			<listcell
+				label="@{reminder.dataEntrega,converter='org.zkoss.zkplus.databind.DateFormatConverter'}"
+				self="@{format(dd/MM/yyyy)}" />
+			<listcell label="@{reminder.fornecedor.razaosocialnome}" />
+			<listcell label="@{reminder.numeroNotaFical}" />
+			<listcell label="@{reminder.valorTotal}" />
+			<listcell id="entityDeleteQuick"
+				image="/img/png/delete-icon16x16.png" />
+		</listitem>
+	</listbox>
+
+	<div id="entityDetail">
+
+		<!-- view mode -->
+		<div id="entityView"
+			visible="@{saidaEstoqueController.viewMode}">
+
+			<grid width="100%">
+				<rows>
+					<row>
+						Unidade:
+						<label
+							value="@{saidaEstoqueController.selected.unidade.razaoSocial}" />
+						Almoxarifado:
+						<label
+							value="@{saidaEstoqueController.selected.almoxarifado.nome}" />
+					</row>
+					<row>
+						Nº NF:
+						<label
+							value="@{saidaEstoqueController.selected.numeroNotaFical}" />
+						Observacao:
+						<label
+							value="@{saidaEstoqueController.selected.observacao}" />
+					</row>
+				</rows>
+			</grid>
+
+		</div>
+
+		<image id="entityCreate" src="/img/png/file-new-icon32x32.png"
+			visible="@{saidaEstoqueController.viewMode}" />
+
+		<include src="/cadastro/estoque/saidaEstoque.zul" />
+	</div>
+
+</window>
