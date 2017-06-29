@@ -43,8 +43,8 @@ public class IndexController extends GenericForwardComposer {
 
 			if (login == null || login.getLogin() == null) {
 				Map<String, String> mapSearch = new HashMap<String, String>();
-				mapSearch.put("login", "jgle");
-				mapSearch.put("senha", "jgle");
+				mapSearch.put("login", "admin");
+				mapSearch.put("senha", "admin");
 
 				List<Login> result = genericService.procurarSimples(
 						new Login(), mapSearch);
